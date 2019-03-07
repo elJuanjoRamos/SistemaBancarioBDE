@@ -98,9 +98,9 @@ public class AccessWindow {
         
         
         Scene scene = new Scene(grid, 360, 360);
+        scene.getStylesheets().addAll("/resources/root.css");
         
         primaryStage.setTitle("Access Window");
-        scene.getStylesheets().addAll("/resources/root.css");
         primaryStage.setScene(scene);
         primaryStage.show();
         

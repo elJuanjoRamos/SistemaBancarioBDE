@@ -6,10 +6,7 @@
 package userInterface;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+
 import javafx.stage.Stage;
 
 import beans.*;
@@ -20,20 +17,15 @@ import controller.ClienteController;
  */
 public class Principal extends Application {
     
-    Cliente[] c = new Cliente[20];
-    Cliente a = new Cliente();
-    Cliente b = new Cliente();
-    Cliente e = new Cliente();
-    
-    
-    
     @Override
     public void start(Stage primaryStage) {
         
-        agregar();
-        AccessWindow.getAccessWindow().getGridPane(primaryStage);
-            
+        ClienteController.getClienteController().agregar("1", "dir1", "tel");
+        ClienteController.getClienteController().agregar("2", "dir2", "tel");
+        ClienteController.getClienteController().agregar("3", "dir3", "tel");
         
+        //AccessWindow.getAccessWindow().getGridPane(primaryStage);
+        AdminInterface.getAdminInterface().start(primaryStage);
         
     }
 
@@ -46,13 +38,6 @@ public class Principal extends Application {
         
     }
     
-    public void agregar() {
-        ClienteController.getClienteController().agregarCliente("a", "dir1", "tel");
-        ClienteController.getClienteController().agregarCliente("s", "dir2", "tel");
-     ClienteController.getClienteController().agregarCliente("c", "dir3", "tel");
-     
-     
-       }
     
     
 }

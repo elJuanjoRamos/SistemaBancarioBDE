@@ -10,7 +10,7 @@ package beans;
  * @author Ana Ramos
  */
 public class Empleado {
-    private int idEmpleado;
+    private int id;
     private String nombre;
     private String direccion;
     private String telefono;
@@ -18,7 +18,7 @@ public class Empleado {
     
         public Empleado(int id,String nombre,String direccion,String telefono, String departamento){
        
-        this.idEmpleado = id;
+        this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -31,7 +31,7 @@ public class Empleado {
         
     //Metodo Get
     public Integer getId() {
-        return this.idEmpleado;
+        return this.id;
     }
     public String getNombre() {
         return this.nombre;
@@ -48,7 +48,7 @@ public class Empleado {
     
     //Metodos Set
     public void setId(int var) {
-        this.idEmpleado = var;
+        this.id = var;
     }
     public void setNombre(String var) {
         this.nombre = var;

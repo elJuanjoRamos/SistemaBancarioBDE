@@ -5,24 +5,7 @@
  */
 package controller;
 import beans.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+
 /**
  *
  * @author Juan José Ramos
@@ -30,29 +13,84 @@ import javafx.scene.text.Text;
 public class ClienteController {
     private static final ClienteController ClienteController = new ClienteController();
     
-    Cliente[] arrayCliente = new Cliente[1000];
+    private Cliente[] arrayCliente = new Cliente[1000];
+    private Cliente[] arrayAux = new Cliente[1000];
     
     
     private ClienteController() {
     }
 
-    public static ClienteController getClienteController() {
-        return ClienteController;
+    private static ClienteController instance;
+    public static ClienteController getClienteController(){
+        if(instance == null){
+            instance = new ClienteController();
+        }
+        return instance;
     }
     
-    public void agregarCliente(String nombre, String telefono, String direccion) {
+    public void agregar(String nombre, String direccion, String telefono) {
         
         for (int i = 0; i < arrayCliente.length; i++) {
-            if( arrayCliente[i] == null ) {
-                arrayCliente[i] = new Cliente(i, nombre, telefono, direccion);
+            if (arrayCliente[i] == null) {
+                arrayCliente[i] = new Cliente(i, nombre, direccion, telefono);
                 break;
             }
-        } 
+        }
+        
+    }
+    public void mostrar() {
+        for (int i = 0; i < arrayCliente.length; i++) {
+            if (arrayCliente[i] != null) {
+                System.out.println(arrayCliente[i].getNombre());
+                System.out.println(arrayCliente[i].getDireccion());
+                System.out.println(arrayCliente[i].getTelefono());
+        
+            }
+        }
     }
     
+    public void borrar(int id) {
+        for (int i = 0; i < arrayCliente.length; i++) {
+            if( i == id ) {
+                arrayCliente[i] = null;
+                if (arrayCliente[i + 1] != null ) {
+                    arrayCliente[i] = arrayCliente[i + 1];
+                    arrayCliente[i + 1 ] = null;
+                    break;
+                }
+            } 
+        }
+    }
+    public void actualizar(int id, String nombre, String direccion, String telefono) {
+        for (int i = 0; i < arrayCliente.length; i++) {
+            if (i == id) {
+                Cliente c = arrayCliente[i];
+                c.setNombre(nombre);
+                c.setDireccion(direccion);
+                c.setTelefono(telefono);
+            }
+        }
+        mostrar();
+    }
+    
+    public Cliente[] getBuscar(String nombre){
+        System.out.println(nombre);
+        Cliente[] resultado = new Cliente[1000];
+        int a = 0;
+        for (int i = 0; i < arrayCliente.length; i++) {
+            for (int j = 0; j < resultado.length; j++) {
+                if(arrayCliente[i].getNombre().toUpperCase().contains(nombre.toUpperCase())){
+                    resultado[j] = arrayCliente[i];
+                }
+            }
+        }
+         return resultado;
+     }
     public Cliente[] getArrayCliete() {
         return this.arrayCliente;
     }
+    
+    
     
    
 }
