@@ -57,6 +57,7 @@ public class UICliente {
     private Button buttonNuevo;
     private Button buttonModificar;
     private Button buttonEliminar;
+    private Button buttonReestablecer;
 
     private TableColumn<Cliente, Integer> tableColumnIdCliente;
     private TableColumn<Cliente, String> tableColumnNombreCliente;
@@ -87,25 +88,28 @@ public class UICliente {
 
         textFieldBuscar = new TextField();
         textFieldBuscar.setPromptText("Buscar cliente");
-        textFieldBuscar.textProperty().addListener((newValue) -> {
-            if (textFieldBuscar.getText().length() == 0) {
-                actualizarDatosTabla();
-            } else {
-                actualizarTablabusqueda(textFieldBuscar.getText().trim());
-            }
-
-        });
-
-        buttonBuscar = new Button("Reestablecer");
+        
+        buttonBuscar = new Button("Bucar");
         buttonBuscar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                actualizarDatosTabla();
+                if (textFieldBuscar.getText().length() != 0) {
+                    actualizarTablabusqueda(textFieldBuscar.getText().trim());
+                } 
             }
         });
 
-        hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar);
+        buttonReestablecer = new Button("Reestablecer");
+        buttonReestablecer.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                textFieldBuscar.clear();
+                actualizarDatosTabla();
+            }
+        });
+        hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar, buttonReestablecer);
         gridPane.add(hBoxBuscar, 0, 1);
+        
 
         buttonNuevo = new Button("Nuevo");
         buttonNuevo.setOnAction(new EventHandler<ActionEvent>() {
@@ -230,8 +234,8 @@ public class UICliente {
     }
 
     public void actualizarTablabusqueda(String nombre) {
-        if (ClienteController.getClienteController().getBuscar(nombre) != null) {
-            observableList = FXCollections.observableArrayList(ClienteController.getClienteController().getBuscar(nombre));
+        if (ClienteController.getClienteController().buscar(nombre) != null) {
+            observableList = FXCollections.observableArrayList(ClienteController.getClienteController().buscar(nombre));
             tableView.setItems(observableList);
         } else {
             actualizarDatosTabla();

@@ -36,7 +36,7 @@ public class AdminInterface {
 
         primaryStage.setTitle("MODULO ADMINISTRATIVO");
         Group root = new Group();
-        Scene scene = new Scene(root, 1200, 700, Color.WHITE);
+        Scene scene = new Scene(root, 1300, 700, Color.WHITE);
 
         TabPane tabPane = new TabPane();
 
@@ -58,8 +58,18 @@ public class AdminInterface {
         tab1.setContent(UIEmpleado.getUIEmpleado().getVistaData());
         tab1.setClosable(false);
 
+        Tab tab2 = new Tab();
+        tab2.setText("Agencias");
+        HBox hbox2 = new HBox();
+        hbox2.getChildren().add(new Label("Agencias"));
+        hbox2.setAlignment(Pos.CENTER);
+        tab2.setContent(UIAgencia.getAgencia().getViewAgencia());
+        tab2.setClosable(false);
         
-        tabPane.getTabs().addAll(tab1, tab);
+        
+        
+        
+        tabPane.getTabs().addAll(tab2, tab1, tab);
 
         tabPane.setSide(Side.LEFT);
         borderPane.prefHeightProperty().bind(scene.heightProperty());

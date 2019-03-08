@@ -13,20 +13,20 @@ public class AgenciaBancaria {
   private String nombre;
   private String direccion;
   private String telefono;
-  private int idAgencia;
+  private int id;
   private int noCajas;
   private int escritorios;
-  private int efectivo;
+  private double efectivo;
   
   public AgenciaBancaria( ) {
   }
   
   public AgenciaBancaria( String nombre, String direccion,String telefono,int idAgencia,int noCajas,
-          int escritorios,int efectivo) {
+          int escritorios,double efectivo) {
       this.nombre = nombre;
       this.direccion = direccion;
       this.telefono = telefono;
-      this.idAgencia = idAgencia;
+      this.id = idAgencia;
       this.noCajas = noCajas;
       this.escritorios = escritorios;
       this.efectivo = efectivo;
@@ -41,8 +41,8 @@ public class AgenciaBancaria {
   public String getTelefono() {
       return this.telefono;
   }
-  public int getIdAgencia() {
-      return this.idAgencia;
+  public int getId() {
+      return this.id;
   }
   public int getNoCajas() {
       return this.noCajas;
@@ -50,7 +50,7 @@ public class AgenciaBancaria {
   public int getEscritorios() {
       return this.escritorios;
   }
-  public int getEfectivo() {
+  public double getEfectivo() {
       return this.efectivo;
   }
   //Metodos Set
@@ -64,8 +64,8 @@ public class AgenciaBancaria {
   public void setTelefono(String var) {
       this.telefono = var;
   }
-  public void setIdAgencia(int var) {
-      this.idAgencia = var;
+  public void setId(int var) {
+      this.id = var;
   }
   public void setNoCajas(int var) {
       this.noCajas = var;
@@ -73,7 +73,7 @@ public class AgenciaBancaria {
   public void setEscritorios(int var) {
       this.escritorios = var;
   }
-  public void setEfectivo(int var) {
+  public void setEfectivo(double var) {
       this.efectivo = var;
   }
 }

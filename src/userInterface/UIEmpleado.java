@@ -30,11 +30,8 @@ import javafx.stage.StageStyle;
 import javafx.scene.control.Alert.AlertType;
 import java.util.Optional;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
 
 import controller.*;
-import beans.*;
 import javafx.scene.control.ComboBox;
 
 /**
@@ -58,6 +55,7 @@ public class UIEmpleado {
     private HBox hBoxBuscar;
     private TextField textFieldBuscar;
     private Button buttonBuscar;
+    private Button buttonReestablecer;
     private HBox hBoxButtons;
     private Button buttonNuevo;
     private Button buttonModificar;
@@ -93,26 +91,28 @@ public class UIEmpleado {
 
         textFieldBuscar = new TextField();
         textFieldBuscar.setPromptText("Buscar Empleado");
-        textFieldBuscar.textProperty().addListener((newValue) -> {
-            if (textFieldBuscar.getText().length() == 0) {
-                actualizarDatosTabla();
-            } else {
-                actualizarTablabusqueda(textFieldBuscar.getText().trim());
-            }
-
-        });
-
-        buttonBuscar = new Button("Reestablecer");
+        
+        buttonBuscar = new Button("Bucar");
         buttonBuscar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                actualizarDatosTabla();
+                if (textFieldBuscar.getText().length() != 0) {
+                    actualizarTablabusqueda(textFieldBuscar.getText().trim());
+                } 
             }
         });
 
-        hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar);
+        buttonReestablecer = new Button("Reestablecer");
+        buttonReestablecer.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                textFieldBuscar.clear();
+                actualizarDatosTabla();
+            }
+        });
+        hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar, buttonReestablecer);
         gridPane.add(hBoxBuscar, 0, 1);
-
+        
         buttonNuevo = new Button("Nuevo");
         buttonNuevo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -178,7 +178,7 @@ public class UIEmpleado {
 
         tableColumnIdEmpleado = new TableColumn<>();
         tableColumnIdEmpleado.setText("ID");
-        tableColumnIdEmpleado.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableColumnIdEmpleado.setCellValueFactory(new PropertyValueFactory<>("id") );
         tableColumnIdEmpleado.setMinWidth(70);
 
         tableColumnNombreEmpleado = new TableColumn<>();
@@ -218,7 +218,7 @@ public class UIEmpleado {
             }
         });
 
-        gridPane.add(tableView, 0, 3, 2, 1);
+        gridPane.add(tableView, 0, 6);
 
         hBoxCRUD.getChildren().add(gridPane);
         hBoxCRUD.setAlignment(Pos.CENTER_LEFT);
@@ -242,8 +242,8 @@ public class UIEmpleado {
     }
 
     public void actualizarTablabusqueda(String nombre) {
-        if (EmpleadoController.getEmpleadoController().getBuscar(nombre) != null) {
-            observableList = FXCollections.observableArrayList(EmpleadoController.getEmpleadoController().getBuscar(nombre));
+        if (EmpleadoController.getEmpleadoController().buscar(nombre) != null) {
+            observableList = FXCollections.observableArrayList(EmpleadoController.getEmpleadoController().buscar(nombre));
             tableView.setItems(observableList);
         } else {
             actualizarDatosTabla();
@@ -268,7 +268,6 @@ class CrearEmpleado {
     private Button buttonCerrar;
 
     private CrearEmpleado() {
-        //updateObservableListGrado();
     }
 
     public static CrearEmpleado getCrearEmpleado() {
@@ -304,6 +303,7 @@ class CrearEmpleado {
         textFieldTelefono = new TextField();
         gridPane.add(textFieldTelefono, 1, 5, 2, 1);
 
+        
         labelDepartamento = new Label("Departamento: ");
         gridPane.add(labelDepartamento, 0, 6);
 
@@ -312,7 +312,7 @@ class CrearEmpleado {
         gridPane.add(comboDepartamento, 1, 6, 2, 1);
 
         
-        Button buttonCerrar = new Button("Cerrar");
+        buttonCerrar = new Button("Cerrar");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -325,13 +325,12 @@ class CrearEmpleado {
             @Override
             public void handle(ActionEvent event) {
 
-                if (textFieldNombre.getText().length() != 0 && textFieldDireccion.getText().length() != 0 && textFieldTelefono.getText().length() != 0) {
+                if (textFieldNombre.getText().length() != 0 && textFieldDireccion.getText().length() != 0 && textFieldTelefono.getText().length() != 0 &&
+                        comboDepartamento.getSelectionModel().getSelectedItem() != null) {
                     EmpleadoController.getEmpleadoController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString());
                     textFieldNombre.clear();
                     textFieldDireccion.clear();
                     textFieldTelefono.clear();
-
-                    //UIEmpleado.getUIEmpleado().actualizarDatosTabla();
                 } else {
                     Alert alerta = new Alert(Alert.AlertType.INFORMATION);
                     alerta.setTitle("Error!");
@@ -367,7 +366,10 @@ class ActualizarEmpleado {
     private Label labelTelefono;
     private TextField textFieldTelefono;
     private Button buttonModificar;
+    private Button buttonCerrar;
     private Alert alert = new Alert(AlertType.INFORMATION);
+    private Label labelDepartamento;
+    private ComboBox comboDepartamento;
 
     private ActualizarEmpleado() {
         alert.setTitle("Informacion");
@@ -400,13 +402,18 @@ class ActualizarEmpleado {
         textFieldDireccion = new TextField(empleado.getDireccion());
         gridPane.add(textFieldDireccion, 1, 4, 3, 1);
 
-        labelDireccion = new Label("Telefono: ");
-        gridPane.add(labelDireccion, 0, 5);
-
-        labelDireccion = new Label("Telefono: ");
-        gridPane.add(labelDireccion, 0, 5);
+        labelTelefono = new Label("Telefono: ");
+        gridPane.add(labelTelefono, 0, 5);
+        
         textFieldTelefono = new TextField(empleado.getTelefono());
         gridPane.add(textFieldTelefono, 1, 5, 3, 1);
+
+        labelDepartamento = new Label("Departamento: ");
+        gridPane.add(labelDepartamento, 0, 6);
+
+        comboDepartamento = new ComboBox();
+        comboDepartamento.getItems().addAll("Agencia","Auto Banco","Cajero","Call-Center");
+        gridPane.add(comboDepartamento, 1, 6, 3, 1);
 
         buttonModificar = new Button("Modificar");
         buttonModificar.setDefaultButton(true);
@@ -415,29 +422,35 @@ class ActualizarEmpleado {
             public void handle(ActionEvent event) {
                 if (textFieldNombre.getText().trim().length() != 0
                         && textFieldDireccion.getText().trim().length() != 0
-                        && textFieldTelefono.getText().trim().length() != 0) {
-                    EmpleadoController.getEmpleadoController().actualizar(empleado.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(), " ");
+                        && textFieldTelefono.getText().trim().length() != 0 
+                        && comboDepartamento.getSelectionModel().getSelectedItem() != null) {
+                    
+                    EmpleadoController.getEmpleadoController().actualizar(empleado.getId(), textFieldNombre.getText(), 
+                            textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString());
                     UIEmpleado.getUIEmpleado().actualizarDatosTabla();
-
+                    
 
                 } else {
-                    
-                    alert.setContentText("No puede dejar datos en blanco");
-                    alert.showAndWait();
+                    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                    alerta.setTitle("Error!");
+                    alerta.setHeaderText(null);
+                    alerta.setContentText("No puede dejar campos en blanco.");
+                    alerta.initStyle(StageStyle.UTILITY);
+                    alerta.showAndWait();
                 }
             }
         });
 
-        gridPane.add(buttonModificar, 0, 6);
+        gridPane.add(buttonModificar, 0, 7);
 
-        Button buttonCerrar = new Button("Cerrar");
+        buttonCerrar = new Button("Cerrar");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 UIEmpleado.getUIEmpleado().restarthBoxCRUD();
             }
         });
-        gridPane.add(buttonCerrar, 1, 6);
+        gridPane.add(buttonCerrar, 1, 7);
         gridPane.getStyleClass().add("gridPane");
         gridPane.setMinSize(200, 400);
 

@@ -38,17 +38,6 @@ public class EmpleadoController {
         }
         
     }
-    public void mostrar() {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] != null) {
-                System.out.println(array[i].getNombre());
-                System.out.println(array[i].getDireccion());
-                System.out.println(array[i].getTelefono());
-        
-            }
-        }
-    }
-    
     public void borrar(int id) {
         for (int i = 0; i < array.length; i++) {
             if( i == id ) {
@@ -71,21 +60,27 @@ public class EmpleadoController {
                 e.setDepartamento(departamento);
             }
         }
-        mostrar();
     }
     
-    public Empleado[] getBuscar(String nombre){
+    public Empleado[] buscar(String nombre){
         Empleado[] resultado = new Empleado[1000];
-        int a = 0;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < resultado.length; j++) {
-                if(array[i].getNombre().toUpperCase().contains(nombre.toUpperCase())){
-                    resultado[j] = array[i];
+        for (int i = 0; i < 1000; i++) {
+            if (array[i] != null) {
+                if (array[i].getNombre().toUpperCase().contains(nombre.toUpperCase())) {
+                    for (int j = 0; j < 1000; j++) {
+                        if (resultado[j] == null) {
+                            resultado[j] = array[i];
+                            break;
+                        }
+                    }
+        
                 }
             }
         }
-         return resultado;
-     }
+        return resultado;
+    }   
+    
+    
     public Empleado[] getArray() {
         return this.array;
     }
