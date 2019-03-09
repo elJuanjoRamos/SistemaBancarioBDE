@@ -27,12 +27,23 @@ public class Principal extends Application {
         EmpleadoController.getEmpleadoController().agregar("luis", "dir2", "tel", "Agencia");
         EmpleadoController.getEmpleadoController().agregar("pedro", "dir3", "tel", "Autobanco");
         
+        //AGENCIA
+        AgenciaController.getAgenciaController().agregar("1", "DIR1", "TEL", 1, 1, 0, 50.450);
+        AgenciaController.getAgenciaController().agregar("2", "DIR1", "TEL", 1, 1, 0, 50.450);
+        AgenciaController.getAgenciaController().agregar("3", "DIR1", "TEL", 1, 1, 0, 50.450);
+        AgenciaController.getAgenciaController().agregar("4", "DIR1", "TEL", 1, 1, 0, 50.450);
         
-        AgenciaController.getAgenciaController().agregar("BAM", "dir1", "tel1", 5, 5, 332.997);
-        AgenciaController.getAgenciaController().agregar("CRED", "dir2", "tel2", 15, 5, 15265.03);
-        AgenciaController.getAgenciaController().agregar("BAN", "dir3", "tel3", 11, 5, 998.03);
-        AgenciaController.getAgenciaController().agregar("BI", "dir4", "tel4", 9, 5, 50.03);
-        AgenciaController.getAgenciaController().agregar("FIC", "dir5", "tel5", 7, 5, 37.03);
+        
+        
+        
+        
+        
+        //AGENCIAAUTOBANCOS
+        AgenciaController.getAgenciaController().agregar("A", "dir1", "tel1", 5, 5, 1, 332.997);
+        AgenciaController.getAgenciaController().agregar("B", "dir2", "tel2", 15, 5, 2, 15265.03);
+        AgenciaController.getAgenciaController().agregar("C", "dir3", "tel3", 11, 5, 3, 998.03);
+        AgenciaController.getAgenciaController().agregar("D", "dir4", "tel4", 9, 5, 4, 50.03);
+        AgenciaController.getAgenciaController().agregar("E", "dir5", "tel5", 7, 5, 5, 37.03);
         
         
         //AccessWindow.getAccessWindow().getGridPane(primaryStage);

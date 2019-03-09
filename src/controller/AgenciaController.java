@@ -6,6 +6,7 @@
 package controller;
 
 import beans.AgenciaBancaria;
+import java.util.InputMismatchException;
 
 /**
  *
@@ -28,11 +29,11 @@ public class AgenciaController {
         return instance;
     }
     
-    public void agregar(String nombre, String direccion, String telefono, int noCajas, int escritorios, double efectivo) {
+    public void agregar(String nombre, String direccion, String telefono, int noCajas, int escritorios, int autob, double efectivo) {
         
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                array[i] = new AgenciaBancaria(nombre, direccion, telefono, i, noCajas, escritorios, efectivo);
+                array[i] = new AgenciaBancaria(nombre, direccion, telefono, i, noCajas, escritorios,autob, efectivo);
                 break;
             }
         }
@@ -50,7 +51,7 @@ public class AgenciaController {
             } 
         }
     }
-    public void actualizar(int id, String nombre, String direccion, String telefono, int noCajas, int escritorios, double efectivo) {
+    public void actualizar(int id, String nombre, String direccion, String telefono, int noCajas, int escritorios, int auto, double efectivo) {
         for (int i = 0; i < array.length; i++) {
             if (i == id) {
                 AgenciaBancaria c = array[i];
@@ -59,6 +60,7 @@ public class AgenciaController {
                 c.setTelefono(telefono);
                 c.setEscritorios(escritorios);
                 c.setNoCajas(noCajas);
+                c.setAuto(auto);
                 c.setEfectivo(efectivo);
             }
         }
@@ -84,17 +86,66 @@ public class AgenciaController {
     
     
     public AgenciaBancaria[] getArray() {
-        return this.array;
-    }
-    public boolean buscarAgencia(String nombre){
-            boolean esDefinido = false;
-            for(AgenciaBancaria a : array){
-                if(!nombre.equalsIgnoreCase(a.getNombre())){
-                    esDefinido = true;
-                    System.out.println("No existe");
+        AgenciaBancaria[] resultado = new AgenciaBancaria[1000];
+        for (int i = 0; i < 1000; i++) {
+            if (array[i] != null) {
+                if (array[i].getAuto()== 0) {
+                    for (int j = 0; j < 1000; j++) {
+                        if (resultado[j] == null) {
+                            resultado[j] = array[i];
+                            break;
+                        }
+                    }        
                 }
             }
-            System.out.println("existe");
-            return esDefinido;
         }
+        return resultado;
+    }
+    
+    public AgenciaBancaria[] getArray2() {
+        AgenciaBancaria[] resultado = new AgenciaBancaria[1000];
+        for (int i = 0; i < 1000; i++) {
+            if (array[i] != null) {
+                if (array[i].getAuto() != 0) {
+                    for (int j = 0; j < 1000; j++) {
+                        if (resultado[j] == null) {
+                            resultado[j] = array[i];
+                            break;
+                        }
+                    }        
+                }
+            }
+        }
+        return resultado;    }
+    
+    public boolean buscarAgencia(String nombre){
+        
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
+                if (nombre.equalsIgnoreCase(array[i].getNombre())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean esNumero(String cadena, String cadena2, String cadena3, String cadena4) {
+        
+        
+        boolean resultado;
+        
+        try {
+            Integer.parseInt(cadena);
+            Integer.parseInt(cadena2);
+            Double.parseDouble(cadena3);
+            Double.parseDouble(cadena4);
+            resultado = true;
+        } catch (NumberFormatException e) {
+            resultado = false;
+        } catch (InputMismatchException a) {
+            resultado = false;
+        }
+        
+        return resultado;
+    }
 }

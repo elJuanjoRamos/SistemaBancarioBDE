@@ -14,7 +14,6 @@ public class ClienteController {
     private static final ClienteController ClienteController = new ClienteController();
     
     private Cliente[] array = new Cliente[1000];
-    private Cliente[] arrayAux = new Cliente[1000];
     
     
     private ClienteController() {

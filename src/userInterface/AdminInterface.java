@@ -66,10 +66,18 @@ public class AdminInterface {
         tab2.setContent(UIAgencia.getAgencia().getViewAgencia());
         tab2.setClosable(false);
         
+        Tab tab3 = new Tab();
+        tab3.setText("Agencias AutoBanco");
+        HBox hbox3 = new HBox();
+        hbox3.getChildren().add(new Label("Agencias con AutoBanco"));
+        hbox3.setAlignment(Pos.CENTER);
+        tab3.setContent(UIAgenciaAutobanco.getAgencia().getViewAgencia());
+        tab3.setClosable(false);
         
         
         
-        tabPane.getTabs().addAll(tab2, tab1, tab);
+        
+        tabPane.getTabs().addAll(tab3,tab2, tab1, tab);
 
         tabPane.setSide(Side.LEFT);
         borderPane.prefHeightProperty().bind(scene.heightProperty());

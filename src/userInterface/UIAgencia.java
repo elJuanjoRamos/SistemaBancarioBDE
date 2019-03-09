@@ -32,11 +32,13 @@ import java.util.Optional;
 import javafx.scene.control.ButtonType;
 
 import beans.*;
+
 /**
  *
  * @author Juan José Ramos
  */
 public class UIAgencia {
+
     private static final UIAgencia CRUDAgenciaBancaria = new UIAgencia();
 
     private UIAgencia() {
@@ -90,14 +92,14 @@ public class UIAgencia {
 
         textFieldBuscar = new TextField();
         textFieldBuscar.setPromptText("Buscar AgenciaBancaria");
-        
+
         buttonBuscar = new Button("Bucar");
         buttonBuscar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (textFieldBuscar.getText().length() != 0) {
                     actualizarTablabusqueda(textFieldBuscar.getText().trim());
-                } 
+                }
             }
         });
 
@@ -111,7 +113,6 @@ public class UIAgencia {
         });
         hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar, buttonReestablecer);
         gridPane.add(hBoxBuscar, 0, 1);
-        
 
         buttonNuevo = new Button("Nuevo");
         buttonNuevo.setOnAction(new EventHandler<ActionEvent>() {
@@ -128,6 +129,7 @@ public class UIAgencia {
             public void handle(ActionEvent event) {
                 if (tableView.getSelectionModel().getSelectedItem() != null) {
                     hBoxCRUD.getChildren().clear();
+                    
                     hBoxCRUD.getChildren().addAll(gridPane, Animacion.getAnimatedGridPane().getAnimatedGridPane(ActualizarAgencia.getActualizarAgencia()
                             .getGridPane(tableView.getSelectionModel().getSelectedItem())));
                     tableView.getSelectionModel().clearSelection();
@@ -135,7 +137,7 @@ public class UIAgencia {
                 } else {
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Information");
-                    alert.setHeaderText("No ha seleccionado ningun AgenciaBancaria para modificar");
+                    alert.setHeaderText("No ha seleccionado ninguna Agencia para modificar");
                     alert.initStyle(StageStyle.UTILITY);
                     alert.showAndWait();
                 }
@@ -150,8 +152,8 @@ public class UIAgencia {
                 if (tableView.getSelectionModel().getSelectedItem() != null) {
                     Alert alert = new Alert(AlertType.CONFIRMATION);
                     alert.initStyle(StageStyle.DECORATED);
-                    alert.setTitle("Materialogo de Cofirmacion");
-                    alert.setHeaderText("Segudo Que Desea Eliminar ");
+                    alert.setTitle("Cofirmacion");
+                    alert.setHeaderText("Seguro que desea eliminar?");
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.get() == ButtonType.OK) {
@@ -195,13 +197,11 @@ public class UIAgencia {
         tableColumnDireccionAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         tableColumnDireccionAgenciaBancaria.setMinWidth(100);
 
-        
         tableColumnNoCajasAgenciaBancaria = new TableColumn<>();
         tableColumnNoCajasAgenciaBancaria.setText("No Cajas");
         tableColumnNoCajasAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("noCajas"));
         tableColumnNoCajasAgenciaBancaria.setMinWidth(60);
 
-        
         tableColumnNoEscritoriosAgenciaBancaria = new TableColumn<>();
         tableColumnNoEscritoriosAgenciaBancaria.setText("Escritorios SEalCl");
         tableColumnNoEscritoriosAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("escritorios"));
@@ -212,14 +212,13 @@ public class UIAgencia {
         tableColumnEfectivoAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("efectivo"));
         tableColumnEfectivoAgenciaBancaria.setMinWidth(80);
 
-        
         tableView = new TableView<>();
         tableView.setItems(getObservableList());
 
-        tableView.getColumns().addAll(tableColumnIdAgenciaBancaria, tableColumnNombreAgenciaBancaria, 
-                                      tableColumnTelefonoAgenciaBancaria, tableColumnDireccionAgenciaBancaria,
-                                      tableColumnNoCajasAgenciaBancaria, tableColumnNoEscritoriosAgenciaBancaria, 
-                                      tableColumnEfectivoAgenciaBancaria);
+        tableView.getColumns().addAll(tableColumnIdAgenciaBancaria, tableColumnNombreAgenciaBancaria,
+                tableColumnTelefonoAgenciaBancaria, tableColumnDireccionAgenciaBancaria,
+                tableColumnNoCajasAgenciaBancaria, tableColumnNoEscritoriosAgenciaBancaria,
+                tableColumnEfectivoAgenciaBancaria);
         tableView.setMinSize(730, 150);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -249,10 +248,11 @@ public class UIAgencia {
         actualizarDatos();
         tableView.setItems(observableList);
     }
+
     public void actualizarDatos() {
         observableList.clear();
         observableList = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getArray());
-        
+
     }
 
     public void actualizarTablabusqueda(String nombre) {
@@ -274,13 +274,22 @@ class CrearAgencia {
     private TextField textFieldNombre;
     private Label labelDireccion;
     private TextField textFieldDireccion;
-    private TextField textFieldTelefono;
     private Label labelTelefono;
+    private TextField textFieldTelefono;
+
+    private Label labelcajas;
+    private TextField textFieldcajas;
+
+    private Label labelescritorio;
+    private TextField textFieldescritorio;
+
+    private Label labelefectivo;
+    private TextField textFieldefectivo;
+
     private Button buttonAgregar;
     private Button buttonCerrar;
 
     private CrearAgencia() {
-        //updateObservableListGrado();
     }
 
     public static CrearAgencia getCrearAgencia() {
@@ -297,29 +306,47 @@ class CrearAgencia {
         textTitle.setFont(Font.font("Montserrat", FontWeight.BOLD, 20));
         gridPane.add(textTitle, 0, 0, 3, 1);
 
-        labelNombre = new Label("Nombre: ");
+        labelNombre = new Label("Nombre Agencia: ");
         gridPane.add(labelNombre, 0, 3);
 
         textFieldNombre = new TextField();
         gridPane.add(textFieldNombre, 1, 3, 2, 1);
 
-        labelDireccion = new Label("Direccion: ");
+        labelDireccion = new Label("Direccion Agencia: ");
         gridPane.add(labelDireccion, 0, 4);
 
         textFieldDireccion = new TextField();
         gridPane.add(textFieldDireccion, 1, 4, 2, 1);
 
-        labelTelefono = new Label("Telefono: ");
+        labelTelefono = new Label("Telefono Agencia: ");
         gridPane.add(labelTelefono, 0, 5);
 
         textFieldTelefono = new TextField();
         gridPane.add(textFieldTelefono, 1, 5, 2, 1);
 
-        Button buttonCerrar = new Button("Cerrar");
+        labelcajas = new Label("Cajas de la Agencia: ");
+        gridPane.add(labelcajas, 0, 6);
+
+        textFieldcajas = new TextField();
+        gridPane.add(textFieldcajas, 1, 6, 2, 1);
+
+        labelescritorio = new Label("Escitorios Servicio al Cliente: ");
+        gridPane.add(labelescritorio, 0, 7);
+
+        textFieldescritorio = new TextField();
+        gridPane.add(textFieldescritorio, 1, 7, 2, 1);
+
+        labelefectivo = new Label("Efectivo neto: ");
+        gridPane.add(labelefectivo, 0, 8);
+
+        textFieldefectivo = new TextField();
+        gridPane.add(textFieldefectivo, 1, 8, 2, 1);
+
+        buttonCerrar = new Button("Cerrar");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-//                UIAgencia.getCRUDAgencia().restarthBoxCRUD();
+                UIAgencia.getAgencia().restarthBoxCRUD();
             }
         });
 
@@ -328,13 +355,40 @@ class CrearAgencia {
             @Override
             public void handle(ActionEvent event) {
 
-/*                if (textFieldNombre.getText().length() != 0 && textFieldDireccion.getText().length() != 0 && textFieldTelefono.getText().length() != 0) {
-                    AgenciaController.getAgenciaController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText());
-                    textFieldNombre.clear();
-                    textFieldDireccion.clear();
-                    textFieldTelefono.clear();
+                if (textFieldNombre.getText().length() != 0 && textFieldDireccion.getText().length() != 0 && textFieldTelefono.getText().length() != 0
+                        && textFieldcajas.getText().length() != 0 && textFieldescritorio.getText().length() != 0 && textFieldefectivo.getText().length() != 0) {
 
-                    UIAgencia.getCRUDAgencia().actualizarDatosTabla();
+                    if (AgenciaController.getAgenciaController().esNumero(textFieldcajas.getText(), textFieldescritorio.getText(), textFieldefectivo.getText(), "0")) {
+
+                        if (AgenciaController.getAgenciaController().buscarAgencia(textFieldNombre.getText())) {
+                            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                            alerta.setTitle("Information!");
+                            alerta.setHeaderText(null);
+                            alerta.setContentText("Ya existe una agencia o agencia con autobanco asociada con ese nombre");
+                            alerta.initStyle(StageStyle.UTILITY);
+                            alerta.showAndWait();
+                        } else {
+
+                            AgenciaController.getAgenciaController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
+                                    Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()),0, Double.parseDouble(textFieldefectivo.getText()));
+                            textFieldNombre.clear();
+                            textFieldDireccion.clear();
+                            textFieldTelefono.clear();
+                            textFieldcajas.clear();
+                            textFieldescritorio.clear();
+                            textFieldefectivo.clear();
+                            UIAgencia.getAgencia().actualizarDatosTabla();
+
+                        }
+
+                    } else {
+                        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                        alerta.setTitle("Error!");
+                        alerta.setHeaderText(null);
+                        alerta.setContentText("No puede introducir letras donde van valores numericos");
+                        alerta.initStyle(StageStyle.UTILITY);
+                        alerta.showAndWait();
+                    }
                 } else {
                     Alert alerta = new Alert(Alert.AlertType.INFORMATION);
                     alerta.setTitle("Error!");
@@ -344,13 +398,12 @@ class CrearAgencia {
                     alerta.showAndWait();
 
                 }
-                UIAgencia.getCRUDAgencia().actualizarDatosTabla();
-*/
+
             }
         });
 
-        gridPane.add(buttonAgregar, 1, 7);
-        gridPane.add(buttonCerrar, 2, 7);
+        gridPane.add(buttonAgregar, 1, 9);
+        gridPane.add(buttonCerrar, 2, 9);
         gridPane.setMinSize(200, 400);
         gridPane.getStyleClass().add("gridPane");
 
@@ -370,11 +423,22 @@ class ActualizarAgencia {
     private Label labelTelefono;
     private TextField textFieldTelefono;
     private Button buttonModificar;
+
+    private Label labelcajas;
+    private TextField textFieldcajas;
+
+    private Label labelescritorio;
+    private TextField textFieldescritorio;
+
+    private Label labelefectivo;
+    private TextField textFieldefectivo;
+
+    private Button buttonAgregar;
+    private Button buttonCerrar;
+
     private Alert alert = new Alert(AlertType.INFORMATION);
 
     private ActualizarAgencia() {
-        alert.setTitle("Informacion");
-        alert.setHeaderText(null);
     }
 
     public static synchronized ActualizarAgencia getActualizarAgencia() {
@@ -387,60 +451,107 @@ class ActualizarAgencia {
         gridPane.setHgap(10);
         gridPane.setPadding(new Insets(25, 25, 25, 25));
 
-        textTitle = new Text("Modificar");
-        textTitle.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+        textTitle = new Text("Actualizar Datos");
+        textTitle.setFont(Font.font("Montserrat", FontWeight.BOLD, 20));
         gridPane.add(textTitle, 0, 0, 3, 1);
 
-        labelNombre = new Label("Nombre: ");
+        labelNombre = new Label("Nombre Agecia: ");
         gridPane.add(labelNombre, 0, 3);
 
         textFieldNombre = new TextField(Agencia.getNombre());
         gridPane.add(textFieldNombre, 1, 3, 3, 1);
 
-        labelDireccion = new Label("Direccion: ");
+        labelDireccion = new Label("Direccion Agencia: ");
         gridPane.add(labelDireccion, 0, 4);
 
         textFieldDireccion = new TextField(Agencia.getDireccion());
         gridPane.add(textFieldDireccion, 1, 4, 3, 1);
 
-        labelDireccion = new Label("Telefono: ");
-        gridPane.add(labelDireccion, 0, 5);
+        labelTelefono = new Label("Telefono Agencia: ");
+        gridPane.add(labelTelefono, 0, 5);
 
-        labelDireccion = new Label("Telefono: ");
-        gridPane.add(labelDireccion, 0, 5);
         textFieldTelefono = new TextField(Agencia.getTelefono());
         gridPane.add(textFieldTelefono, 1, 5, 3, 1);
 
+        
+        labelcajas = new Label("Cajas de la Agencia: ");
+        gridPane.add(labelcajas, 0, 6);
+
+        textFieldcajas = new TextField(String.valueOf(Agencia.getNoCajas()));
+        gridPane.add(textFieldcajas, 1, 6, 3, 1);
+
+        labelescritorio = new Label("Escitorios Servicio al Cliente: ");
+        gridPane.add(labelescritorio, 0, 7);
+
+        textFieldescritorio = new TextField(String.valueOf(Agencia.getEscritorios()));
+        gridPane.add(textFieldescritorio, 1, 7, 3, 1);
+
+        labelefectivo = new Label("Efectivo neto: ");
+        gridPane.add(labelefectivo, 0, 8);
+
+        textFieldefectivo = new TextField(String.valueOf(Agencia.getEfectivo()));
+        gridPane.add(textFieldefectivo, 1, 8, 3, 1);
+
+        
+        
         buttonModificar = new Button("Modificar");
         buttonModificar.setDefaultButton(true);
         buttonModificar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                /*if (textFieldNombre.getText().trim().length() != 0
-                        && textFieldDireccion.getText().trim().length() != 0
-                        && textFieldTelefono.getText().trim().length() != 0) {
-                    AgenciaController.getAgenciaController().actualizar(Agencia.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText());
-                    UIAgencia.getCRUDAgencia().actualizarDatosTabla();
+                
+                if (textFieldNombre.getText().length() != 0 && textFieldDireccion.getText().length() != 0 && textFieldTelefono.getText().length() != 0
+                        && textFieldcajas.getText().length() != 0 && textFieldescritorio.getText().length() != 0 && textFieldefectivo.getText().length() != 0) {
 
+                    if (AgenciaController.getAgenciaController().esNumero(textFieldcajas.getText(), textFieldescritorio.getText(), textFieldefectivo.getText(), "0" )) {
 
+                        if (AgenciaController.getAgenciaController().buscarAgencia(textFieldNombre.getText())) {
+                            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                            alerta.setTitle("Information!");
+                            alerta.setHeaderText(null);
+                            alerta.setContentText("Ya existe una agencia o agencia con autobanco asociada con ese nombre");
+                            alerta.initStyle(StageStyle.UTILITY);
+                            alerta.showAndWait();
+                        } else {
+
+                            AgenciaController.getAgenciaController().actualizar(Agencia.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
+                                    Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()), 0, Double.parseDouble(textFieldefectivo.getText()));
+                            UIAgencia.getAgencia().actualizarDatosTabla();
+                             UIAgencia.getAgencia().restarthBoxCRUD();
+                        }
+
+                    } else {
+                        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                        alerta.setTitle("Error!");
+                        alerta.setHeaderText(null);
+                        alerta.setContentText("No puede introducir letras donde van valores numericos");
+                        alerta.initStyle(StageStyle.UTILITY);
+                        alerta.showAndWait();
+                    }
                 } else {
-                    
-                    alert.setContentText("No puede dejar datos en blanco");
-                    alert.showAndWait();
-                }*/
+                    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+                    alerta.setTitle("Error!");
+                    alerta.setHeaderText(null);
+                    alerta.setContentText("No puede dejar campos en blanco.");
+                    alerta.initStyle(StageStyle.UTILITY);
+                    alerta.showAndWait();
+
+                }
+
             }
+
         });
 
-        gridPane.add(buttonModificar, 0, 6);
+        gridPane.add(buttonModificar, 1, 9);
 
         Button buttonCerrar = new Button("Cerrar");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-               // UIAgencia.getCRUDAgencia().restarthBoxCRUD();
+                UIAgencia.getAgencia().restarthBoxCRUD();
             }
         });
-        gridPane.add(buttonCerrar, 1, 6);
+        gridPane.add(buttonCerrar, 2, 9);
         gridPane.getStyleClass().add("gridPane");
         gridPane.setMinSize(200, 400);
 
