@@ -116,7 +116,8 @@ public class AgenciaController {
                 }
             }
         }
-        return resultado;    }
+        return resultado;    
+    }
     
     public boolean buscarAgencia(String nombre){
         
@@ -129,9 +130,8 @@ public class AgenciaController {
         }
         return false;
     }
+    
     public boolean esNumero(String cadena, String cadena2, String cadena3, String cadena4) {
-        
-        
         boolean resultado;
         
         try {
