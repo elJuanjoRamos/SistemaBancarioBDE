@@ -42,8 +42,8 @@ public class Principal extends Application {
     @Override
     public void start(Stage primaryStage) {
         
- /*       
-        hBox = new HBox();
+        
+       /* hBox = new HBox();
         hBox2 = new HBox(); 
         
         hBoxButtons = new HBox(10);
@@ -79,7 +79,7 @@ public class Principal extends Application {
         gridPane2.setAlignment(Pos.CENTER);
         
         view.setImage(image);
-        view.setFitHeight(500);
+        view.setFitHeight(475);
         view.setFitWidth(800);
         gridPane2.add(view, 0, 0);
         
@@ -99,9 +99,9 @@ public class Principal extends Application {
         });
         primaryStage.setScene(scene);
         primaryStage.show();
-*/       
+      */
         
-                ClienteController.getClienteController().agregar("1", "dir1", "tel");
+        ClienteController.getClienteController().agregar("1", "dir1", "tel");
         ClienteController.getClienteController().agregar("2", "dir2", "tel");
         ClienteController.getClienteController().agregar("3", "dir3", "tel");
         
@@ -126,8 +126,8 @@ public class Principal extends Application {
         AgenciaController.getAgenciaController().agregar("C", "dir3", "tel3", 11, 5, 3, 998.03);
         AgenciaController.getAgenciaController().agregar("D", "dir4", "tel4", 9, 5, 4, 50.03);
         AgenciaController.getAgenciaController().agregar("E", "dir5", "tel5", 7, 5, 5, 37.03);
-        AdminInterface.getAdminInterface().start(primaryStage);
-        
+        //AdminInterface.getAdminInterface().start(primaryStage);
+        AccessWindow.getAccessWindow().getGridPane(primaryStage);
     }
 
     /**

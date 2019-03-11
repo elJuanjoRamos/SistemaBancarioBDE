@@ -44,11 +44,12 @@ public class AdminInterface {
         Tab tab = new Tab();
         tab.setText("Clientes");
         HBox hbox = new HBox();
+          
         hbox.getChildren().add(new Label("Clientes"));
         hbox.setAlignment(Pos.CENTER);
         tab.setContent(UICliente.getCRUDCliente().getViewCliente());
         tab.setClosable(false);
-
+        tab.setId("menuBar");
         
         Tab tab1 = new Tab();
         tab1.setText("Empleados");

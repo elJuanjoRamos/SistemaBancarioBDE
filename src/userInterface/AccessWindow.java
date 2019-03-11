@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -28,16 +30,11 @@ import javafx.stage.Stage;
  */
 public class AccessWindow {
     private static final AccessWindow AccessWindow = new AccessWindow();
+    Principal p = new Principal();
+
     private GridPane grid;
-    private Text textTitle;
-    private Label labelNombre;
-    private TextField textFieldNombre;
-    private Label labelClave;
     private TextField userTextField;
-    private PasswordField passwordFieldClave;
-    
     private PasswordField pwBox;
-    private Button buttonAcceder;
     private Text actiontarget;
 
     private AccessWindow() {
@@ -48,36 +45,35 @@ public class AccessWindow {
     }
 
     public GridPane getGridPane(Stage primaryStage) {
+        Image image = new Image("/resources/BID2.png");
+        ImageView view = new ImageView();
+        view.setImage(image);
         grid = new GridPane();
+        grid.setId("gridLogin");
         grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
+        grid.setHgap(20);
+        grid.setVgap(20);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        Text scenetitle = new Text("Bienvenido");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid.add(scenetitle, 0, 0, 2, 1);
-
-        Label userName = new Label("User Name:"); 
-        grid.add(userName, 0, 1);
-
+        grid.add(view, 1, 0);
+        
+        
         userTextField = new TextField("admin");
-        grid.add(userTextField, 1, 1);
+        userTextField.setPromptText("User Name");
+        grid.add(userTextField, 1, 2);
 
-        Label pw = new Label("Password:");
-        grid.add(pw, 0, 2);
 
         pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
+        pwBox.setPromptText("Password");
+        grid.add(pwBox, 1, 3);
         
         Button btn = new Button("Sign in");
+        btn.setId("btnAzulA");
         HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, 6);
-        
+        hbBtn.setId("hboxLogin");
         actiontarget = new Text();
-        grid.add(actiontarget, 1, 5);
+        grid.add(actiontarget, 1, 4);
+
         btn.setOnAction(new EventHandler<ActionEvent>() {
               @Override
                public void handle(ActionEvent e) {
@@ -88,36 +84,51 @@ public class AccessWindow {
                       AdminInterface.getAdminInterface().start(primaryStage);
                   } else {
                       actiontarget.setFill(Color.FIREBRICK);
-                      actiontarget.setText("Usuario o Contraseña Invalidos");
+                      actiontarget.setText("Usuario o password Invalidos");
                   }
                   
             }
         });
-        btn.setDefaultButton(true);
-        grid.setId("gridLogin");
+
+        Button btn1 = new Button("Regresar");
+        btn1.setId("btnRojoR");
+        btn1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e ) {
+                p.start(primaryStage);
+            }
+          }
+        );
         
         
-        Scene scene = new Scene(grid, 360, 360);
+        hbBtn.setAlignment(Pos.BASELINE_RIGHT);
+        hbBtn.getChildren().addAll(btn, btn1);
+        grid.add(hbBtn, 1, 5);
+        
+        
+        Scene scene = new Scene(grid, 800, 600);
         scene.getStylesheets().addAll("/resources/root.css");
         
         primaryStage.setTitle("Access Window");
         primaryStage.setScene(scene);
         primaryStage.show();
         
-        
-        
         return grid;
     }
     
     private Boolean autenticar(String nombre, String clave) {
-        if (esNumero(clave)) {
-            if (nombre.equals("admin") && Integer.parseInt(clave) ==  12345) {
-                return true;
+        if(nombre.length() != 0 && clave.length() != 0) {
+            if (esNumero(clave)) {
+                if (nombre.equals("admin") && Integer.parseInt(clave) ==  12345) {
+                    return true;
+                }
+            } else {
+                return false;
             }
+            return false;
         } else {
             return false;
         }
-        return false;
     }
     
     public static boolean esNumero(String cadena) {
