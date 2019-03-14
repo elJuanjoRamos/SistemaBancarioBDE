@@ -78,9 +78,19 @@ public class AdminInterface {
         
         
         
-        tabPane.getTabs().addAll(tab3,tab2, tab1, tab);
+        
+        Tab tab4 = new Tab();
+        tab4.setText("Cajeros");
+        HBox hbox4 = new HBox();
+        hbox4.getChildren().add(new Label("Agencias con AutoBanco"));
+        hbox4.setAlignment(Pos.CENTER);
+        tab4.setContent(UICajero.getCRUDCajero().getViewCajero());
+        tab4.setClosable(false);
+        
+        
+        tabPane.getTabs().addAll(tab4, tab3,tab2, tab1, tab);
 
-        tabPane.setSide(Side.LEFT);
+        tabPane.setSide(Side.TOP);
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());
 
@@ -90,7 +100,5 @@ public class AdminInterface {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
-
 }

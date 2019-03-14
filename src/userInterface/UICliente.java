@@ -31,6 +31,7 @@ import javafx.stage.StageStyle;
 import javafx.scene.control.Alert.AlertType;
 import java.util.Optional;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -90,6 +91,7 @@ public class UICliente {
         textFieldBuscar.setPromptText("Buscar cliente");
         
         buttonBuscar = new Button("Bucar");
+        buttonBuscar.setId("btnVerdeV");
         buttonBuscar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -100,6 +102,7 @@ public class UICliente {
         });
 
         buttonReestablecer = new Button("Reestablecer");
+        buttonReestablecer.setId("btnVerdeV");
         buttonReestablecer.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -112,6 +115,9 @@ public class UICliente {
         
 
         buttonNuevo = new Button("Nuevo");
+        buttonNuevo.setId("btnAzulA");
+        buttonNuevo.setGraphic(new ImageView("/resources/1.png"));
+        
         buttonNuevo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -120,15 +126,19 @@ public class UICliente {
             }
         });
 
+        
         buttonModificar = new Button("Modificar");
+        buttonModificar.setId("btnNaranja");
+        buttonModificar.setGraphic(new ImageView("/resources/3.png"));
+        
         buttonModificar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (tableView.getSelectionModel().getSelectedItem() != null) {
                     hBoxCRUD.getChildren().clear();
-                    hBoxCRUD.getChildren().addAll(gridPane, Animacion.getAnimatedGridPane().getAnimatedGridPane(ActualizarCliente.getActualizarCliente()
-                            .getGridPane(tableView.getSelectionModel().getSelectedItem())));
+                    hBoxCRUD.getChildren().addAll(gridPane, Actualizar.getActualizar().getGridPane(tableView.getSelectionModel().getSelectedItem()));
                     tableView.getSelectionModel().clearSelection();
+                    
                     actualizarDatosTabla();
                 } else {
                     Alert alert = new Alert(AlertType.INFORMATION);
@@ -142,6 +152,9 @@ public class UICliente {
         });
 
         buttonEliminar = new Button("Eliminar");
+        buttonEliminar.setId("btnRojoR");
+        buttonEliminar.setGraphic(new ImageView("/resources/2.png"));
+        
         buttonEliminar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -172,7 +185,7 @@ public class UICliente {
 
         hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar,
                 buttonEliminar);
-        gridPane.add(hBoxButtons, 0, 2);
+        gridPane.add(hBoxButtons, 0, 4);
 
         tableColumnIdCliente = new TableColumn<>();
         tableColumnIdCliente.setText("ID");
@@ -210,7 +223,7 @@ public class UICliente {
             }
         });
 
-        gridPane.add(tableView, 0, 3, 2, 1);
+        gridPane.add(tableView, 0, 7, 2, 1);
 
         hBoxCRUD.getChildren().add(gridPane);
         hBoxCRUD.setAlignment(Pos.CENTER_LEFT);
@@ -241,6 +254,10 @@ public class UICliente {
             actualizarDatosTabla();
         }
     }
+    
+    public void clientes(Cliente c){
+        System.out.println(c.getNombre());
+    }
 }
 
 class CrearCliente {
@@ -258,7 +275,6 @@ class CrearCliente {
     private Button buttonCerrar;
 
     private CrearCliente() {
-        //updateObservableListGrado();
     }
 
     public static CrearCliente getCrearCliente() {
@@ -294,6 +310,7 @@ class CrearCliente {
         gridPane.add(textFieldTelefono, 1, 5, 2, 1);
 
         Button buttonCerrar = new Button("Cerrar");
+        buttonCerrar.setId("btnRojoR");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -302,6 +319,7 @@ class CrearCliente {
         });
 
         buttonAgregar = new Button("Agregar");
+        buttonAgregar.setId("btnVerdeV");
         buttonAgregar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -336,9 +354,9 @@ class CrearCliente {
     }
 }
 
-class ActualizarCliente {
+class Actualizar {
 
-    private static final ActualizarCliente ActualizarCliente = new ActualizarCliente();
+    private static final Actualizar Actualizar = new Actualizar();
     private GridPane gridPane;
     private Text textTitle;
     private Label labelNombre;
@@ -350,16 +368,16 @@ class ActualizarCliente {
     private Button buttonModificar;
     private Alert alert = new Alert(AlertType.INFORMATION);
 
-    private ActualizarCliente() {
-        alert.setTitle("Informacion");
-        alert.setHeaderText(null);
+    private Actualizar() {
+       
     }
 
-    public static synchronized ActualizarCliente getActualizarCliente() {
-        return ActualizarCliente;
+    public static Actualizar getActualizar() {
+        return Actualizar;
     }
 
     public GridPane getGridPane(Cliente cliente) {
+        System.out.println(cliente.getNombre());
         gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -380,16 +398,16 @@ class ActualizarCliente {
 
         textFieldDireccion = new TextField(cliente.getDireccion());
         gridPane.add(textFieldDireccion, 1, 4, 3, 1);
+        
+        
+        labelTelefono = new Label("Telefono: ");
+        gridPane.add(labelTelefono, 0, 5);
 
-        labelDireccion = new Label("Telefono: ");
-        gridPane.add(labelDireccion, 0, 5);
-
-        labelDireccion = new Label("Telefono: ");
-        gridPane.add(labelDireccion, 0, 5);
         textFieldTelefono = new TextField(cliente.getTelefono());
         gridPane.add(textFieldTelefono, 1, 5, 3, 1);
 
         buttonModificar = new Button("Modificar");
+        buttonModificar.setId("btnNaranja");
         buttonModificar.setDefaultButton(true);
         buttonModificar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -409,16 +427,17 @@ class ActualizarCliente {
             }
         });
 
-        gridPane.add(buttonModificar, 0, 6);
+        gridPane.add(buttonModificar, 1, 6);
 
         Button buttonCerrar = new Button("Cerrar");
+        buttonCerrar.setId("btnRojoR");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 UICliente.getCRUDCliente().restarthBoxCRUD();
             }
         });
-        gridPane.add(buttonCerrar, 1, 6);
+        gridPane.add(buttonCerrar, 2, 6);
         gridPane.getStyleClass().add("gridPane");
         gridPane.setMinSize(200, 400);
 

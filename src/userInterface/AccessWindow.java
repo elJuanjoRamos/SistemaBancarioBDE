@@ -119,7 +119,7 @@ public class AccessWindow {
     private Boolean autenticar(String nombre, String clave) {
         if(nombre.length() != 0 && clave.length() != 0) {
             if (esNumero(clave)) {
-                if (nombre.equals("admin") && Integer.parseInt(clave) ==  12345) {
+                if (nombre.equals("admin") && Integer.parseInt(clave) ==  123456) {
                     return true;
                 }
             } else {

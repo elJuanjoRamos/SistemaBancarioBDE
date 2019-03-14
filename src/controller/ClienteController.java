@@ -38,14 +38,12 @@ public class ClienteController {
         
     }
     public void borrar(int id) {
+        Cliente[] c = new Cliente[1100];
         for (int i = 0; i < array.length; i++) {
             if( i == id ) {
                 array[i] = null;
-                if (array[i + 1] != null ) {
-                    array[i] = array[i + 1];
-                    array[i + 1 ] = null;
-                    break;
-                }
+                
+                break;
             } 
         }
     }

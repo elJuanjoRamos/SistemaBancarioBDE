@@ -11,16 +11,16 @@ package beans;
  */
 public class Cajero {
     private int id;
-    private int transacciones;
-    private int efectivo;
+    private int transaccion;
+    private Double efectivo;
     private String ubicacion;
-    private Boolean estado;
+    private String estado;
     
     public Cajero(){}
     
-    public Cajero(int id,int transacciones,int efectivo,String ubicacion, Boolean estado) {
+    public Cajero(int id,int transacciones,Double efectivo,String ubicacion, String estado) {
         this.id = id;
-        this.transacciones = transacciones;
+        this.transaccion = transacciones;
         this.efectivo = efectivo;
         this.ubicacion = ubicacion;
         this.estado = estado;
@@ -31,15 +31,15 @@ public class Cajero {
         return this.id;
     }
     public int getTransaccion() {
-        return this.transacciones; 
+        return this.transaccion; 
     }
-    public int getEfectivo() {
+    public Double getEfectivo() {
         return this.efectivo; 
     }
     public String getUbicacion() {
         return this.ubicacion; 
     }
-    public Boolean getEstado() {
+    public String getEstado() {
         return this.estado; 
     }
     
@@ -48,15 +48,15 @@ public class Cajero {
         this.id = var;
     }
     public void setTransaccion(int var) {
-        this.transacciones = var;
+        this.transaccion = var;
     }
-    public void setEfectivo(int var) {
+    public void setEfectivo(Double var) {
         this.efectivo = var;
     }
     public void setUbicacion(String var) {
         this.ubicacion = var;
     }
-    public void setEstado(Boolean var) {
+    public void setEstado(String var) {
         this.estado = var;
     }
 }

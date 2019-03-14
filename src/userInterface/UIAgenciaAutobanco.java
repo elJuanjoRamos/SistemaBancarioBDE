@@ -32,6 +32,8 @@ import java.util.Optional;
 import javafx.scene.control.ButtonType;
 
 import beans.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -47,7 +49,10 @@ public class UIAgenciaAutobanco {
     public static UIAgenciaAutobanco getAgencia() {
         return UIAgenciaAutobanco;
     }
-
+    
+    ImageView view = new ImageView();
+    
+    
     private HBox hBoxCRUD;
     private GridPane gridPane;
     private Text textTitle;
@@ -95,6 +100,7 @@ public class UIAgenciaAutobanco {
         textFieldBuscar.setPromptText("Buscar AgenciaBancariaBancaria");
 
         buttonBuscar = new Button("Bucar");
+        buttonBuscar.setId("btnVerdeV");
         buttonBuscar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -104,7 +110,9 @@ public class UIAgenciaAutobanco {
             }
         });
 
+        
         buttonReestablecer = new Button("Reestablecer");
+        buttonReestablecer.setId("btnVerdeV");
         buttonReestablecer.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -116,6 +124,8 @@ public class UIAgenciaAutobanco {
         gridPane.add(hBoxBuscar, 0, 1);
 
         buttonNuevo = new Button("Nuevo");
+        buttonNuevo.setId("btnAzulA");
+        buttonNuevo.setGraphic(new ImageView("/resources/1.png"));
         buttonNuevo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -125,6 +135,9 @@ public class UIAgenciaAutobanco {
         });
 
         buttonModificar = new Button("Modificar");
+        buttonModificar.setId("btnNaranja");
+        buttonModificar.setGraphic(new ImageView("/resources/3.png"));
+        
         buttonModificar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -144,8 +157,11 @@ public class UIAgenciaAutobanco {
                 }
             }
         });
-
+        
         buttonEliminar = new Button("Eliminar");
+        buttonEliminar.setId("btnRojoR");
+        buttonEliminar.setGraphic(new ImageView("/resources/2.png"));
+        
         buttonEliminar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

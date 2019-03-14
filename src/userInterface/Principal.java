@@ -10,6 +10,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import controller.*;
+import beans.*;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -42,8 +44,8 @@ public class Principal extends Application {
     @Override
     public void start(Stage primaryStage) {
         
-        
-       /* hBox = new HBox();
+        /*
+        hBox = new HBox();
         hBox2 = new HBox(); 
         
         hBoxButtons = new HBox(10);
@@ -99,11 +101,11 @@ public class Principal extends Application {
         });
         primaryStage.setScene(scene);
         primaryStage.show();
-      */
-        
-        ClienteController.getClienteController().agregar("1", "dir1", "tel");
-        ClienteController.getClienteController().agregar("2", "dir2", "tel");
-        ClienteController.getClienteController().agregar("3", "dir3", "tel");
+      
+        */
+        ClienteController.getClienteController().agregar("pedro", "dir1", "tel");
+        ClienteController.getClienteController().agregar("raul", "dir2", "tel");
+        ClienteController.getClienteController().agregar("jenny", "dir3", "tel");
         
         EmpleadoController.getEmpleadoController().agregar("juan", "dir1", "tel", "Call-Center");
         EmpleadoController.getEmpleadoController().agregar("luis", "dir2", "tel", "Agencia");
@@ -126,8 +128,17 @@ public class Principal extends Application {
         AgenciaController.getAgenciaController().agregar("C", "dir3", "tel3", 11, 5, 3, 998.03);
         AgenciaController.getAgenciaController().agregar("D", "dir4", "tel4", 9, 5, 4, 50.03);
         AgenciaController.getAgenciaController().agregar("E", "dir5", "tel5", 7, 5, 5, 37.03);
-        //AdminInterface.getAdminInterface().start(primaryStage);
-        AccessWindow.getAccessWindow().getGridPane(primaryStage);
+        
+        //CAJEROS
+        CajeroController.getCajeroControler().agregar(153231.55, "Zona 1", "Disponible" );
+        CajeroController.getCajeroControler().agregar(56456.01, "Centro Comercial Miraflores", "Disponible" );
+        CajeroController.getCajeroControler().agregar(5456.21, "USAC", "No Disponible" );
+        CajeroController.getCajeroControler().agregar(556.12, "Avenida Petapa", "No Disponible" );
+        
+        
+        AdminInterface.getAdminInterface().start(primaryStage);
+        
+//AccessWindow.getAccessWindow().getGridPane(primaryStage);
     }
 
     /**
