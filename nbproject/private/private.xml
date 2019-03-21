@@ -6,11 +6,11 @@
             <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UIPagoServicios.java</file>
             <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/controller/CuentasCliente.java</file>
             <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/Principal.java</file>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/beans/Pago.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UIPagoPrestamo.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UIPagoTarjeta.java</file>
             <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UIOperacionesCliente.java</file>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UIEmpleado.java</file>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/controller/OperacionesClienteController.java</file>
             <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/controller/PagoController.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/controller/OperacionesClienteController.java</file>
         </group>
     </open-files>
 </project-private>

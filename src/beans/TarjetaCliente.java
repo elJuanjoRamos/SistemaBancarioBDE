@@ -62,6 +62,22 @@ public class TarjetaCliente {
     public Double getDeuda() {
         return deuda;
     }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public void setFechaVencimiento(String fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public void setCredito(Double credito) {
+        this.credito = credito;
+    }
+
+    public void setDeuda(Double deuda) {
+        this.deuda = deuda;
+    }
     
     
 

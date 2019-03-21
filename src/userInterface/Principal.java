@@ -164,9 +164,9 @@ public class Principal extends Application {
         
         
         /*Agregar Prestamos al cliente*/
-        OperacionesClienteController.getInstancia().agregarPrestamo(d, 456465.365, 45454.3);
+        OperacionesClienteController.getInstancia().agregarPrestamo(d, 100.00, 0.0);
         
-        OperacionesClienteController.getInstancia().agregarPrestamoCliente(0, 0);
+        OperacionesClienteController.getInstancia().agregarPrestamoCliente(0);
         
         
         /*Agregar cuentas a cliente */
@@ -189,14 +189,7 @@ public class Principal extends Application {
         CuentaMonetariaCliente[] b = CuentasCliente.getCuentasCliente().getArrayCMCliete(0);
         
         
-  
-        /*PrestamoCliente[] a = OperacionesClienteController.getInstancia().getArrayPrestamoCliente(0); 
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i].getAbono());
-            System.out.println(a[i].getFechaPrestamo());
-            System.out.println(a[i].getMonto());
-        }*/
-        
+ 
         
         
 

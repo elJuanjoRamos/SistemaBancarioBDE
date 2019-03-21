@@ -65,7 +65,7 @@ public class UIOperacionesCliente {
         gridPane.setHgap(20);
         gridPane.setVgap(20);
         gridPane.setPadding(new Insets(30, 30, 30, 30));
-        gridPane.setGridLinesVisible(true);
+        gridPane.setGridLinesVisible(false);
 
         /*------IMAGEN DEL PROFILE-------------*/
         ImageView view = new ImageView("/resources/profile.jpeg");
@@ -83,25 +83,25 @@ public class UIOperacionesCliente {
         t.setFont(Font.font("Montserrat", FontWeight.BOLD, 20));
 
         grid2.add(t, 0, 1, 3, 1);
-        grid2.setGridLinesVisible(true);
+        grid2.setGridLinesVisible(false);
 
-        Label label = getLabel("Nombre:");
-        Label label2 = getLabel("Juan fdsfdsfdsfdsfdsfdsdfsfsd");
+        Label label = getLabel("Nombre: ");
+        Label label2 = getLabel(cliente.getNombre());
 
         grid2.add(label, 0, 3);
         grid2.add(label2, 1, 3);
 
-        Label label3 = getLabel("Nombre:");
-        Label label4 = getLabel("Hola FDSFDSFDS");
+        Label label3 = getLabel("Direccion: ");
+        Label label4 = getLabel(cliente.getDireccion());
         grid2.add(label3, 0, 4);
         grid2.add(label4, 1, 4);
 
         Label label5 = getLabel("Telefono:");
-        Label label6 = getLabel("Hola FDSFDSFDS");
+        Label label6 = getLabel(cliente.getTelefono());
         grid2.add(label5, 0, 5);
         grid2.add(label6, 1, 5);
 
-        Label label7 = getLabel("Cantidad de cuentas:");
+        /*Label label7 = getLabel("Cantidad de cuentas:");
         Label label8 = getLabel("Hola FDSFDSFDS");
         grid2.add(label7, 0, 6);
         grid2.add(label8, 1, 6);
@@ -109,7 +109,7 @@ public class UIOperacionesCliente {
         Label label9 = getLabel("Cantidad Tarjetas:");
         Label label10 = getLabel("Hola FDSFDSFDS");
         grid2.add(label9, 0, 7);
-        grid2.add(label10, 1, 7);
+        grid2.add(label10, 1, 7);*/
 
         h.getChildren().addAll(grid2);
 
@@ -193,19 +193,27 @@ public class UIOperacionesCliente {
     private MenuBar getMenuBar(Stage primaryStage, Cliente cliente) {
         MenuBar menuBar = new MenuBar();
 
-        Menu menuArchivo = new Menu("REGRESAR");
+        Menu menuArchivo = new Menu("OPCIONES");
         Menu menuAgencia = new Menu("AGENCIA BANCARIA");
-
-        MenuItem menuItemSalir = new MenuItem("_Salir");
         
+        Menu menuPago = new Menu("Pagos");
+        MenuItem menuItemDeposito = new MenuItem("_Depositos");
+        
+        
+        MenuItem menuItemSalir = new MenuItem("_Salir");
         MenuItem menuItemRegresar = new MenuItem("_Regresar");
         
-        MenuItem menuItemAgencia = new MenuItem("_Pago de servicios");
+        
+        
+        MenuItem menuItemPagoServicio = new MenuItem("_Pago de Servicios");
+        MenuItem menuItemPagoTarjeta = new MenuItem("_Pago de Tarjetas");
+        MenuItem menuItemPagoPrestamo = new MenuItem("_Pago de Prestamos");
+        
+        
         
         menuItemRegresar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = new Stage();
                 UISeleccionCliente.getUI().start(primaryStage);
             }
         });
@@ -216,20 +224,45 @@ public class UIOperacionesCliente {
             }
         });
         
-        menuItemAgencia.setOnAction(new EventHandler<ActionEvent>() {
+        menuItemPagoServicio.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 UIPagoServicios.getUI().start(primaryStage, cliente);
             }
         });
         
+        menuItemPagoPrestamo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                UIPagoPrestamo.getUI().start(primaryStage, cliente);
+            }
+        });
         
+        menuItemPagoTarjeta.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                UIPagoTarjeta.getUI().start(primaryStage, cliente);
+            }
+        });
+        
+        menuItemDeposito.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //UIDeposito.getUI().start(primaryStage, cliente);
+            }
+          });
+        
+        menuPago.getItems().addAll(menuItemPagoServicio, menuItemPagoTarjeta, menuItemPagoPrestamo);
         menuArchivo.getItems().addAll(menuItemRegresar, menuItemSalir);
-        menuAgencia.getItems().addAll(menuItemAgencia);
+        menuAgencia.getItems().addAll(menuPago, menuItemDeposito);
         
         menuBar.getMenus().addAll(menuArchivo, menuAgencia);
         return menuBar;
+        
+        
     }
+    
+    
 }
 
 
@@ -328,7 +361,7 @@ class ObtenerPrestamoCliente {
     }
     
     
-    private TableColumn<PrestamoCliente, String> tableColumnNombre;
+    private TableColumn<PrestamoCliente, String> tableColumnId;
     private TableColumn<PrestamoCliente, String> tableColumnFecha;
     private TableColumn<PrestamoCliente, String> tableColumnCredito;
     private TableColumn<PrestamoCliente, String> tableColumnDeuda;
@@ -353,10 +386,10 @@ class ObtenerPrestamoCliente {
         gridPane.add(textTitle, 0, 0);
         
         
-        tableColumnNombre = new TableColumn<>();
-        tableColumnNombre.setText("ID");
-        tableColumnNombre.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnNombre.setMinWidth(60);
+        tableColumnId = new TableColumn<>();
+        tableColumnId.setText("ID");
+        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        tableColumnId.setMinWidth(60);
 
         
         
@@ -369,7 +402,7 @@ class ObtenerPrestamoCliente {
         
         tableColumnCredito = new TableColumn<>();
         tableColumnCredito.setText("Monto prestado Q");
-        tableColumnCredito.setCellValueFactory(new PropertyValueFactory<>("monto"));
+        tableColumnCredito.setCellValueFactory(new PropertyValueFactory<>("deuda"));
         tableColumnCredito.setMinWidth(200);
 
         tableColumnDeuda = new TableColumn<>();
@@ -385,7 +418,7 @@ class ObtenerPrestamoCliente {
         tableView = new TableView<>();
         tableView.setItems(getObservableList(idCliente));
 
-        tableView.getColumns().addAll(tableColumnNombre, tableColumnFecha, tableColumnCredito, tableColumnDeuda, tableColumnEstado);
+        tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnCredito, tableColumnDeuda, tableColumnEstado);
         tableView.setMinSize(100, 300);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         gridPane.add(tableView, 0, 3, 2, 1);
@@ -464,7 +497,7 @@ class ObtenerPagosCliente{
         tableColumnServicio = new TableColumn<>();
         tableColumnServicio.setText("Servicio");
         tableColumnServicio.setCellValueFactory(new PropertyValueFactory<>("servicio"));
-        tableColumnServicio.setMinWidth(90);
+        tableColumnServicio.setMinWidth(250);
         
         tableView = new TableView<>();
         tableView.setItems(getObservableList(idCliente));
@@ -477,7 +510,7 @@ class ObtenerPagosCliente{
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(700, 600);
+        hBoxVista.setMinSize(1000, 600);
         return hBoxVista;
         
     }

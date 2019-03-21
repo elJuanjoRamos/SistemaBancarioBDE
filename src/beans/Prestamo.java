@@ -17,16 +17,18 @@ public class Prestamo {
     private Double monto;
     private Double abono;
     private String estado;
+    private String codigo;
     
     public Prestamo() {
     }
 
-    public Prestamo(int id, Date fechaPrestamo, Double monto, Double abono, String estado) {
+    public Prestamo(int id, Date fechaPrestamo, Double monto, Double abono, String estado, String codigo) {
         this.id = id;
         this.fechaPrestamo = fechaPrestamo;
         this.monto = monto;
         this.abono = abono;
         this.estado = estado;
+        this.codigo = codigo;
     }
 
     public int getId() {
@@ -45,11 +47,11 @@ public class Prestamo {
         this.fechaPrestamo = fechaPrestamo;
     }
 
-    public Double getMonto() {
+    public Double getDeuda() {
         return monto;
     }
 
-    public void setMonto(Double monto) {
+    public void setDeuda(Double monto) {
         this.monto = monto;
     }
 
@@ -67,6 +69,14 @@ public class Prestamo {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
     
     
