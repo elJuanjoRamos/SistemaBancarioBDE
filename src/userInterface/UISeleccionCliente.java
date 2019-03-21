@@ -162,7 +162,7 @@ public class UISeleccionCliente {
         tableColumnDireccionCliente.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         tableColumnDireccionCliente.setMinWidth(200);
 
-        tableView = new TableView<>();
+        tableView = new TableView<>(observableList);
         tableView.setItems(getObservableList());
 
         tableView.getColumns().addAll(tableColumnIdCliente, tableColumnNombreCliente, tableColumnTelefonoCliente, tableColumnDireccionCliente);

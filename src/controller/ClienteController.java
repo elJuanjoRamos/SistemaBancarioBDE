@@ -5,17 +5,25 @@
  */
 package controller;
 import beans.*;
+import java.util.ArrayList;
 
 /**
  *
  * @author Juan José Ramos
  */
 public class ClienteController {
-    private static final ClienteController ClienteController = new ClienteController();
     
+    /*VARIABLES*/
+    private ArrayList<Cliente> arrayList =new ArrayList();
     private Cliente[] array = new Cliente[1000];
     
+    
+    /*SINGLETON*/
+    private static final ClienteController ClienteController = new ClienteController();
+    
+    
     private ClienteController() {
+        arrayList = new ArrayList<>();
     }
 
     private static ClienteController instance;
@@ -91,8 +99,15 @@ public class ClienteController {
     }
     
     
-    public Cliente[] getArrayCliete() {
-        return this.array;
+    public ArrayList<Cliente> getArrayCliete() {
+        this.arrayList.clear();
+        
+        for (Cliente c : array) {
+            if (c != null) {
+                arrayList.add(c);
+            }
+        }
+        return arrayList;
     }
     
     
