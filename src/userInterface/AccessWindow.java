@@ -71,6 +71,7 @@ public class AccessWindow {
         btn.setId("btnAzulA");
         HBox hbBtn = new HBox(10);
         hbBtn.setId("hboxLogin");
+        
         actiontarget = new Text();
         grid.add(actiontarget, 1, 4);
 

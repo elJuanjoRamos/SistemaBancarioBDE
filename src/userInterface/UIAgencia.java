@@ -370,7 +370,11 @@ class CrearAgencia {
                         } else {
 
                             AgenciaController.getAgenciaController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
-                                    Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()),0, Double.parseDouble(textFieldefectivo.getText()));
+                                Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()),0, Double.parseDouble(textFieldefectivo.getText()));
+                            
+                            
+                            
+                            
                             textFieldNombre.clear();
                             textFieldDireccion.clear();
                             textFieldTelefono.clear();

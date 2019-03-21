@@ -10,7 +10,12 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import controller.*;
+
 import beans.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -43,8 +48,7 @@ public class Principal extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        
-        /*
+       /*
         hBox = new HBox();
         hBox2 = new HBox(); 
         
@@ -54,7 +58,7 @@ public class Principal extends Application {
         buttonLogin = new Button("Modulo Admin");
         buttonLogin.setId("btnAzul");
         
-        buttonUser = new Button("Modulo Usuario ");
+        buttonUser = new Button("Modulo Transaccion ");
         buttonUser.setId("btnRojo");
         
         //UNO
@@ -99,10 +103,15 @@ public class Principal extends Application {
                 AccessWindow.getAccessWindow().getGridPane(primaryStage);
             }
         });
+        buttonUser.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                UITransacciones.getUI().start(primaryStage);
+            }
+        });
         primaryStage.setScene(scene);
-        primaryStage.show();
+        primaryStage.show();*/
       
-        */
         ClienteController.getClienteController().agregar("pedro", "dir1", "tel");
         ClienteController.getClienteController().agregar("raul", "dir2", "tel");
         ClienteController.getClienteController().agregar("jenny", "dir3", "tel");
@@ -136,9 +145,67 @@ public class Principal extends Application {
         CajeroController.getCajeroControler().agregar(556.12, "Avenida Petapa", "No Disponible" );
         
         
-        AdminInterface.getAdminInterface().start(primaryStage);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date d = new Date();
         
-//AccessWindow.getAccessWindow().getGridPane(primaryStage);
+        
+        /*Agregar Tarjetas a Clientes*/
+        OperacionesClienteController.getInstancia().agregarTarjeta(dateFormat.format(d), 15320.215, 4545.5);
+        OperacionesClienteController.getInstancia().agregarTarjetaCliente(0);
+        
+        /*OperacionesClienteController.getInstancia().agregarTarjeta(dateFormat.format(d), 15320.215, 4545.5);
+        OperacionesClienteController.getInstancia().agregarTarjetaCliente(0);
+        OperacionesClienteController.getInstancia().agregarTarjeta(dateFormat.format(d), 45654.456, 45498.6);
+        OperacionesClienteController.getInstancia().agregarTarjetaCliente(0);*/
+        
+        
+        
+        
+        
+        
+        /*Agregar Prestamos al cliente*/
+        OperacionesClienteController.getInstancia().agregarPrestamo(d, 456465.365, 45454.3);
+        
+        OperacionesClienteController.getInstancia().agregarPrestamoCliente(0, 0);
+        
+        
+        /*Agregar cuentas a cliente */
+        
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(d, 4564654.6);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(d, 787897.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(0);
+        
+        
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(d, 42321.32);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(0);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(d, 83219321.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(0);
+        
+        
+        CuentaAhorroCliente[] a = CuentasCliente.getCuentasCliente().getArrayCACliete(0);
+        
+        
+        CuentaMonetariaCliente[] b = CuentasCliente.getCuentasCliente().getArrayCMCliete(0);
+        
+        
+  
+        /*PrestamoCliente[] a = OperacionesClienteController.getInstancia().getArrayPrestamoCliente(0); 
+        for (int i = 0; i < a.length; i++) {
+            System.out.println(a[i].getAbono());
+            System.out.println(a[i].getFechaPrestamo());
+            System.out.println(a[i].getMonto());
+        }*/
+        
+        
+        
+
+        //UIOperacionesCliente.getUI().start(primaryStage, null);
+        UISeleccionCliente.getUI().start(primaryStage);
+        //AdminInterface.getAdminInterface().start(primaryStage);
+       // AccessWindow.getAccessWindow().getGridPane(primaryStage);        
+
+
     }
 
     /**

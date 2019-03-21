@@ -15,7 +15,6 @@ public class ClienteController {
     
     private Cliente[] array = new Cliente[1000];
     
-    
     private ClienteController() {
     }
 
@@ -63,7 +62,9 @@ public class ClienteController {
         Cliente[] resultado = new Cliente[1000];
         for (int i = 0; i < 1000; i++) {
             if (array[i] != null) {
-                if (array[i].getNombre().toUpperCase().contains(nombre.toUpperCase())) {
+                if (array[i].getNombre().toUpperCase().contains(nombre.toUpperCase())||
+                    array[i].getTelefono().toUpperCase().contains(nombre.toUpperCase()) ||
+                    array[i].getDireccion().toUpperCase().contains(nombre.toUpperCase())) {
                     for (int j = 0; j < 1000; j++) {
                         if (resultado[j] == null) {
                             resultado[j] = array[i];
@@ -75,6 +76,19 @@ public class ClienteController {
         }
         return resultado;
     }   
+    
+    public Cliente buscar(int id){
+        Cliente resultado = new Cliente();
+        for (int i = 0; i < 1000; i++) {
+            if (array[i] != null) {
+                if (array[i].getId() ==  id) {
+                    resultado = array[i];
+                    break;        
+                }
+            }
+        }
+        return resultado;
+    }
     
     
     public Cliente[] getArrayCliete() {

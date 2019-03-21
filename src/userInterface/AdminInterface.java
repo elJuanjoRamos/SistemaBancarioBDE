@@ -39,7 +39,6 @@ public class AdminInterface {
         Scene scene = new Scene(root, 1300, 700, Color.WHITE);
 
         TabPane tabPane = new TabPane();
-
         BorderPane borderPane = new BorderPane();
         Tab tab = new Tab();
         tab.setText("Clientes");
@@ -82,7 +81,7 @@ public class AdminInterface {
         Tab tab4 = new Tab();
         tab4.setText("Cajeros");
         HBox hbox4 = new HBox();
-        hbox4.getChildren().add(new Label("Agencias con AutoBanco"));
+        hbox4.getChildren().add(new Label("Cajeros"));
         hbox4.setAlignment(Pos.CENTER);
         tab4.setContent(UICajero.getCRUDCajero().getViewCajero());
         tab4.setClosable(false);

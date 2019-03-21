@@ -87,6 +87,8 @@ public class UICliente {
         textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
         gridPane.add(textTitle, 0, 0);
 
+        
+        
         textFieldBuscar = new TextField();
         textFieldBuscar.setPromptText("Buscar cliente");
         
@@ -101,6 +103,11 @@ public class UICliente {
             }
         });
 
+        
+        
+        
+        
+        
         buttonReestablecer = new Button("Reestablecer");
         buttonReestablecer.setId("btnVerdeV");
         buttonReestablecer.setOnAction(new EventHandler<ActionEvent>() {
@@ -246,18 +253,24 @@ public class UICliente {
         
     }
 
+    
+    
     public void actualizarTablabusqueda(String nombre) {
+        
+        
         if (ClienteController.getClienteController().buscar(nombre) != null) {
+           
             observableList = FXCollections.observableArrayList(ClienteController.getClienteController().buscar(nombre));
             tableView.setItems(observableList);
+        
         } else {
             actualizarDatosTabla();
         }
     }
     
-    public void clientes(Cliente c){
-        System.out.println(c.getNombre());
-    }
+    
+    
+
 }
 
 class CrearCliente {
@@ -377,7 +390,6 @@ class Actualizar {
     }
 
     public GridPane getGridPane(Cliente cliente) {
-        System.out.println(cliente.getNombre());
         gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);

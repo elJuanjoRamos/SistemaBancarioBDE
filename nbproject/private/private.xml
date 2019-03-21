@@ -3,14 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UICliente.java</file>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UIAgenciaAutobanco.java</file>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/AdminInterface.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UIPagoServicios.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/controller/CuentasCliente.java</file>
             <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/Principal.java</file>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/beans/Retiro.java</file>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/AccessWindow.java</file>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/beans/TarjetaCredito.java</file>
-            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/beans/Prestamo.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/beans/Pago.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UIOperacionesCliente.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/userInterface/UIEmpleado.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/controller/OperacionesClienteController.java</file>
+            <file>file:/C:/Users/Juan%20José%20Ramos/Documents/USAC/2.Segundo%20Año/TERCER%20SEMESTRE/Introduccion%20a%20la%20programacion%201/Java/SistemaBancatioBDE/src/controller/PagoController.java</file>
         </group>
     </open-files>
 </project-private>

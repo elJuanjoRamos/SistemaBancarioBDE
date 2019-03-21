@@ -115,5 +115,16 @@ public class CajeroController {
 
         return resultado;
     }
+    
+    public int getCantidad(){
+        int cantidad = 0;
+        for (int i = 0; i < cajero.length; i++) {
+            if (cajero[i] != null) {
+                cantidad++;  
+                        
+            }
+        }
+        return cantidad;
+    }
 
 }

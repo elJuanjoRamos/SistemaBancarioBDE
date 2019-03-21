@@ -72,6 +72,7 @@ public class UICajero {
     private TableColumn<Cajero, String> tableColumnTransaccion;
     
     private TableView<Cajero> tableView;
+     
     private ObservableList<Cajero> observableList;
 
     /**************************************/
@@ -222,7 +223,6 @@ public class UICajero {
 
         tableView = new TableView<>();
         tableView.setItems(getObservableList());
-
         tableView.getColumns().addAll(tableColumnId, tableColumnUbicacion, tableColumnEfectivo, tableColumnEstado, tableColumnTransaccion);
         tableView.setMinSize(100, 250);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

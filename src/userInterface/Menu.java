@@ -84,7 +84,6 @@ public class Menu {
 
                     }
                 });
-                //vBoxPrueba.getChildren().addAll(getMenuBar(), CRUDAlumno.getCRUDAlumno().gethBoxCRUDAlumno(), botonRegresar);
             }
         });
         Button botonProfesor= new Button("Profesores");

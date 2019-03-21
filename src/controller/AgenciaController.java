@@ -15,19 +15,21 @@ import java.util.InputMismatchException;
 public class AgenciaController {
     private static final AgenciaController AgenciaController = new AgenciaController();
     
-    private AgenciaBancaria[] array = new AgenciaBancaria[1000];
     
-    
-    private AgenciaController() {
-    }
-
     private static AgenciaController instance;
+
     public static AgenciaController getAgenciaController(){
         if(instance == null){
             instance = new AgenciaController();
         }
         return instance;
     }
+    
+
+    private AgenciaController() {
+    }
+
+    private AgenciaBancaria[] array = new AgenciaBancaria[1000];
     
     public void agregar(String nombre, String direccion, String telefono, int noCajas, int escritorios, int autob, double efectivo) {
         

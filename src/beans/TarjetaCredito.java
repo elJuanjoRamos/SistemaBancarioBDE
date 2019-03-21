@@ -10,7 +10,7 @@ package beans;
  * @author Ana Ramos
  */
 public class TarjetaCredito {
-    private int noTarjeta;
+    private int id;
     private String fechaVencimiento;
     private Double credito;
     private Double deuda;
@@ -19,18 +19,18 @@ public class TarjetaCredito {
     }
 
     public TarjetaCredito(int noTarjeta, String fechaVencimiento, Double credito, Double deuda) {
-        this.noTarjeta = noTarjeta;
+        this.id = noTarjeta;
         this.fechaVencimiento = fechaVencimiento;
         this.credito = credito;
         this.deuda = deuda;
     }
 
-    public int getNoTarjeta() {
-        return noTarjeta;
+    public int getId() {
+        return id;
     }
 
-    public void setNoTarjeta(int noTarjeta) {
-        this.noTarjeta = noTarjeta;
+    public void setId(int noTarjeta) {
+        this.id = noTarjeta;
     }
 
     public String getFechaVencimiento() {
