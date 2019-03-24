@@ -52,17 +52,7 @@ public class DepositoController {
             }
         }
         
-        for (int i = 0; i < array.length; i++) {
-            if (array[i]!=null) {
-                 System.out.println(array[i].getIdDepositante());
-                System.out.println(array[i].getCuenta());
-                System.out.println(array[i].getMonto());
-                System.out.println(array[i].getTipoDeposito());
-                System.out.println(array[i].getCliente().getNombre());
-                System.out.println(otraCuenta);
-
-            }
-        }
+      
 
         if (CuentasCliente.getCuentasCliente().buscarCuentaAhorros(Integer.parseInt(cuenta)) != null) {
 

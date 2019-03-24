@@ -18,9 +18,10 @@ import java.util.Random;
  */
 public class RetiroController {
     /*VARIABLES*/
-    private ArrayList<RetiroAgencia> arrayList =new ArrayList();
-    private RetiroAgencia[] array = new RetiroAgencia[1000];
-        
+    private ArrayList<Retiro> arrayList =new ArrayList();
+    private Retiro[] array = new Retiro[1000];
+    private Retiro[] arrayRetiroCajero = new Retiro[1000];
+    
     /*Instancias*/
     Random aleatorio = new Random();
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -42,23 +43,57 @@ public class RetiroController {
     }
     /*--------*/
     
-    public void agregar(String cuenta, Double monto, int cliente, String agencia){
+    
+    /*Agregar retiro de agencia*/
+    public void agregar(String cuenta, Double monto, int cliente, String objeto){
         
-        AgenciaBancaria resultado = AgenciaController.getAgenciaController().buscarUnica(agencia);
+        String[] cadena = objeto.split("-");
         
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                array[i] = new RetiroAgencia(aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000 , cuenta, monto, d, cliente, resultado);
-                break;
-            }
+        String detalle ="";
+        
+         
+        if (AgenciaController.getAgenciaController().buscarUnica(objeto) != null)  {
+            AgenciaBancaria resultado = AgenciaController.getAgenciaController().buscarUnica(cadena[0]);
+            
+            detalle =  "Agencia " + cadena[0];
+            
+            System.out.println("agencia");
+            
+            
+        } else if(CajeroController.getCajeroControler().bucarCajeroUnico(cadena[0]) != null) {
+            System.out.println("cajero");
+            detalle = "Cajero No." + objeto;
         }
         
         
         
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == null) {
+                array[i] = new Retiro(aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000 , cuenta, monto, d, cliente, detalle);
+                break;
+            }
+        }
+        
+        if (CuentasCliente.getCuentasCliente().buscarCuentaAhorros(Integer.parseInt(cuenta)) != null) {
+
+            Double montoInicial = CuentasCliente.getCuentasCliente().buscarCuentaAhorros(Integer.parseInt(cuenta)).getMontoInicial();
+            CuentasCliente.getCuentasCliente().buscarCuentaAhorros(Integer.parseInt(cuenta)).setMontoInicial(montoInicial - monto);
+                        
+        } else if (CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(cuenta)) != null) {
+
+            Double montoInicial = CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(cuenta)).getMontoInicial();
+            CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(cuenta)).setMontoInicial(montoInicial - monto);
+        }
     }
     
-    public ArrayList<RetiroAgencia> getArrayRetiro(int idCliente) {
-        for (RetiroAgencia r : array) {
+    
+    /*agregar retiro de cajero*/
+        
+    
+    
+    public ArrayList<Retiro> getArrayRetiro(int idCliente) {
+        this.arrayList.clear();
+        for (Retiro r : array) {
             if (r != null) {
                 if (r.getCliente() == idCliente) {
                     arrayList.add(r);

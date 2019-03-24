@@ -40,9 +40,7 @@ import javafx.stage.StageStyle;
 public class UISeleccionCliente {
     /*--------INTANCIA----------*/
     private static final UISeleccionCliente instancia = new UISeleccionCliente();
-    private UISeleccionCliente() {
-    }
-
+    
     public static UISeleccionCliente getUI() {
         return instancia;
     }
@@ -55,6 +53,11 @@ public class UISeleccionCliente {
 
     private TableView<Cliente> tableView;
     private ObservableList<Cliente> observableList;
+
+    private UISeleccionCliente() {
+            
+        
+    }
 
     /*------------------------------------*/
     public void start(Stage primaryStage) {
@@ -96,8 +99,8 @@ public class UISeleccionCliente {
             @Override
             public void handle(ActionEvent event) {
                        observableList.clear();
-          observableList = FXCollections.observableArrayList(ClienteController.getClienteController().getArrayCliete());
-        tableView.setItems(observableList);
+                        observableList = FXCollections.observableArrayList(ClienteController.getClienteController().getArrayCliete());
+                        tableView.setItems(observableList);
  
             }
         });
@@ -162,7 +165,7 @@ public class UISeleccionCliente {
         tableColumnDireccionCliente.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         tableColumnDireccionCliente.setMinWidth(200);
 
-        tableView = new TableView<>(observableList);
+        tableView = new TableView<>();
         tableView.setItems(getObservableList());
 
         tableView.getColumns().addAll(tableColumnIdCliente, tableColumnNombreCliente, tableColumnTelefonoCliente, tableColumnDireccionCliente);

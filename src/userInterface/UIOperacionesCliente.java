@@ -238,7 +238,7 @@ public class UIOperacionesCliente {
         menuItemRegresar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                UISeleccionCliente.getUI().start(primaryStage);
+                UIMenu.getUI().start(primaryStage);
             }
         });
         menuItemSalir.setOnAction(new EventHandler<ActionEvent>() {
@@ -665,14 +665,14 @@ class ObtenerRetiroCliente {
     /*------------*/
     
     
-    private TableColumn<RetiroAgencia, String> tableColumnId;
-    private TableColumn<RetiroAgencia, String> tableColumnFecha;
-    private TableColumn<RetiroAgencia, String> tableColumnMonto;
-    private TableColumn<RetiroAgencia, String> tableColumnCuenta;
-    private TableColumn<RetiroAgencia, String> tableColumnAgencia;
+    private TableColumn<Retiro, String> tableColumnId;
+    private TableColumn<Retiro, String> tableColumnFecha;
+    private TableColumn<Retiro, String> tableColumnMonto;
+    private TableColumn<Retiro, String> tableColumnCuenta;
+    private TableColumn<Retiro, String> tableColumnAgencia;
 
-    private TableView<RetiroAgencia> tableView;
-    private ObservableList<RetiroAgencia> observableList;
+    private TableView<Retiro> tableView;
+    private ObservableList<Retiro> observableList;
 
     
     /*----TABLA TARJETA CREDITO---------*/
@@ -716,8 +716,8 @@ class ObtenerRetiroCliente {
 
 
         tableColumnAgencia = new TableColumn<>();
-        tableColumnAgencia.setText("Agencia");
-        tableColumnAgencia.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        tableColumnAgencia.setText("Direccion deposito");
+        tableColumnAgencia.setCellValueFactory(new PropertyValueFactory<>("cadena"));
         tableColumnAgencia.setMinWidth(250);
 
         
@@ -736,7 +736,7 @@ class ObtenerRetiroCliente {
         return hBoxVista;
         
     }
-    private ObservableList<RetiroAgencia> getObservableList(int idCliente) {
+    private ObservableList<Retiro> getObservableList(int idCliente) {
         observableList = FXCollections.observableArrayList(RetiroController.getRetiroController().getArrayRetiro(idCliente));
         return observableList;
     }

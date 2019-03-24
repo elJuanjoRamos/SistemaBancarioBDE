@@ -20,11 +20,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro8.JMetro;
@@ -38,8 +41,6 @@ public class AdminInterface {
     private static final AdminInterface AdminInterface = new AdminInterface();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
    
-    Principal p = new Principal();
-   
     /*SINGLETON*/
     private AdminInterface() {
     }
@@ -52,16 +53,6 @@ public class AdminInterface {
 
         primaryStage.setTitle("MODULO ADMINISTRATIVO");
         
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.minHeight(616.0);
-        anchorPane.minWidth(945.0);
-        
-        
-        Text text = new Text();
-        
-        
-        
-        
         VBox vbox = new VBox();
         vbox.setStyle("-fx-background-color: white");
    
@@ -72,14 +63,16 @@ public class AdminInterface {
         
         
         TabPane tabPane = new TabPane();
+        tabPane.minWidth(945);
+        tabPane.minHeight(546);
         tabPane.setId("tabPane");
+        
         BorderPane borderPane = new BorderPane();
         Tab tab = new Tab();
-        tab.setText("Clientes");
-        HBox hbox = new HBox();
-          
-        hbox.getChildren().add(new Label("Clientes"));
-        hbox.setAlignment(Pos.CENTER);
+        Text t = new Text("Clientes");
+        t.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
+        
+        tab.setGraphic(new ImageView("resources/images/img001.png"));
         tab.setContent(UICliente.getCRUDCliente().getViewCliente());
         tab.setClosable(false);
         tab.setId("menuBar");
@@ -154,8 +147,7 @@ public class AdminInterface {
         menuItemRegresar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                
-                p.start(primaryStage);
+               UIMenu.getUI().start(primaryStage);
             }
         });
         menuItemSalir.setOnAction(new EventHandler<ActionEvent>() {

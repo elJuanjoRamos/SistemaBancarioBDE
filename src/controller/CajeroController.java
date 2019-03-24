@@ -33,8 +33,10 @@ public class CajeroController {
     
     private CajeroController(){
         arrayList = new ArrayList();
+        arrayList.clear();
    }
     
+    /*agregar*/
     public void agregar(Double efectivo, String ubicacion, String estado) {
         for (int i = 0; i < cajero.length; i++) {
             if (cajero[i] == null) {
@@ -44,7 +46,7 @@ public class CajeroController {
             }
         }
     }
-
+    /*Eliminar*/
     public void borrar(int id) {
         for (int i = 0; i < cajero.length; i++) {
             if (cajero[i].getId() == id) {
@@ -64,6 +66,7 @@ public class CajeroController {
         }
     }
 
+    /*bucar*/
     public ArrayList<Cajero> buscar(String valor) {
         this.arrayList.clear();
         Cajero[] c = new Cajero[1000];
@@ -88,9 +91,19 @@ public class CajeroController {
         return arrayList;
     }
 
+    /*obtiene todos los cajeros*/
     public ArrayList<Cajero> getArray() {
+        System.out.println("hola cajero");
         this.arrayList.clear();
-        Cajero[] resultado = new Cajero[1000];
+        for (Cajero c : cajero) {
+            if (c != null) {
+                arrayList.add(c);
+            }
+        }
+        
+        
+        
+        /*Cajero[] resultado = new Cajero[1000];
         for (int i = 0; i < cajero.length; i++) {
             if (cajero[i] != null) {
                 for (int j = 0; j < resultado.length; j++) {
@@ -106,21 +119,36 @@ public class CajeroController {
                 arrayList.add(c);
             }
         }
+        */
         return arrayList;
     }
-
-    public void prueba() {
-
-        for (int i = 0; i < cajero.length; i++) {
-            if (cajero[i] != null) {
-                System.out.println("Ubicacion " + cajero[i].getUbicacion());
-                System.out.println("Efectivo " + cajero[i].getEfectivo());
-                System.out.println("Transacciones " + cajero[i].getTransaccion());
-                System.out.println("Estado " + cajero[i].getEstado());
-
+    
+    /*OBTIENE TODAS LAS DIRECCIONES*/
+    public ArrayList<String> getDireccion() {
+        
+        ArrayList<String> array = new ArrayList();
+        
+        for (Cajero c : cajero) {
+            if (c != null) {
+                array.add(c.getId() + "-" + c.getUbicacion());
             }
-
         }
+        return array;
+    }
+
+
+    public Cajero bucarCajeroUnico(String cadena){
+        String[] parts = cadena.split("-");
+        String id = parts[0];
+                
+        for (int i = 0; i < cajero.length ; i++) {
+            if (cajero[i] != null) {
+                if (cajero[i].getId() == Integer.parseInt(id)) {
+                    return cajero[i];
+                }
+            }
+        }
+        return null;
     }
 
     public boolean esNumero(String cadena, String cadena2) {

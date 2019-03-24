@@ -30,7 +30,7 @@ import javafx.stage.Stage;
  */
 public class AccessWindow {
     private static final AccessWindow AccessWindow = new AccessWindow();
-    Principal p = new Principal();
+    
 
     private GridPane grid;
     private TextField userTextField;
@@ -95,7 +95,7 @@ public class AccessWindow {
         btn1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e ) {
-                p.start(primaryStage);
+                UIMenu.getUI().start(primaryStage);
             }
           }
         );

@@ -112,7 +112,7 @@ public class AgenciaController {
     }
     
     
-    
+    /*ARRAY DE LAS AGENCIAS SIN AUTOBANCO*/
     public ArrayList<AgenciaBancaria> getArray() {
         this.arrayList.clear();
         
@@ -137,6 +137,8 @@ public class AgenciaController {
         return arrayList;
     }
     
+    
+    /*ARRAY DE LAS CUENTAS CON AUTOBANCO*/
     public ArrayList<AgenciaBancaria> getArray2() {
         this.arrayListAutoBanco.clear();
         AgenciaBancaria[] resultado = new AgenciaBancaria[1000];
@@ -159,6 +161,19 @@ public class AgenciaController {
         }
         return arrayListAutoBanco;    
     }
+    /*ARRAY DE NOMBRES DE AGENCIAS*/
+    public ArrayList<String> getNombreAgencia() {
+        ArrayList<String> agencias = new ArrayList();
+        
+        for (AgenciaBancaria agencia : array) {
+            if (agencia != null)  {
+                agencias.add(agencia.getNombre());
+            }
+        }
+        
+        return agencias;    
+    }
+    
     
     public boolean buscarAgencia(String nombre){
         

@@ -48,69 +48,7 @@ public class Principal extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-       /*
-        hBox = new HBox();
-        hBox2 = new HBox(); 
-        
-        hBoxButtons = new HBox(10);
-  
-        
-        buttonLogin = new Button("Modulo Admin");
-        buttonLogin.setId("btnAzul");
-        
-        buttonUser = new Button("Modulo Transaccion ");
-        buttonUser.setId("btnRojo");
-        
-        //UNO
-        gridPane = new GridPane();
-        gridPane.setPadding(new Insets(30, 30, 30, 30));
-        gridPane.setMinSize(900, 650);
-        gridPane.setAlignment(Pos.BOTTOM_CENTER);
-        
-        
-        hBoxButtons.getChildren().addAll(buttonLogin, buttonUser );
-        
-        
-        gridPane.add(hBoxButtons, 1,90);
-        
-        hBox.getChildren().addAll(gridPane);
-        
-        
-        //dos
-
-        Image image = new Image("/resources/BID.png"); 
-        
-        gridPane2 = new GridPane();
-        gridPane2.setPadding(new Insets(30, 30, 30, 30));
-        gridPane2.setAlignment(Pos.CENTER);
-        
-        view.setImage(image);
-        view.setFitHeight(475);
-        view.setFitWidth(800);
-        gridPane2.add(view, 0, 0);
-        
-        hBox2.getChildren().addAll(gridPane2);
-        
-        Group root = new Group();
-        Scene scene = new Scene(root, 850,700);
-
-        root.getChildren().addAll(hBox, hBox2);
-        scene.getStylesheets().addAll("/resources/root.css");
-
-        buttonLogin.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                AccessWindow.getAccessWindow().getGridPane(primaryStage);
-            }
-        });
-        buttonUser.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                UITransacciones.getUI().start(primaryStage);
-            }
-        });
-        primaryStage.setScene(scene);
-        primaryStage.show();*/
+      
       
         ClienteController.getClienteController().agregar("pedro", "dir1", "tel");
         ClienteController.getClienteController().agregar("raul", "dir2", "tel");
@@ -214,14 +152,13 @@ public class Principal extends Application {
         
         
         
-        
- 
+        UIMenu.getUI().start(primaryStage);
         
         
 
         //UIOperacionesCliente.getUI().start(primaryStage, ClienteController.getClienteController().buscar(0));
         //UISeleccionCliente.getUI().start(primaryStage);
-        AdminInterface.getAdminInterface().start(primaryStage);
+        //AdminInterface.getAdminInterface().start(primaryStage);
        // AccessWindow.getAccessWindow().getGridPane(primaryStage);        
 
 
