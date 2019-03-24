@@ -8,7 +8,7 @@ package userInterface;
 import beans.*;
 import controller.CuentasCliente;
 import controller.PagoController;
-import controller.OperacionesClienteController;
+import controller.TarjetasYPrestamosCliente;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -66,7 +66,7 @@ public class UIPagoTarjeta {
         
         
         /* BUSCA LAS TARJETAS DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
-        ObservableList tarjetas = FXCollections.observableArrayList(OperacionesClienteController.getInstancia().getArrayTarjetaClienteEspecifico(cliente.getId()));
+        ObservableList tarjetas = FXCollections.observableArrayList(TarjetasYPrestamosCliente.getInstancia().getArrayTarjetaClienteEspecifico(cliente.getId()));
 
         ComboBox comboPago = new ComboBox();
         comboPago.getItems().addAll(tarjetas);
@@ -135,7 +135,7 @@ public class UIPagoTarjeta {
         comboPago.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
-                TarjetaCredito tarjeta = OperacionesClienteController.getInstancia().buscarTarjetaCliente(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()));
+                TarjetaCredito tarjeta = TarjetasYPrestamosCliente.getInstancia().buscarTarjetaCliente(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()));
                 textFieldDeuda.setText(String.valueOf(tarjeta.getDeuda()));
                 
                 labelDeuda.setVisible(true);
@@ -160,7 +160,7 @@ public class UIPagoTarjeta {
 
                         PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente);
                         
-                        OperacionesClienteController.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
+                        TarjetasYPrestamosCliente.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
                                                     Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
 
                         getAlert("Pago realizado con exito");
@@ -176,7 +176,7 @@ public class UIPagoTarjeta {
                             String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
                             PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente);
                             
-                            OperacionesClienteController.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
+                            TarjetasYPrestamosCliente.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
                                                     Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
 
                             textFieldMonto.clear();

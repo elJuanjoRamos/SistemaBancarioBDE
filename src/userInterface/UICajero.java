@@ -267,7 +267,7 @@ public class UICajero {
     }
 
     public void actualizarTablabusqueda(String valor) {
-        if (CajeroController.getCajeroControler().buscar(valor) != null) {
+        if (!CajeroController.getCajeroControler().buscar(valor).isEmpty()) {
             observableList = FXCollections.observableArrayList(CajeroController.getCajeroControler().buscar(valor));
             tableView.setItems(observableList);
         } else {

@@ -145,57 +145,83 @@ public class Principal extends Application {
         CajeroController.getCajeroControler().agregar(556.12, "Avenida Petapa", "No Disponible" );
         
         
+        
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date d = new Date();
         
-        
         /*Agregar Tarjetas a Clientes*/
-        OperacionesClienteController.getInstancia().agregarTarjeta(dateFormat.format(d), 15320.215, 4545.5);
-        OperacionesClienteController.getInstancia().agregarTarjetaCliente(0);
+        TarjetasYPrestamosCliente.getInstancia().agregarTarjeta(dateFormat.format(d), 15320.215, 4545.5);
+        TarjetasYPrestamosCliente.getInstancia().agregarTarjetaCliente(0);
         
-        /*OperacionesClienteController.getInstancia().agregarTarjeta(dateFormat.format(d), 15320.215, 4545.5);
-        OperacionesClienteController.getInstancia().agregarTarjetaCliente(0);
-        OperacionesClienteController.getInstancia().agregarTarjeta(dateFormat.format(d), 45654.456, 45498.6);
-        OperacionesClienteController.getInstancia().agregarTarjetaCliente(0);*/
-        
-        
-        
+    
         
         
         
         /*Agregar Prestamos al cliente*/
-        OperacionesClienteController.getInstancia().agregarPrestamo(d, 100.00, 0.0);
-        
-        OperacionesClienteController.getInstancia().agregarPrestamoCliente(0);
+        TarjetasYPrestamosCliente.getInstancia().agregarPrestamo(100.00, 0.0);
+        TarjetasYPrestamosCliente.getInstancia().agregarPrestamoCliente(0);
         
         
         /*Agregar cuentas a cliente */
         
-        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(d, 4564654.6);
+        //Clente 1
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(100.0);
         CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(0);
-        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(d, 787897.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(200.0);
         CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(0);
         
         
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(d, 42321.32);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(150.00);
         CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(0);
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(d, 83219321.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(200.00);
         CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(0);
         
         
-        CuentaAhorroCliente[] a = CuentasCliente.getCuentasCliente().getArrayCACliete(0);
+        
+        //cliente 2
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(300.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(1);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(400.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(1);
+        
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(350.00);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(1);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(450.00);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(1);
         
         
-        CuentaMonetariaCliente[] b = CuentasCliente.getCuentasCliente().getArrayCMCliete(0);
+        //cliente 3
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(500.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(600.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
+        
+        
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(550.00);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(2);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(650.00);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(2);
+        
+        
+        
+        
+        //RETIROS
+        
+        
+        
+        
+        //DepositoController.getInstancia().agregar(0, "8987898797", 46554.4, "Efectivo", ClienteController.getClienteController().buscar(0));
+        
+        
         
         
  
         
         
 
-        //UIOperacionesCliente.getUI().start(primaryStage, null);
-        UISeleccionCliente.getUI().start(primaryStage);
-        //AdminInterface.getAdminInterface().start(primaryStage);
+        //UIOperacionesCliente.getUI().start(primaryStage, ClienteController.getClienteController().buscar(0));
+        //UISeleccionCliente.getUI().start(primaryStage);
+        AdminInterface.getAdminInterface().start(primaryStage);
        // AccessWindow.getAccessWindow().getGridPane(primaryStage);        
 
 

@@ -5,40 +5,74 @@
  */
 package userInterface;
 
+import beans.Cliente;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Menu;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro8.JMetro;
 
 /**
  *
  * @author Juan José Ramos
  */
 public class AdminInterface {
-
+    //private static final JMetro.Style style = JMetro.Style.LIGHT;
     private static final AdminInterface AdminInterface = new AdminInterface();
-
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+   
+    Principal p = new Principal();
+   
+    /*SINGLETON*/
     private AdminInterface() {
     }
 
     public static AdminInterface getAdminInterface() {
         return AdminInterface;
     }
-
+    ///////////////
     public void start(Stage primaryStage) {
 
         primaryStage.setTitle("MODULO ADMINISTRATIVO");
-        Group root = new Group();
-        Scene scene = new Scene(root, 1300, 700, Color.WHITE);
+        
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.minHeight(616.0);
+        anchorPane.minWidth(945.0);
+        
+        
+        Text text = new Text();
+        
+        
+        
+        
+        VBox vbox = new VBox();
+        vbox.setStyle("-fx-background-color: white");
+   
+        Scene scene = new Scene(vbox, screenSize.getWidth(), screenSize.getHeight(), Color.WHITE);
 
+        
+        
+        
+        
         TabPane tabPane = new TabPane();
+        tabPane.setId("tabPane");
         BorderPane borderPane = new BorderPane();
         Tab tab = new Tab();
         tab.setText("Clientes");
@@ -89,15 +123,54 @@ public class AdminInterface {
         
         tabPane.getTabs().addAll(tab4, tab3,tab2, tab1, tab);
 
-        tabPane.setSide(Side.TOP);
+        tabPane.setSide(Side.LEFT);
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());
 
         borderPane.setCenter(tabPane);
-        root.getChildren().add(borderPane);
+        vbox.getChildren().addAll(getMenuBar(primaryStage), borderPane);
+        
         scene.getStylesheets().addAll("/resources/root.css");
-
+        
+        
+        //new JMetro(style).applyTheme(scene);
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
+    
+    private  MenuBar getMenuBar(Stage primaryStage) {
+        MenuBar menuBar = new MenuBar();
+
+        Menu menuArchivo = new Menu("OPCIONES");
+        
+        MenuItem menuItemSalir = new MenuItem("_Salir");
+        MenuItem menuItemRegresar = new MenuItem("_Regresar");
+        
+        
+        
+        
+        
+        menuItemRegresar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                
+                p.start(primaryStage);
+            }
+        });
+        menuItemSalir.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                primaryStage.close();
+            }
+        });
+        
+        menuArchivo.getItems().addAll(menuItemRegresar, menuItemSalir);
+        
+        menuBar.getMenus().addAll(menuArchivo);
+        return menuBar;
+        
+        
+    }
+   
 }

@@ -33,15 +33,14 @@ public class ClienteController {
         }
         return instance;
     }
-    
+    /*--------*/
     public void agregar(String nombre, String direccion, String telefono) {
-        
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                array[i] = new Cliente(i, nombre, direccion, telefono);
-                break;
+            for (int i = 0; i < array.length; i++) {
+                if (array[i] == null) {
+                    array[i] = new Cliente(i, nombre, direccion, telefono);
+                    break;
+                }
             }
-        }
         
     }
     public void borrar(int id) {
@@ -66,7 +65,8 @@ public class ClienteController {
     }
     
 
-    public Cliente[] buscar(String nombre){
+    public ArrayList<Cliente> buscar(String nombre){
+        this.arrayList.clear();
         Cliente[] resultado = new Cliente[1000];
         for (int i = 0; i < 1000; i++) {
             if (array[i] != null) {
@@ -82,7 +82,12 @@ public class ClienteController {
                 }
             }
         }
-        return resultado;
+        for (Cliente c : resultado) {
+            if (c != null) {
+                arrayList.add(c);
+            }
+        }
+        return arrayList;
     }   
     
     public Cliente buscar(int id){
@@ -99,6 +104,31 @@ public class ClienteController {
     }
     
     
+        public boolean buscarNombre(String nombre){
+        
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
+                if (nombre.equalsIgnoreCase(array[i].getNombre())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public Cliente buscarClieteUnico(String nombre){
+        
+        for (int i = 0; i < 1000; i++) {
+            if (array[i] != null) {
+                if (array[i].getNombre().equals(nombre)) {
+                    return array[i];
+                }
+            }
+        }
+        return null;
+    }
+    
+    
     public ArrayList<Cliente> getArrayCliete() {
         this.arrayList.clear();
         
@@ -107,10 +137,20 @@ public class ClienteController {
                 arrayList.add(c);
             }
         }
+        
         return arrayList;
     }
     
-    
-    
+    public ArrayList<String> getNombresClietes() {
+        ArrayList<String> nombres = new ArrayList();
+        
+        for (Cliente c : array) {
+            if (c != null) {
+                nombres.add(c.getNombre());
+            }
+        }
+        
+        return nombres;
+    }
    
 }

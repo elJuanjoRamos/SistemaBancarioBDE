@@ -5,7 +5,8 @@
  */
 package controller;
 
-import beans.AgenciaBancaria;
+import beans.*;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 /**
@@ -13,6 +14,13 @@ import java.util.InputMismatchException;
  * @author Juan José Ramos
  */
 public class AgenciaController {
+    
+    
+    private ArrayList<AgenciaBancaria> arrayList =new ArrayList();
+    private ArrayList<AgenciaBancaria> arrayListAutoBanco =new ArrayList();
+    
+    
+    /*SINGLETON*/
     private static final AgenciaController AgenciaController = new AgenciaController();
     
     
@@ -24,9 +32,11 @@ public class AgenciaController {
         }
         return instance;
     }
-    
+    /*-------------*/
 
     private AgenciaController() {
+        arrayList = new ArrayList<>();
+        arrayListAutoBanco = new ArrayList<>();
     }
 
     private AgenciaBancaria[] array = new AgenciaBancaria[1000];
@@ -64,12 +74,15 @@ public class AgenciaController {
         }
     }
     
-
-    public AgenciaBancaria[] buscar(String nombre){
+    /*BUSCAR*/
+    public ArrayList<AgenciaBancaria> buscar(String nombre){
+        this.arrayList.clear();
         AgenciaBancaria[] resultado = new AgenciaBancaria[1000];
         for (int i = 0; i < 1000; i++) {
             if (array[i] != null) {
-                if (array[i].getNombre().toUpperCase().contains(nombre.toUpperCase())) {
+                if (array[i].getNombre().toUpperCase().contains(nombre.toUpperCase()) ||
+                    array[i].getDireccion().toUpperCase().contains(nombre.toUpperCase()) ||
+                    array[i].getTelefono().toUpperCase().contains(nombre.toUpperCase())) {
                     for (int j = 0; j < 1000; j++) {
                         if (resultado[j] == null) {
                             resultado[j] = array[i];
@@ -79,11 +92,30 @@ public class AgenciaController {
                 }
             }
         }
-        return resultado;
+        for (AgenciaBancaria a : resultado) {
+            if (a != null) {
+                arrayList.add(a);
+            }
+        }
+        return arrayList;
     }   
     
+     public AgenciaBancaria buscarUnica(String nombre){
+        for (int i = 0; i < 1000; i++) {
+            if (array[i] != null) {
+                if (array[i].getNombre().toUpperCase().equals(nombre.toUpperCase())) {
+                    return array[i];           
+                }
+            }
+        }
+        return null;
+    }
     
-    public AgenciaBancaria[] getArray() {
+    
+    
+    public ArrayList<AgenciaBancaria> getArray() {
+        this.arrayList.clear();
+        
         AgenciaBancaria[] resultado = new AgenciaBancaria[1000];
         for (int i = 0; i < 1000; i++) {
             if (array[i] != null) {
@@ -97,10 +129,16 @@ public class AgenciaController {
                 }
             }
         }
-        return resultado;
+        for (AgenciaBancaria a : resultado) {
+            if (a != null) {
+                arrayList.add(a);
+            }
+        }
+        return arrayList;
     }
     
-    public AgenciaBancaria[] getArray2() {
+    public ArrayList<AgenciaBancaria> getArray2() {
+        this.arrayListAutoBanco.clear();
         AgenciaBancaria[] resultado = new AgenciaBancaria[1000];
         for (int i = 0; i < 1000; i++) {
             if (array[i] != null) {
@@ -114,7 +152,12 @@ public class AgenciaController {
                 }
             }
         }
-        return resultado;    
+        for (AgenciaBancaria a : resultado) {
+            if (a != null) {
+                arrayListAutoBanco.add(a);
+            }
+        }
+        return arrayListAutoBanco;    
     }
     
     public boolean buscarAgencia(String nombre){
@@ -128,6 +171,7 @@ public class AgenciaController {
         }
         return false;
     }
+    
     
     public boolean esNumero(String cadena, String cadena2, String cadena3, String cadena4) {
         boolean resultado;

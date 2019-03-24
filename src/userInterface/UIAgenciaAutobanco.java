@@ -242,6 +242,7 @@ public class UIAgenciaAutobanco {
                 tableColumnTelefonoAgenciaBancariaBancaria, tableColumnDireccionAgenciaBancariaBancaria,
                 tableColumnNoCajasAgenciaBancariaBancaria, tableColumnNoEscritoriosAgenciaBancariaBancaria,
                 tableColumnAutoBancoAgenciaBancariaBancaria, tableColumnEfectivoAgenciaBancariaBancaria);
+        
         tableView.setMinSize(730, 150);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -279,7 +280,7 @@ public class UIAgenciaAutobanco {
     }
 
     public void actualizarTablabusqueda(String nombre) {
-        if (AgenciaController.getAgenciaController().buscar(nombre) != null) {
+        if (!AgenciaController.getAgenciaController().buscar(nombre).isEmpty()) {
             observableList = FXCollections.observableArrayList(AgenciaController.getAgenciaController().buscar(nombre));
             tableView.setItems(observableList);
         } else {

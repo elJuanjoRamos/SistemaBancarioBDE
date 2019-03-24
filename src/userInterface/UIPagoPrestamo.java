@@ -64,7 +64,7 @@ public class UIPagoPrestamo {
         
         
         /* BUSCA LAS TARJETAS DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
-        ObservableList tarjetas = FXCollections.observableArrayList(OperacionesClienteController.getInstancia().getArrayPrestamoClienteEspecifico(cliente.getId()));
+        ObservableList tarjetas = FXCollections.observableArrayList(TarjetasYPrestamosCliente.getInstancia().getArrayPrestamoClienteEspecifico(cliente.getId()));
 
         ComboBox comboPago = new ComboBox();
         comboPago.getItems().addAll(tarjetas);
@@ -133,7 +133,7 @@ public class UIPagoPrestamo {
         comboPago.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
-                Prestamo prestamo = OperacionesClienteController.getInstancia().buscarPrestamoCliente(comboPago.getSelectionModel().getSelectedItem().toString());
+                Prestamo prestamo = TarjetasYPrestamosCliente.getInstancia().buscarPrestamoCliente(comboPago.getSelectionModel().getSelectedItem().toString());
                 
                 
                 
@@ -161,7 +161,7 @@ public class UIPagoPrestamo {
 
                         PagoController.getInstancia().agregar("Prestamo Codigo. " + comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente);
                         
-                        OperacionesClienteController.getInstancia().modificarPrestamo(comboPago.getSelectionModel().getSelectedItem().toString(), 
+                        TarjetasYPrestamosCliente.getInstancia().modificarPrestamo(comboPago.getSelectionModel().getSelectedItem().toString(), 
                                                     Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
 
                         getAlert("Pago realizado con exito");
@@ -177,7 +177,7 @@ public class UIPagoPrestamo {
                             String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
                             PagoController.getInstancia().agregar("Prestamo Codigo. " + comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente);
                             
-                            OperacionesClienteController.getInstancia().modificarPrestamo(comboPago.getSelectionModel().getSelectedItem().toString(), 
+                            TarjetasYPrestamosCliente.getInstancia().modificarPrestamo(comboPago.getSelectionModel().getSelectedItem().toString(), 
                                                     Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
 
                             textFieldMonto.clear();

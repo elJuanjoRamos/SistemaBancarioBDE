@@ -258,7 +258,7 @@ public class UICliente {
     public void actualizarTablabusqueda(String nombre) {
         
         
-        if (ClienteController.getClienteController().buscar(nombre) != null) {
+        if (!ClienteController.getClienteController().buscar(nombre).isEmpty()) {
            
             observableList = FXCollections.observableArrayList(ClienteController.getClienteController().buscar(nombre));
             tableView.setItems(observableList);

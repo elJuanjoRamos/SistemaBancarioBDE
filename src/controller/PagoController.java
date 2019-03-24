@@ -10,7 +10,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
-import jdk.nashorn.internal.ir.ForNode;
 
 /**
  *
@@ -48,15 +47,7 @@ public class PagoController {
                 break;
             }
         }
-        
-        for (int i = 0; i < pago.length; i++) {
-            if (pago[i] != null) {
-                System.out.println(pago[i].getCliente().getNombre());
-                System.out.println(pago[i].getServicio());
-                System.out.println(pago[i].getTipoPago());
-                System.out.println(pago[i].getMonto());
-            }
-        }
+
     }
     
     

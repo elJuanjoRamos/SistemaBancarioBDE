@@ -6,21 +6,26 @@
 package controller;
 
 import beans.Empleado;
+import java.util.ArrayList;
 
 /**
  *
  * @author Juan José Ramos
  */
 public class EmpleadoController {
-        private static final EmpleadoController EmpleadoController = new EmpleadoController();
     
+    /*VARIABLES*/
+    private static final EmpleadoController EmpleadoController = new EmpleadoController();
     private Empleado[] array = new Empleado[1000];
     private Empleado[] arrayAux = new Empleado[1000];
+    private ArrayList<Empleado> arrayList =new ArrayList();
     
     
     private EmpleadoController() {
+        arrayList= new ArrayList();
     }
-
+    
+    /*SINGLETON*/
     private static EmpleadoController instance;
     public static EmpleadoController getEmpleadoController(){
         if(instance == null){
@@ -28,11 +33,13 @@ public class EmpleadoController {
         }
         return instance;
     }
+    /*---------------*/
     
     public void agregar(String nombre, String direccion, String telefono, String departamento) {
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 array[i] = new Empleado(i, nombre, direccion, telefono, departamento);
+             
                 break;
             }
         }
@@ -62,27 +69,41 @@ public class EmpleadoController {
         }
     }
     
-    public Empleado[] buscar(String nombre){
+    public ArrayList<Empleado> buscar(String valor){
+        this.arrayList.clear();
         Empleado[] resultado = new Empleado[1000];
         for (int i = 0; i < 1000; i++) {
             if (array[i] != null) {
-                if (array[i].getNombre().toUpperCase().contains(nombre.toUpperCase())) {
+                if (array[i].getNombre().toUpperCase().contains(valor.toUpperCase()) ||
+                    array[i].getDepartamento().toUpperCase().contains(valor.toUpperCase())  ||
+                    array[i].getDireccion().toUpperCase().contains(valor.toUpperCase())  ||
+                    array[i].getTelefono().toUpperCase().contains(valor.toUpperCase())     ) {
                     for (int j = 0; j < 1000; j++) {
                         if (resultado[j] == null) {
                             resultado[j] = array[i];
                             break;
                         }
                     }
-        
                 }
             }
         }
-        return resultado;
+        for (Empleado e : resultado) {
+            if (e != null) {
+                arrayList.add(e);
+            }
+        }
+        return arrayList;
     }   
     
     
-    public Empleado[] getArray() {
-        return this.array;
+    public ArrayList<Empleado> getArray() {
+        this.arrayList.clear();
+        for (Empleado e : array) {
+            if (e != null) {
+                arrayList.add(e);
+            }
+        }
+        return arrayList;
     }
     
     

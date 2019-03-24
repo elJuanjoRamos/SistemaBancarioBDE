@@ -46,6 +46,7 @@ import javafx.stage.StageStyle;
  */
 public class UIPagoServicios {
 
+    /*SINGLETON*/
     private static final UIPagoServicios instance = new UIPagoServicios();
 
     private UIPagoServicios() {
@@ -54,7 +55,10 @@ public class UIPagoServicios {
     public static UIPagoServicios getUI() {
         return instance;
     }
-
+    /*------------*/
+    private ObservableList<String> cuentas;
+        
+    
     public void start(Stage primaryStage, Cliente cliente) {
         VBox v = new VBox();
         v.setStyle("-fx-background-color: white");
@@ -97,9 +101,8 @@ public class UIPagoServicios {
         ComboBox comboCuenta = new ComboBox();
 
         /* BUSCA LAS CUENTAS MONETARIAS DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
-        ObservableList cuentas = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayNoCMCliete(cliente.getId()));
-
-        comboCuenta.getItems().addAll(cuentas);
+        
+        comboCuenta.getItems().addAll(getCuentaMonetaria(cliente.getId()));
         comboCuenta.setEditable(true);
         gridPane.add(comboCuenta, 2, 6);
         labelCuenta.setVisible(false);
@@ -226,4 +229,14 @@ public class UIPagoServicios {
         alerta.initStyle(StageStyle.UTILITY);
         alerta.showAndWait();
     }
+    
+    public ObservableList<String> getCuentaMonetaria(int id){
+        
+        if (!CuentasCliente.getCuentasCliente().getArrayNoCMCliete(id).isEmpty()) {
+           cuentas = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayNoCMCliete(id));
+        }
+        return cuentas;
+    }
+    
+    
 }

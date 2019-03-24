@@ -242,7 +242,7 @@ public class UIEmpleado {
     }
 
     public void actualizarTablabusqueda(String nombre) {
-        if (EmpleadoController.getEmpleadoController().buscar(nombre) != null) {
+        if (!EmpleadoController.getEmpleadoController().buscar(nombre).isEmpty()) {
             observableList = FXCollections.observableArrayList(EmpleadoController.getEmpleadoController().buscar(nombre));
             tableView.setItems(observableList);
         } else {
@@ -308,7 +308,7 @@ class CrearEmpleado {
         gridPane.add(labelDepartamento, 0, 6);
 
         comboDepartamento = new ComboBox();
-        comboDepartamento.getItems().addAll("Agencia","Auto Banco","Cajero","Call-Center");
+        comboDepartamento.getItems().addAll("Agencia","Auto Banco","Oficinas Centrales","Call-Center");
         gridPane.add(comboDepartamento, 1, 6, 2, 1);
 
         
@@ -412,7 +412,7 @@ class ActualizarEmpleado {
         gridPane.add(labelDepartamento, 0, 6);
 
         comboDepartamento = new ComboBox();
-        comboDepartamento.getItems().addAll("Agencia","Auto Banco","Cajero","Call-Center");
+        comboDepartamento.getItems().addAll("Agencia","Auto Banco","Oficinas","Call-Center");
         gridPane.add(comboDepartamento, 1, 6, 3, 1);
 
         buttonModificar = new Button("Modificar");

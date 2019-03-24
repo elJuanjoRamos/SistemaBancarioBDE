@@ -39,6 +39,7 @@ import beans.*;
  */
 public class UIAgencia {
 
+    /*SINGLETON*/
     private static final UIAgencia CRUDAgenciaBancaria = new UIAgencia();
 
     private UIAgencia() {
@@ -47,7 +48,7 @@ public class UIAgencia {
     public static UIAgencia getAgencia() {
         return CRUDAgenciaBancaria;
     }
-
+    /*----------------*/
     private HBox hBoxCRUD;
     private GridPane gridPane;
     private Text textTitle;
@@ -256,7 +257,7 @@ public class UIAgencia {
     }
 
     public void actualizarTablabusqueda(String nombre) {
-        if (AgenciaController.getAgenciaController().buscar(nombre) != null) {
+        if (!AgenciaController.getAgenciaController().buscar(nombre).isEmpty()) {
             observableList = FXCollections.observableArrayList(AgenciaController.getAgenciaController().buscar(nombre));
             tableView.setItems(observableList);
         } else {

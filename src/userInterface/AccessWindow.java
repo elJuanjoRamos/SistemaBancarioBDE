@@ -81,7 +81,6 @@ public class AccessWindow {
                   boolean auth = autenticar(userTextField.getText(), pwBox.getText());
                   
                   if (auth) {
-                      //Menu.getMemu().start(primaryStage);
                       AdminInterface.getAdminInterface().start(primaryStage);
                   } else {
                       actiontarget.setFill(Color.FIREBRICK);
