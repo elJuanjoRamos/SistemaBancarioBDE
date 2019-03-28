@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="SistemaBancatioBDE.jar" size="664498" download="eager" />
+    <jar href="SistemaBancatioBDE.jar" size="664532" download="eager" />
     <jar href="lib\barcodes-7.0.7.jar" size="150286" download="eager" />
     <jar href="lib\barcodes-7.1.2.jar" size="150251" download="eager" />
     <jar href="lib\font-asian-7.0.7.jar" size="2166112" download="eager" />
