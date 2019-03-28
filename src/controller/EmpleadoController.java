@@ -35,10 +35,11 @@ public class EmpleadoController {
     }
     /*---------------*/
     
-    public void agregar(String nombre, String direccion, String telefono, String departamento) {
+    public void agregar(String nombre, String direccion, String telefono, String departamento, String cadena) {
+        System.out.println(cadena);
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                array[i] = new Empleado(i, nombre, direccion, telefono, departamento);
+                array[i] = new Empleado(i, nombre, direccion, telefono, departamento, Integer.parseInt(cadena));
              
                 break;
             }
@@ -57,7 +58,7 @@ public class EmpleadoController {
             } 
         }
     }
-    public void actualizar(int id, String nombre, String direccion, String telefono, String departamento) {
+    public void actualizar(int id, String nombre, String direccion, String telefono, String departamento, String cadena) {
         for (int i = 0; i < array.length; i++) {
             if (i == id) {
                 Empleado e = array[i];
@@ -65,6 +66,7 @@ public class EmpleadoController {
                 e.setDireccion(direccion);
                 e.setTelefono(telefono);
                 e.setDepartamento(departamento);
+                e.setIdAgencia(Integer.parseInt(cadena));
             }
         }
     }

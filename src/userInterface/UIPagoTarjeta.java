@@ -6,6 +6,7 @@
 package userInterface;
 
 import beans.*;
+import controller.AgenciaController;
 import controller.CuentasCliente;
 import controller.PagoController;
 import controller.TarjetasYPrestamosCliente;
@@ -51,7 +52,7 @@ public class UIPagoTarjeta {
     public void start(Stage primaryStage, Cliente cliente) {
         VBox v = new VBox();
         v.setStyle("-fx-background-color: white");
-        Scene scene = new Scene(v, 500, 400, Color.WHITE);
+        Scene scene = new Scene(v, 700, 700, Color.WHITE);
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -86,7 +87,7 @@ public class UIPagoTarjeta {
         comboTipo.setEditable(true);
 
         Label labelCuenta = new Label("Numero de cuenta: ");
-        gridPane.add(labelCuenta, 1, 7);
+        gridPane.add(labelCuenta, 1, 6);
 
         ComboBox comboCuenta = new ComboBox();
 
@@ -95,7 +96,7 @@ public class UIPagoTarjeta {
 
         comboCuenta.getItems().addAll(cuentas);
         comboCuenta.setEditable(true);
-        gridPane.add(comboCuenta, 2, 7);
+        gridPane.add(comboCuenta, 2, 6);
         labelCuenta.setVisible(false);
         comboCuenta.setVisible(false);
 
@@ -130,6 +131,19 @@ public class UIPagoTarjeta {
         labelDeuda.setVisible(false);
         textFieldDeuda.setVisible(false);
 
+        Label labelAgencia = new Label("Agencia Bancaria: ");
+        gridPane.add(labelAgencia, 1, 7);
+        
+        ComboBox comboAgencia = new ComboBox();
+          /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
+        ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
+
+        comboAgencia.getItems().addAll(agencias);
+        comboAgencia.setEditable(true);
+
+        gridPane.add(comboAgencia, 2, 7);
+
+        
         
         
         comboPago.valueProperty().addListener(new ChangeListener<String>() {
@@ -158,7 +172,9 @@ public class UIPagoTarjeta {
                     if (comboPago.getSelectionModel().getSelectedItem() != null
                             && comboTipo.getSelectionModel().getSelectedItem().toString().equals("Efectivo")) {
 
-                        PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente);
+                        PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
+                                Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente, "", 
+                                comboAgencia.getSelectionModel().getSelectedItem().toString());
                         
                         TarjetasYPrestamosCliente.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
                                                     Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
@@ -173,15 +189,32 @@ public class UIPagoTarjeta {
                         
                         
                         if (comboCuenta.getSelectionModel().getSelectedItem() != null) {
-                            String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
-                            PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente);
                             
-                            TarjetasYPrestamosCliente.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
-                                                    Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
+                            CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(comboCuenta.getSelectionModel().getSelectedItem().toString()));
+                            if (c != null) {
+                                if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim())) {
+                                    String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
+                                    PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
+                                            Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente
+                                            , comboCuenta.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString());
 
-                            textFieldMonto.clear();
-                            getAlert("Pago realizado con exito");
-                        
+                                    TarjetasYPrestamosCliente.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
+                                                            Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
+
+                                    textFieldMonto.clear();
+                                    getAlert("Pago realizado con exito");
+
+                                    
+                                    
+                                } else {
+                                    getAlert("El saldo de la cuenta no es suficiente");
+                                }
+                             
+                            } else {
+                                getAlert("Numero de cuenta no valido");
+                            }
+                            
+                            
                         } else {
                             getAlert("Por favor seleccione un numero cuenta valido");
                         }

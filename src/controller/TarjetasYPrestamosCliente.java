@@ -8,6 +8,7 @@ package controller;
 import beans.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 /**
@@ -25,6 +26,9 @@ public class TarjetasYPrestamosCliente {
     TarjetaCredito[] arrayTarjeta = new TarjetaCredito[1000];
     Prestamo[] arrayPrestamo = new Prestamo[1000];
     
+    private ArrayList<TarjetaCliente> arrayListTarjeta =new ArrayList();
+    private ArrayList<PrestamoCliente> arrayListPrestamo =new ArrayList();
+    
     public int noTarjetaTransaccion = 0;
     public int noPrestamo;
     
@@ -32,13 +36,17 @@ public class TarjetasYPrestamosCliente {
     Date d = new Date();
         
     
+    public TarjetasYPrestamosCliente() {
+        arrayListTarjeta =new ArrayList();
+        arrayListPrestamo =new ArrayList();
+    }
     
     
     /*--------Singleton-------*/
     private static final TarjetasYPrestamosCliente transaccionController = new TarjetasYPrestamosCliente();
     private static TarjetasYPrestamosCliente instancia;
-    public TarjetasYPrestamosCliente() {
-    }
+    
+    
     
     public static TarjetasYPrestamosCliente getInstancia() {
         if (instancia == null) {
@@ -47,11 +55,12 @@ public class TarjetasYPrestamosCliente {
         return instancia;
     }
     /*--------------------*/
-    
-
 
     
+
     
+    
+
     
     
     
@@ -101,23 +110,21 @@ public class TarjetasYPrestamosCliente {
         return this.arrayTarjeta;
     }
     
-    public TarjetaCliente[] getArrayTarjetaCliente(int idCliente) {
-        TarjetaCliente[] result = new TarjetaCliente[1000];
+    public ArrayList<TarjetaCliente> getArrayTarjetaCliente(int idCliente) {
+        this.arrayListTarjeta.clear();
         
-        for (int i = 0; i < this.arrayTarjetaCliente.length; i++) {
-            if (arrayTarjetaCliente[i] != null) {
-                if (arrayTarjetaCliente[i].getCliente().getId() ==  idCliente) {
-                    
-                    for (int j = 0; j < result.length; j++) {
-                        if (result[j] == null) {
-                            result[j] = arrayTarjetaCliente[i];
-                            break;
-                        }
-                    }
+        for (TarjetaCliente c : arrayTarjetaCliente) {
+            
+            if (c != null) {
+                
+                if (c.getCliente().getId() == idCliente) {
+                    arrayListTarjeta.add(c);
                 }
+                
             }
         }
-        return result;
+        
+        return arrayListTarjeta;
     }
     
     
@@ -136,23 +143,20 @@ public class TarjetasYPrestamosCliente {
     }
     
     
-    public String[] getArrayTarjetaClienteEspecifico(int idCliente) {
-        String[] result = new String[10];
+    public ArrayList<String> getArrayTarjetaClienteEspecifico(int idCliente) {
         
-        for (int i = 0; i < this.arrayTarjetaCliente.length; i++) {
-            if (arrayTarjetaCliente[i] != null) {
-                if (arrayTarjetaCliente[i].getCliente().getId() ==  idCliente) {
-                    
-                    for (int j = 0; j < result.length; j++) {
-                        if (result[j] == null) {
-                            result[j] = String.valueOf(arrayTarjetaCliente[i].getTarjeta().getId());
-                            break;
-                        }
-                    }
+        ArrayList<String> array = new ArrayList();
+        
+        for (TarjetaCliente c : arrayTarjetaCliente) {
+            if (c != null) {
+                if (c.getCliente().getId() == idCliente) {
+                    array.add(String.valueOf(c.getTarjeta().getId()));
                 }
             }
+            
         }
-        return result;
+        
+        return array;
     }
     
     
@@ -224,27 +228,20 @@ public class TarjetasYPrestamosCliente {
                 
     }
     
-    public PrestamoCliente[] getPrestamoCliente(){
-        return this.arrayPrestamoCliente;
-    }
     
-    public PrestamoCliente[] getArrayPrestamoCliente(int idCliente) {
-        PrestamoCliente[] result = new PrestamoCliente[1000];
+    
+    public ArrayList<PrestamoCliente> getArrayPrestamoCliente(int idCliente) {
+        this.arrayListPrestamo.clear();
         
-        for (int i = 0; i < this.arrayPrestamoCliente.length; i++) {
-            if (arrayPrestamoCliente[i] != null) {
-                if (arrayPrestamoCliente[i].getCliente().getId() ==  idCliente) {
-                    
-                    for (int j = 0; j < result.length; j++) {
-                        if (result[j] == null) {
-                            result[j] = arrayPrestamoCliente[i];
-                            break;
-                        }
-                    }
+        for (PrestamoCliente c : arrayPrestamoCliente) {
+            if (c != null) {
+                if (c.getCliente().getId() == idCliente) {
+                    arrayListPrestamo.add(c);
                 }
             }
         }
-        return result;
+        
+        return arrayListPrestamo;
     }
     
     /*----------BUSCAR UN PRESTAMO POR CODIGO DE UN CLIENTE ESPECIFICO ----------*/
@@ -261,23 +258,18 @@ public class TarjetasYPrestamosCliente {
     }
     
     
-    public String[] getArrayPrestamoClienteEspecifico(int idCliente) {
-        String[] result = new String[10];
+    public ArrayList<String> getArrayPrestamoClienteEspecifico(int idCliente) {
+        ArrayList<String> arrayList = new ArrayList();
         
-        for (int i = 0; i < this.arrayPrestamoCliente.length; i++) {
-            if (arrayPrestamoCliente[i] != null) {
-                if (arrayPrestamoCliente[i].getCliente().getId() ==  idCliente) {
-                    
-                    for (int j = 0; j < result.length; j++) {
-                        if (result[j] == null) {
-                            result[j] = String.valueOf(arrayPrestamoCliente[i].getCodigo());
-                            break;
-                        }
-                    }
+        for (PrestamoCliente c : arrayPrestamoCliente) {
+            if (c != null) {
+                if (c.getCliente().getId() == idCliente) {
+                    arrayList.add(c.getCodigo());
                 }
-            }
+            }   
         }
-        return result;
+        
+        return arrayList;
     }
     /*-----------------MODIFICAR PRESTAMO DEL CLIENTE---------------------*/
     public void modificarPrestamo(String codigo, Double monto, int idCliente){
@@ -295,6 +287,10 @@ public class TarjetasYPrestamosCliente {
                     
                     arrayPrestamoCliente[i].setDeuda(deuda-monto);
                     arrayPrestamoCliente[i].setAbono(abono + monto);
+                    
+                    if (arrayPrestamoCliente[i].getDeuda() == 0) {
+                        arrayPrestamoCliente[i].setEstado("Pagado");
+                    }
                     
                     
                 }

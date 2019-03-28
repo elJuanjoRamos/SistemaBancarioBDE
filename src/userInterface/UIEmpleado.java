@@ -5,6 +5,7 @@
  */
 package userInterface;
 
+import beans.AgenciaBancaria;
 import beans.Empleado;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +33,8 @@ import java.util.Optional;
 import javafx.scene.control.ButtonType;
 
 import controller.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
 
 /**
@@ -266,7 +269,7 @@ class CrearEmpleado {
     private ComboBox comboDepartamento;
     private Button buttonAgregar;
     private Button buttonCerrar;
-
+    private ComboBox comboAgencia;
     private CrearEmpleado() {
     }
 
@@ -312,6 +315,54 @@ class CrearEmpleado {
         gridPane.add(comboDepartamento, 1, 6, 2, 1);
 
         
+        Label labelAgencia = new Label("Agencia bancaria: ");
+        labelAgencia.setId("labelTexto");
+        gridPane.add(labelAgencia, 0, 7);
+        labelAgencia.setVisible(false);
+        
+        comboAgencia = new ComboBox();
+          /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
+        comboAgencia.setVisible(false);
+        
+        
+        
+        
+        
+        
+        
+        comboDepartamento.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue ov, String t, String t1) {
+                if (comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Agencia")) {
+                    comboAgencia = new ComboBox();
+                    ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
+
+                    comboAgencia.getItems().addAll(agencias);
+                    gridPane.add(comboAgencia, 1, 7,3, 1);
+        
+                    
+                    comboAgencia.setVisible(true);
+                    labelAgencia.setVisible(true);
+                    
+                } else if(comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Auto Banco")){
+                    comboAgencia = new ComboBox();
+                    ObservableList agenciasAuto = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgenciaAutoBanco());
+                    comboAgencia.getItems().addAll(agenciasAuto);
+                    gridPane.add(comboAgencia, 1, 7,4, 1);
+        
+                    comboAgencia.setVisible(true);
+                    labelAgencia.setVisible(true);
+                    
+                } else {
+                    comboAgencia.setVisible(false);
+                    labelAgencia.setVisible(false);
+                    
+                } 
+                
+            }
+        });
+        
+        
         buttonCerrar = new Button("Cerrar");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -327,7 +378,18 @@ class CrearEmpleado {
 
                 if (textFieldNombre.getText().length() != 0 && textFieldDireccion.getText().length() != 0 && textFieldTelefono.getText().length() != 0 &&
                         comboDepartamento.getSelectionModel().getSelectedItem() != null) {
-                    EmpleadoController.getEmpleadoController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString());
+                    
+                    String valor = ""; 
+                    AgenciaBancaria a = null;
+                    
+                    if (comboAgencia.getSelectionModel().getSelectedItem() != null) {
+                        a = AgenciaController.getAgenciaController().buscarAgenciaUnica(comboAgencia.getSelectionModel().getSelectedItem().toString());
+                        valor = String.valueOf(a.getId());
+                    } 
+                    
+                    
+                    EmpleadoController.getEmpleadoController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString()+ " " + 
+                            a.getNombre(), valor);
                     textFieldNombre.clear();
                     textFieldDireccion.clear();
                     textFieldTelefono.clear();
@@ -345,8 +407,8 @@ class CrearEmpleado {
             }
         });
 
-        gridPane.add(buttonAgregar, 1, 7);
-        gridPane.add(buttonCerrar, 2, 7);
+        gridPane.add(buttonAgregar, 1, 8);
+        gridPane.add(buttonCerrar, 2, 8);
         gridPane.setMinSize(200, 400);
         gridPane.getStyleClass().add("gridPane");
 
@@ -415,6 +477,35 @@ class ActualizarEmpleado {
         comboDepartamento.getItems().addAll("Agencia","Auto Banco","Oficinas","Call-Center");
         gridPane.add(comboDepartamento, 1, 6, 3, 1);
 
+        Label labelAgencia = new Label("Agencia bancaria: ");
+        labelAgencia.setId("labelTexto");
+        gridPane.add(labelAgencia, 0, 7);
+        labelAgencia.setVisible(false);
+        
+        ComboBox comboAgencia = new ComboBox();
+          /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
+        ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
+
+        comboAgencia.getItems().addAll(agencias);
+        comboAgencia.setEditable(true);
+        
+        gridPane.add(comboAgencia, 1, 7, 3, 1);
+        comboAgencia.setVisible(false);
+        
+        
+        ComboBox comboAutobanco = new ComboBox();
+          /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
+        ObservableList agenciasAuto = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgenciaAutoBanco());
+
+        comboAutobanco.getItems().addAll(agenciasAuto);
+        comboAutobanco.setEditable(true);
+        
+        gridPane.add(comboAutobanco, 1, 7, 3, 1);
+        comboAgencia.setVisible(false);
+        
+        
+        
+        
         buttonModificar = new Button("Modificar");
         buttonModificar.setDefaultButton(true);
         buttonModificar.setOnAction(new EventHandler<ActionEvent>() {
@@ -425,8 +516,20 @@ class ActualizarEmpleado {
                         && textFieldTelefono.getText().trim().length() != 0 
                         && comboDepartamento.getSelectionModel().getSelectedItem() != null) {
                     
+                    String valor = ""; 
+                    AgenciaBancaria a = null;
+                    
+                    if (comboAgencia.getSelectionModel().getSelectedItem() != null || comboAutobanco.getSelectionModel().getSelectedItem() != null) {
+                        a = AgenciaController.getAgenciaController().buscarAgenciaUnica(comboAgencia.getSelectionModel().getSelectedItem().toString());
+                        
+                        valor = String.valueOf(a.getId());
+                        
+                        
+                    }
+                    
+                    
                     EmpleadoController.getEmpleadoController().actualizar(empleado.getId(), textFieldNombre.getText(), 
-                            textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString());
+                            textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), valor);
                     UIEmpleado.getUIEmpleado().actualizarDatosTabla();
                     
 
@@ -441,7 +544,7 @@ class ActualizarEmpleado {
             }
         });
 
-        gridPane.add(buttonModificar, 0, 7);
+        gridPane.add(buttonModificar, 0, 8);
 
         buttonCerrar = new Button("Cerrar");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {

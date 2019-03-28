@@ -89,29 +89,18 @@ public class CuentasCliente {
 
     public ArrayList<CuentaAhorroCliente> getArrayCACliete(int idCliente) {
         this.arrayListCuentaAhorroCliente.clear();
-        CuentaAhorroCliente[] result = new CuentaAhorroCliente[1000];
-
-        for (int i = 0; i < this.cuentaAhorroCliente.length; i++) {
-            if (cuentaAhorroCliente[i] != null) {
-                if (cuentaAhorroCliente[i].getCliente().getId() == idCliente) {
-
-                    for (int j = 0; j < result.length; j++) {
-                        if (result[j] == null) {
-                            result[j] = cuentaAhorroCliente[i];
-                            break;
-                        }
-                    }
+        
+        for (CuentaAhorroCliente c : cuentaAhorroCliente) {
+            if (c!= null) {
+                if (c.getCliente().getId() == idCliente) {
+                    arrayListCuentaAhorroCliente.add(c);                
                 }
-            }
-        }
-        for (CuentaAhorroCliente c : result) {
-            if (c != null) {
-                arrayListCuentaAhorroCliente.add(c);
             }
         }
         return arrayListCuentaAhorroCliente;
     }
 
+   /*OBTIENE SOLO LOS ID DE LAS CUENTAS DE AHORRO DE UN CLIENTE*/
     public ArrayList<String> getArrayNoCACliete(int idCliente) {
         String[] result = new String[1000];
         ArrayList<String> arrayCuentaAhorro = new ArrayList();
@@ -136,6 +125,20 @@ public class CuentasCliente {
             }
         }
         return arrayCuentaAhorro;
+    }
+    
+    
+    
+    /*BUSCA UNA UNICA CUENTA*/
+    public CuentaAhorroCliente getArrayCAClieteUnica(int idCuenta) {
+        for (CuentaAhorroCliente a : cuentaAhorroCliente) {
+            if (a != null) {
+                if (a.getIdCuenta()== idCuenta) {
+                    return a;
+                }
+            }
+        }
+        return null;
     }
 
     /*----------------CUENTA MONETARIA---------------*/
@@ -169,27 +172,28 @@ public class CuentasCliente {
     /*MOSTRAR*/
     public ArrayList<CuentaMonetariaCliente> getArrayCMCliete(int idCliente) {
         this.arrayListCuentaMonetariaCliente.clear();
-        CuentaMonetariaCliente[] result = new CuentaMonetariaCliente[1000];
-
-        for (int i = 0; i < this.cuentaMonetariaCliente.length; i++) {
-            if (cuentaMonetariaCliente[i] != null) {
-                if (cuentaMonetariaCliente[i].getCliente().getId() == idCliente) {
-
-                    for (int j = 0; j < result.length; j++) {
-                        if (result[j] == null) {
-                            result[j] = cuentaMonetariaCliente[i];
-                            break;
-                        }
-                    }
+        
+        
+        for (CuentaMonetariaCliente c : cuentaMonetariaCliente) {
+            if (c != null) {
+                if (c.getCliente().getId() == idCliente) {
+                    arrayListCuentaMonetariaCliente.add(c);
                 }
             }
         }
-        for (CuentaMonetariaCliente c : result) {
-            if (c != null) {
-                arrayListCuentaMonetariaCliente.add(c);
+        return arrayListCuentaMonetariaCliente;
+    }
+    
+    /*BUSCA UNA UNICA CUENTA MONETARIA*/
+    public CuentaMonetariaCliente getArrayCMClieteUnica(int idCuenta) {
+        for (CuentaMonetariaCliente a : cuentaMonetariaCliente) {
+            if (a != null) {
+                if (a.getIdCuenta()== idCuenta) {
+                    return a;
+                }
             }
         }
-        return arrayListCuentaMonetariaCliente;
+        return null;
     }
 
     /*MOSTRAR UNICAMENTE LOS IDS*/

@@ -141,6 +141,12 @@ public class ClienteController {
         return arrayList;
     }
     
+    public Cliente[] getArregloCliente(){
+        
+        return this.array;
+    }
+    
+    
     public ArrayList<String> getNombresClietes() {
         ArrayList<String> nombres = new ArrayList();
         

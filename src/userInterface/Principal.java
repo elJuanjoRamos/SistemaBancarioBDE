@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import controller.*;
 
 import beans.*;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,22 +48,19 @@ public class Principal extends Application {
 
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException{
       
       
         ClienteController.getClienteController().agregar("pedro", "dir1", "tel");
         ClienteController.getClienteController().agregar("raul", "dir2", "tel");
         ClienteController.getClienteController().agregar("jenny", "dir3", "tel");
         
-        EmpleadoController.getEmpleadoController().agregar("juan", "dir1", "tel", "Call-Center");
-        EmpleadoController.getEmpleadoController().agregar("luis", "dir2", "tel", "Agencia");
-        EmpleadoController.getEmpleadoController().agregar("pedro", "dir3", "tel", "Autobanco");
         
         //AGENCIA
-        AgenciaController.getAgenciaController().agregar("1", "DIR1", "TEL", 1, 1, 0, 50.450);
-        AgenciaController.getAgenciaController().agregar("2", "DIR1", "TEL", 1, 1, 0, 50.450);
-        AgenciaController.getAgenciaController().agregar("3", "DIR1", "TEL", 1, 1, 0, 50.450);
-        AgenciaController.getAgenciaController().agregar("4", "DIR1", "TEL", 1, 1, 0, 50.450);
+        AgenciaController.getAgenciaController().agregar("1", "DIR1", "TEL", 1, 1, 0, 100000.00);
+        AgenciaController.getAgenciaController().agregar("2", "DIR1", "TEL", 1, 1, 0, 100000.00);
+        AgenciaController.getAgenciaController().agregar("3", "DIR1", "TEL", 1, 1, 0, 100000.00);
+        AgenciaController.getAgenciaController().agregar("4", "DIR1", "TEL", 1, 1, 0, 100000.00);
         
         
         
@@ -76,13 +74,21 @@ public class Principal extends Application {
         AgenciaController.getAgenciaController().agregar("D", "dir4", "tel4", 9, 5, 4, 50.03);
         AgenciaController.getAgenciaController().agregar("E", "dir5", "tel5", 7, 5, 5, 37.03);
         
+        
+        /*EMPLEADOS*/
+        EmpleadoController.getEmpleadoController().agregar("juan", "dir1", "tel", "Call-Center", "0");
+        EmpleadoController.getEmpleadoController().agregar("luis", "dir2", "tel", "Agencia", "1");
+        EmpleadoController.getEmpleadoController().agregar("pedro", "dir3", "tel", "Autobanco","8");
+        
+        
+        
         //CAJEROS
-        CajeroController.getCajeroControler().agregar(153231.55, "Zona 1", "Disponible" );
-        CajeroController.getCajeroControler().agregar(56456.01, "Centro Comercial Miraflores", "Disponible" );
-        CajeroController.getCajeroControler().agregar(5456.21, "USAC", "No Disponible" );
-        CajeroController.getCajeroControler().agregar(556.12, "Avenida Petapa", "No Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "Zona 1", "Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "Centro Comercial Miraflores", "Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "USAC", "No Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "Avenida Petapa", "No Disponible" );
         
-        
+         
         
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date d = new Date();
@@ -141,9 +147,8 @@ public class Principal extends Application {
         CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(2);
         
         
-        
-        
-        //RETIROS
+        //PDFController.getPDFController().crearPDFClientes();
+//RETIROS
         
         
         

@@ -19,19 +19,21 @@ public class Pago {
     private String tipoPago;
     private String fecha;
     private Cliente cliente;
-    
-    
+    private AgenciaBancaria agencia;
+    private String nombreAgencia;
     
     public Pago() {
     }
 
-    public Pago(int id, String servicio, Double monto, String tipoPago, String fecha, Cliente cliente) {
+    public Pago(int id, String servicio, Double monto, String tipoPago, String fecha, Cliente cliente,AgenciaBancaria agenciaBancaria) {
         this.id = id;
         this.servicio = servicio;
         this.monto = monto;
         this.tipoPago = tipoPago;
         this.fecha = fecha;
         this.cliente = cliente;
+        this.agencia = agenciaBancaria;
+        this.nombreAgencia = agenciaBancaria.getNombre();
     }
 
     public int getId() {
@@ -80,6 +82,22 @@ public class Pago {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public AgenciaBancaria getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(AgenciaBancaria agencia) {
+        this.agencia = agencia;
+    }
+
+    public String getNombreAgencia() {
+        return nombreAgencia;
+    }
+
+    public void setNombreAgencia(String nombreAgencia) {
+        this.nombreAgencia = nombreAgencia;
     }
     
     

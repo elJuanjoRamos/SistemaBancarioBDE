@@ -131,8 +131,7 @@ public class UISeleccionCliente {
         buttonCancelar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Principal p = new Principal();
-                p.start(primaryStage);
+                UIMenu.getUI().start(primaryStage);
             }
         });
         h.getChildren().addAll(textFieldBuscar, buttonBuscar, buttonReg);

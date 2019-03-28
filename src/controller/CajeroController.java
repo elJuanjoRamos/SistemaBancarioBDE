@@ -93,7 +93,6 @@ public class CajeroController {
 
     /*obtiene todos los cajeros*/
     public ArrayList<Cajero> getArray() {
-        System.out.println("hola cajero");
         this.arrayList.clear();
         for (Cajero c : cajero) {
             if (c != null) {
@@ -103,23 +102,6 @@ public class CajeroController {
         
         
         
-        /*Cajero[] resultado = new Cajero[1000];
-        for (int i = 0; i < cajero.length; i++) {
-            if (cajero[i] != null) {
-                for (int j = 0; j < resultado.length; j++) {
-                    if (resultado[j] == null) {
-                        resultado[j] = cajero[i];
-                        break;
-                    }
-                }
-            }
-        }
-        for (Cajero c : resultado) {
-            if (c != null) {
-                arrayList.add(c);
-            }
-        }
-        */
         return arrayList;
     }
     
@@ -130,7 +112,10 @@ public class CajeroController {
         
         for (Cajero c : cajero) {
             if (c != null) {
-                array.add(c.getId() + "-" + c.getUbicacion());
+                if (c.getEstado().equals("Disponible")) {
+                    array.add(c.getId() + "-" + c.getUbicacion());
+                }
+                
             }
         }
         return array;

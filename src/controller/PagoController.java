@@ -8,6 +8,7 @@ package controller;
 import beans.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 
@@ -19,14 +20,17 @@ public class PagoController {
     
     /*Variables*/
     Pago[] pago = new Pago[1000];
+    private ArrayList<Pago> arrayList = new ArrayList();
+
     
+    public PagoController() {
+         arrayList = new ArrayList();
+    }
     
     /*-----------SINGLETON-----------*/
     private static final PagoController PagoController = new PagoController();
     private static PagoController instancia;
-    public PagoController() {
-    }
-    
+   
     public static PagoController getInstancia() {
         if (instancia == null) {
             instancia = new PagoController();
@@ -36,16 +40,34 @@ public class PagoController {
     /*------------------------------*/
     
     
-    public void agregar(String servicio, Double monto, String tipoPago, Cliente cliente) {
+    public void agregar(String servicio, Double monto, String tipoPago, Cliente cliente, String cuenta, String agencia) {
+        
+        
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date d = new Date();
         
         
         for (int i = 0; i < pago.length; i++) {
             if (pago[i] == null ) {
-                pago[i] = new Pago(i,servicio, monto, tipoPago, dateFormat.format(d), cliente);
+                pago[i] = new Pago(i,servicio, monto, tipoPago, dateFormat.format(d), cliente, AgenciaController.getAgenciaController().buscarAgenciaUnica(agencia));
                 break;
             }
+        }
+        
+        if (AgenciaController.getAgenciaController().buscarAgenciaUnica(agencia) != null) {
+            AgenciaBancaria a = AgenciaController.getAgenciaController().buscarAgenciaUnica(agencia);
+            Double efectivo = a.getEfectivo();
+            
+            a.setEfectivo(efectivo + monto);
+        }
+        
+        if (!cuenta.equals("")) {
+            CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(cuenta));
+            Double devito = c.getMontoInicial();
+            
+            c.getCuenta().setMontoInicial(devito - monto);
+            c.setMontoInicial(devito-monto);
+
         }
 
     }
@@ -54,23 +76,17 @@ public class PagoController {
     
     /*BUSCAR PAGOS DE UN CLIENTE ESPECIFICO*/
         
-    public Pago[] getArrayPagosCliente(int idCliente) {
-        Pago[] result = new Pago[1000];
+    public ArrayList<Pago> getArrayPagosCliente(int idCliente) {
+        this.arrayList.clear();
         
-        for (int i = 0; i < this.pago.length; i++) {
-            if (pago[i] != null) {
-                if (pago[i].getCliente().getId() ==  idCliente) {
-                    
-                    for (int j = 0; j < result.length; j++) {
-                        if (result[j] == null) {
-                            result[j] = pago[i];
-                            break;
-                        }
-                    }
+        for (Pago c : pago) {
+            if (c != null) {
+                if (c.getCliente().getId() == idCliente) {
+                    arrayList.add(c);
                 }
             }
         }
-        return result;
+        return arrayList;
     }
     
     

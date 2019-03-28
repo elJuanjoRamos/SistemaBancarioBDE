@@ -72,6 +72,7 @@ public class UICliente {
         hBoxCRUD.getChildren().clear();
         hBoxCRUD.getChildren().add(gridPane);
     }
+    
 
     public HBox getViewCliente() {
         hBoxCRUD = new HBox();

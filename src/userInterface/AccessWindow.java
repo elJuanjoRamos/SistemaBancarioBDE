@@ -50,6 +50,7 @@ public class AccessWindow {
         view.setImage(image);
         grid = new GridPane();
         grid.setId("gridLogin");
+        grid.setStyle("-fx-background-color:white");
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(20);
         grid.setVgap(20);
@@ -78,11 +79,13 @@ public class AccessWindow {
         btn.setOnAction(new EventHandler<ActionEvent>() {
               @Override
                public void handle(ActionEvent e) {
-                  boolean auth = autenticar(userTextField.getText(), pwBox.getText());
+                  int auth = autenticar(userTextField.getText(), pwBox.getText());
                   
-                  if (auth) {
+                  if (auth == 1) {
                       AdminInterface.getAdminInterface().start(primaryStage);
-                  } else {
+                  } else if(auth == 2) {
+                      UIDeptoFinanciero.getUI().start(primaryStage);
+                  }else {
                       actiontarget.setFill(Color.FIREBRICK);
                       actiontarget.setText("Usuario o password Invalidos");
                   }
@@ -113,21 +116,24 @@ public class AccessWindow {
         primaryStage.setScene(scene);
         primaryStage.show();
         
+        
         return grid;
     }
     
-    private Boolean autenticar(String nombre, String clave) {
+    private int autenticar(String nombre, String clave) {
         if(nombre.length() != 0 && clave.length() != 0) {
             if (esNumero(clave)) {
                 if (nombre.equals("admin") && Integer.parseInt(clave) ==  123456) {
-                    return true;
+                    return 1;
+                } else if(nombre.equals("gestion") && Integer.parseInt(clave) ==  123456){
+                    return 2;
                 }
             } else {
-                return false;
+                return 3;
             }
-            return false;
+            return 3;
         } else {
-            return false;
+            return 3;
         }
     }
     

@@ -20,10 +20,11 @@ public class Deposito {
     private String tipoDeposito;
     private Cliente cliente;
     private String nombre;
+    private String nombreAgencia;
     public Deposito() {
     }
 
-    public Deposito(int id, int idDepositante, String cuenta, Double monto, Date fecha, String tipoDeposito, Cliente cliente) {
+    public Deposito(int id, int idDepositante, String cuenta, Double monto, Date fecha, String tipoDeposito, Cliente cliente, String nombreAgencia) {
         this.id = id;
         this.idDepositante = idDepositante;
         this.cuenta = cuenta;
@@ -32,6 +33,7 @@ public class Deposito {
         this.tipoDeposito = tipoDeposito;
         this.cliente = cliente;
         this.nombre = cliente.getNombre();
+        this.nombreAgencia = nombreAgencia;
     }
 
     public int getId() {
@@ -96,6 +98,14 @@ public class Deposito {
 
     public void setIdDepositante(int idDepositante) {
         this.idDepositante = idDepositante;
+    }
+
+    public String getNombreAgencia() {
+        return nombreAgencia;
+    }
+
+    public void setNombreAgencia(String nombreAgencia) {
+        this.nombreAgencia = nombreAgencia;
     }
     
     

@@ -157,6 +157,20 @@ public class UIOperacionesCliente {
         
         
         
+        Tab tab4 = new Tab();
+        tab4.setText("CUENTAS AHORRO");
+        tab4.setContent(ObtenerCuentasAhorro.getObtenerCuentasAhorro().getVista(cliente.getId()));
+        tab4.setClosable(false);
+        
+        Tab tab5 = new Tab();
+        tab5.setText("CUENTAS MONETARIAS");
+        tab5.setContent(ObtenerCuentasMonetaria.getObtenerCuentasMonetaria().getVista(cliente.getId()));
+        tab5.setClosable(false);
+        
+        
+        
+        
+             
         
         
         
@@ -179,8 +193,7 @@ public class UIOperacionesCliente {
         
         
         
-        
-        tabPane.getTabs().addAll(tab, tab0, tab1, tab2, tab3);
+        tabPane.getTabs().addAll(tab, tab0, tab1, tab2, tab3, tab4, tab5);
         tabPane.setSide(Side.TOP);
         borderPane.prefHeightProperty().bind(scene.heightProperty());
         borderPane.prefWidthProperty().bind(scene.widthProperty());
@@ -217,8 +230,15 @@ public class UIOperacionesCliente {
 
         Menu menuArchivo = new Menu("OPCIONES");
         Menu menuAgencia = new Menu("AGENCIA BANCARIA");
+        Menu menuAgenciaAB = new Menu("AGENCIA AUTO BANCO");
+        Menu menuCajero = new Menu("CAJERO");
+        Menu menuCallCenter = new Menu("CallCenter");
+        
+        
+        
         
         Menu menuPago = new Menu("_Área de cajas");
+        Menu menuPagoAB = new Menu("_Área de cajas Auto Banco");
         Menu menuAtencionCliente = new Menu("_Área de atención al cliente");
         
         
@@ -226,12 +246,25 @@ public class UIOperacionesCliente {
         MenuItem menuItemRegresar = new MenuItem("_Regresar");
         
         
-        
+        /*AGENCIA*/
         MenuItem menuItemPagoServicio = new MenuItem("_Pago de Servicios");
         MenuItem menuItemPagoTarjeta = new MenuItem("_Pago de Tarjetas");
         MenuItem menuItemPagoPrestamo = new MenuItem("_Pago de Prestamos");
         MenuItem menuItemDeposito = new MenuItem("_Deposito");
         MenuItem menuItemRetiro = new MenuItem("_Retiros");
+        
+        //AGENCIA AUTO BANCO/
+        MenuItem menuItemPagoServicioAB = new MenuItem("_Pago de Servicios");
+        MenuItem menuItemPagoTarjetaAB = new MenuItem("_Pago de Tarjetas");
+        MenuItem menuItemPagoPrestamoAB = new MenuItem("_Pago de Prestamos");
+        MenuItem menuItemDepositoAB = new MenuItem("_Deposito");
+        MenuItem menuItemRetiroAB = new MenuItem("_Retiros");
+        
+        
+        MenuItem menuItemTransferencia = new MenuItem("");
+        MenuItem menuItemCajero = new MenuItem("_Ir a cajero");
+        
+        MenuItem menuItemAtencion = new MenuItem("_Ir a Atencion al cliente");
         
         
         
@@ -252,6 +285,13 @@ public class UIOperacionesCliente {
             @Override
             public void handle(ActionEvent event) {
                 UIPagoServicios.getUI().start(primaryStage, cliente);
+            }
+        });
+        
+        menuItemPagoServicioAB.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                UIPagoServiciosAB.getUI().start(primaryStage, cliente);
             }
         });
         
@@ -283,12 +323,39 @@ public class UIOperacionesCliente {
             }
           });
         
+        menuItemCajero.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                UIRetiroCajero.getUI().start(primaryStage, cliente);
+            }
+          });
+        
+        menuItemAtencion.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                UISolicitar.getUI().start(new Stage(), cliente);
+            }
+          });
+        
+        
+        
+        
         menuPago.getItems().addAll(menuItemPagoServicio, menuItemPagoTarjeta, menuItemPagoPrestamo, menuItemDeposito, 
                                     menuItemRetiro);
+    
+        menuPagoAB.getItems().addAll(menuItemPagoServicioAB, menuItemPagoTarjetaAB, menuItemPagoPrestamoAB, menuItemDepositoAB, 
+                                    menuItemRetiroAB);
+    
+        
+        menuAtencionCliente.getItems().add(menuItemAtencion);
         menuArchivo.getItems().addAll(menuItemRegresar, menuItemSalir);
         menuAgencia.getItems().addAll(menuPago, menuAtencionCliente);
+        menuAgenciaAB.getItems().addAll(menuPagoAB);
         
-        menuBar.getMenus().addAll(menuArchivo, menuAgencia);
+        menuCajero.getItems().add(menuItemCajero);
+        
+        
+        menuBar.getMenus().addAll(menuArchivo, menuAgencia,menuAgenciaAB, menuCajero);
         return menuBar;
         
         
@@ -338,40 +405,40 @@ class ObtenerTarjetasCliente {
         tableColumnTarjeta = new TableColumn<>();
         tableColumnTarjeta.setText("Numero de Tarjeta");
         tableColumnTarjeta.setCellValueFactory(new PropertyValueFactory<>("numero"));
-        tableColumnTarjeta.setMinWidth(200);
+        tableColumnTarjeta.setMinWidth(300);
 
         
         
         tableColumnFecha = new TableColumn<>();
         tableColumnFecha.setText("Fecha de vencimiento");
         tableColumnFecha.setCellValueFactory(new PropertyValueFactory<>("fechaVencimiento"));
-        tableColumnFecha.setMinWidth(200);
+        tableColumnFecha.setMinWidth(350);
 
         
         
         tableColumnCredito = new TableColumn<>();
         tableColumnCredito.setText("Límite de crédito Q");
         tableColumnCredito.setCellValueFactory(new PropertyValueFactory<>("credito"));
-        tableColumnCredito.setMinWidth(200);
+        tableColumnCredito.setMinWidth(350);
 
         tableColumnDeuda = new TableColumn<>();
         tableColumnDeuda.setText("Monto adeudado Q");
         tableColumnDeuda.setCellValueFactory(new PropertyValueFactory<>("deuda"));
-        tableColumnDeuda.setMinWidth(200);
+        tableColumnDeuda.setMinWidth(350);
 
         
         tableView = new TableView<>();
         tableView.setItems(getObservableList(idCliente));
 
         tableView.getColumns().addAll(tableColumnTarjeta, tableColumnFecha, tableColumnCredito, tableColumnDeuda);
-        tableView.setMinSize(100, 250);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        tableView.setMinSize(4000, 4000);
         gridPane.add(tableView, 0, 3, 2, 1);
 
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(700, 600);
+        hBoxVista.setMinSize(5000, 5000);
         return hBoxVista;
         
     }
@@ -430,19 +497,19 @@ class ObtenerPrestamoCliente {
         tableColumnFecha = new TableColumn<>();
         tableColumnFecha.setText("Fecha del Prestamo");
         tableColumnFecha.setCellValueFactory(new PropertyValueFactory<>("fechaPrestamo"));
-        tableColumnFecha.setMinWidth(200);
+        tableColumnFecha.setMinWidth(400);
 
         
         
         tableColumnCredito = new TableColumn<>();
         tableColumnCredito.setText("Monto prestado Q");
         tableColumnCredito.setCellValueFactory(new PropertyValueFactory<>("deuda"));
-        tableColumnCredito.setMinWidth(200);
+        tableColumnCredito.setMinWidth(350);
 
         tableColumnDeuda = new TableColumn<>();
         tableColumnDeuda.setText("Monto abonado Q");
         tableColumnDeuda.setCellValueFactory(new PropertyValueFactory<>("abono"));
-        tableColumnDeuda.setMinWidth(200);
+        tableColumnDeuda.setMinWidth(350);
 
         tableColumnEstado = new TableColumn<>();
         tableColumnEstado.setText("Estado");
@@ -453,14 +520,14 @@ class ObtenerPrestamoCliente {
         tableView.setItems(getObservableList(idCliente));
 
         tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnCredito, tableColumnDeuda, tableColumnEstado);
-        tableView.setMinSize(100, 300);
+        tableView.setMinSize(400, 4000);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         gridPane.add(tableView, 0, 3, 2, 1);
 
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(700, 600);
+        hBoxVista.setMinSize(5000, 5000);
         return hBoxVista;
         
     }
@@ -487,6 +554,7 @@ class ObtenerPagosCliente{
     private TableColumn<Pago, String> tableColumnServicio;
     private TableColumn<Pago, String> tableColumnTipoPago;
     private TableColumn<Pago, String> tableColumnMonto;
+    private TableColumn<Pago, String> tableColumnAgencia;
 
     private TableView<Pago> tableView;
     private ObservableList<Pago> observableList;
@@ -507,44 +575,50 @@ class ObtenerPagosCliente{
         tableColumnId = new TableColumn<>();
         tableColumnId.setText("ID");
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnId.setMinWidth(40);
+        tableColumnId.setMinWidth(100);
 
         
         
         tableColumnFecha = new TableColumn<>();
         tableColumnFecha.setText("Fecha del Pago");
         tableColumnFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        tableColumnFecha.setMinWidth(150);
+        tableColumnFecha.setMinWidth(250);
 
         
         
         tableColumnMonto = new TableColumn<>();
         tableColumnMonto.setText("Monto Q");
         tableColumnMonto.setCellValueFactory(new PropertyValueFactory<>("monto"));
-        tableColumnMonto.setMinWidth(150);
+        tableColumnMonto.setMinWidth(220);
 
         tableColumnTipoPago = new TableColumn<>();
         tableColumnTipoPago.setText("Tipo Pago");
         tableColumnTipoPago.setCellValueFactory(new PropertyValueFactory<>("tipoPago"));
-        tableColumnTipoPago.setMinWidth(300);
+        tableColumnTipoPago.setMinWidth(380);
 
         tableColumnServicio = new TableColumn<>();
         tableColumnServicio.setText("Servicio");
         tableColumnServicio.setCellValueFactory(new PropertyValueFactory<>("servicio"));
-        tableColumnServicio.setMinWidth(250);
+        tableColumnServicio.setMinWidth(400);
+        
+        tableColumnAgencia = new TableColumn<>();
+        tableColumnAgencia.setText("Agencia");
+        tableColumnAgencia.setCellValueFactory(new PropertyValueFactory<>("nombreAgencia"));
+        tableColumnAgencia.setMinWidth(250);
+        
         
         tableView = new TableView<>();
         tableView.setItems(getObservableList(idCliente));
 
-        tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnMonto, tableColumnTipoPago, tableColumnServicio);
-        tableView.setMinSize(100, 300);
+        tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnMonto, tableColumnTipoPago, tableColumnServicio, tableColumnAgencia);
+        tableView.setMinSize(4000, 4000);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         gridPane.add(tableView, 0, 3, 2, 1);
 
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(1000, 600);
+        hBoxVista.setMinSize(5000, 5000);
         return hBoxVista;
         
     }
@@ -575,6 +649,7 @@ class ObtenerDepositosCliente {
     private TableColumn<Deposito, String> tableColumnMonto;
     private TableColumn<Deposito, String> tableColumnFecha;
     private TableColumn<Deposito, String> tableColumnTipo;
+    private TableColumn<Deposito, String> tableColumnAgencia;
 
     private TableView<Deposito> tableView;
     private ObservableList<Deposito> observableList;
@@ -599,7 +674,7 @@ class ObtenerDepositosCliente {
         tableColumnCodigo = new TableColumn<>();
         tableColumnCodigo.setText("Codigo Deposito");
         tableColumnCodigo.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnCodigo.setMinWidth(60);
+        tableColumnCodigo.setMinWidth(200);
 
         
         tableColumnCliente = new TableColumn<>();
@@ -612,7 +687,7 @@ class ObtenerDepositosCliente {
         tableColumnFecha = new TableColumn<>();
         tableColumnFecha.setText("Fecha del Deposito");
         tableColumnFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        tableColumnFecha.setMinWidth(200);
+        tableColumnFecha.setMinWidth(250);
 
         
         
@@ -629,20 +704,25 @@ class ObtenerDepositosCliente {
         tableColumnTipo = new TableColumn<>();
         tableColumnTipo.setText("Forma de Deposito");
         tableColumnTipo.setCellValueFactory(new PropertyValueFactory<>("tipoDeposito"));
-        tableColumnTipo.setMinWidth(200);
+        tableColumnTipo.setMinWidth(280);
+        
+        tableColumnAgencia = new TableColumn<>();
+        tableColumnAgencia.setText("Agencia");
+        tableColumnAgencia.setCellValueFactory(new PropertyValueFactory<>("nombreAgencia"));
+        tableColumnAgencia.setMinWidth(280);
         
         tableView = new TableView<>();
         tableView.setItems(getObservableList(idCliente));
 
-        tableView.getColumns().addAll(tableColumnCodigo,tableColumnCliente,tableColumnCuenta,tableColumnMonto, tableColumnFecha, tableColumnTipo);
-        tableView.setMinSize(100, 300);
+        tableView.getColumns().addAll(tableColumnCodigo,tableColumnCliente,tableColumnCuenta,tableColumnMonto, tableColumnFecha, tableColumnTipo, tableColumnAgencia);
+        tableView.setMinSize(4000, 4000);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         gridPane.add(tableView, 0, 3, 2, 1);
 
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(5000, 600);
+        hBoxVista.setMinSize(5000, 5000);
         return hBoxVista;
         
     }
@@ -742,4 +822,155 @@ class ObtenerRetiroCliente {
     }
 }
 
+class ObtenerCuentasAhorro {
+    /*----SINGLETON------*/
+    private static final ObtenerCuentasAhorro instancia = new ObtenerCuentasAhorro();
+    private ObtenerCuentasAhorro() {
+    }
+
+    public static ObtenerCuentasAhorro getObtenerCuentasAhorro() {
+        return instancia;
+    }
+    /*------------*/
+    
+    private TableColumn<CuentaAhorroCliente, String> tableColumnId;
+    private TableColumn<CuentaAhorroCliente, String> tableColumnFecha;
+    private TableColumn<CuentaAhorroCliente, String> tableColumnMonto;
+    private TableView<CuentaAhorroCliente> tableView;
+    private ObservableList<CuentaAhorroCliente> observableList;
+    
+    public HBox getVista(int idCliente) {
+        HBox hBoxVista = new HBox();
+        
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(30, 30, 30, 30));
+        
+        Text textTitle = new Text("  Retiros del Cliente ");
+        textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        gridPane.add(textTitle, 0, 0);
+        
+        
+        tableColumnId = new TableColumn<>();
+        tableColumnId.setText("Numero de Cuenta");
+        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idCuenta"));
+        tableColumnId.setMinWidth(250);
+
+        
+        
+        tableColumnFecha = new TableColumn<>();
+        tableColumnFecha.setText("Fecha de apertura");
+        tableColumnFecha.setCellValueFactory(new PropertyValueFactory<>("fechaApertura"));
+        tableColumnFecha.setMinWidth(350);
+
+        
+        
+        tableColumnMonto = new TableColumn<>();
+        tableColumnMonto.setText("Monto Q");
+        tableColumnMonto.setCellValueFactory(new PropertyValueFactory<>("montoInicial"));
+        tableColumnMonto.setMinWidth(250);
+
+     
+        
+        tableView = new TableView<>();
+        tableView.setItems(getObservableList(idCliente));
+
+        tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnMonto);
+        tableView.setMinSize(100, 250);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        gridPane.add(tableView, 0, 3, 2, 1);
+
+
+        hBoxVista.getChildren().add(gridPane);
+        hBoxVista.setAlignment(Pos.CENTER_LEFT);
+        hBoxVista.setMinSize(5000, 5000);
+        return hBoxVista;
+        
+    }
+    private ObservableList<CuentaAhorroCliente> getObservableList(int idCliente) {
+        observableList = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayCACliete(idCliente));
+        return observableList;
+    }
+    
+    
+    
+}
+
+
+
+class ObtenerCuentasMonetaria {
+    /*----SINGLETON------*/
+    private static final ObtenerCuentasMonetaria instancia = new ObtenerCuentasMonetaria();
+    private ObtenerCuentasMonetaria() {
+    }
+
+    public static ObtenerCuentasMonetaria getObtenerCuentasMonetaria() {
+        return instancia;
+    }
+    /*------------*/
+    
+    private TableColumn<CuentaMonetariaCliente, String> tableColumnId;
+    private TableColumn<CuentaMonetariaCliente, String> tableColumnFecha;
+    private TableColumn<CuentaMonetariaCliente, String> tableColumnMonto;
+    private TableView<CuentaMonetariaCliente> tableView;
+    private ObservableList<CuentaMonetariaCliente> observableList;
+    
+    public HBox getVista(int idCliente) {
+        HBox hBoxVista = new HBox();
+        
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(30, 30, 30, 30));
+        
+        Text textTitle = new Text("  Retiros del Cliente ");
+        textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
+        gridPane.add(textTitle, 0, 0);
+        
+        
+        tableColumnId = new TableColumn<>();
+        tableColumnId.setText("Numero de Cuenta");
+        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idCuenta"));
+        tableColumnId.setMinWidth(250);
+
+        
+        
+        tableColumnFecha = new TableColumn<>();
+        tableColumnFecha.setText("Fecha de apertura");
+        tableColumnFecha.setCellValueFactory(new PropertyValueFactory<>("fechaApertura"));
+        tableColumnFecha.setMinWidth(350);
+
+        
+        
+        tableColumnMonto = new TableColumn<>();
+        tableColumnMonto.setText("Monto Q");
+        tableColumnMonto.setCellValueFactory(new PropertyValueFactory<>("montoInicial"));
+        tableColumnMonto.setMinWidth(250);
+
+     
+        
+        tableView = new TableView<>();
+        tableView.setItems(getObservableList(idCliente));
+
+        tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnMonto);
+        tableView.setMinSize(100, 250);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        gridPane.add(tableView, 0, 3, 2, 1);
+
+
+        hBoxVista.getChildren().add(gridPane);
+        hBoxVista.setAlignment(Pos.CENTER_LEFT);
+        hBoxVista.setMinSize(5000, 5000);
+        return hBoxVista;
+        
+    }
+    private ObservableList<CuentaMonetariaCliente> getObservableList(int idCliente) {
+        observableList = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayCMCliete(idCliente));
+        return observableList;
+    }
+    
+    
+    
+}
 

@@ -15,11 +15,11 @@ public class CuentaAhorroCliente {
     private int id;
     private Cliente cliente;
     private CuentaAhorro cuentaAhorro;
-
+    
     
     private Date fechaApertura;
     private Double montoInicial;
-
+    private int idCuenta; 
     
     public CuentaAhorroCliente() {
     }
@@ -30,6 +30,7 @@ public class CuentaAhorroCliente {
         this.cuentaAhorro = cuentaAhorro;
         this.fechaApertura = cuentaAhorro.getFechaApertura();
         this.montoInicial = cuentaAhorro.getMontoInicial();
+        this.idCuenta = cuentaAhorro.getId();
     }
 
     public int getId() {
@@ -62,6 +63,22 @@ public class CuentaAhorroCliente {
 
     public Double getMontoInicial() {
         return montoInicial;
+    }
+
+    public int getIdCuenta() {
+        return idCuenta;
+    }
+
+    public void setIdCuenta(int idCuenta) {
+        this.idCuenta = idCuenta;
+    }
+
+    public void setFechaApertura(Date fechaApertura) {
+        this.fechaApertura = fechaApertura;
+    }
+
+    public void setMontoInicial(Double montoInicial) {
+        this.montoInicial = montoInicial;
     }
 
     

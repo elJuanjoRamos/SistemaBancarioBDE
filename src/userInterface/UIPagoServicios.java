@@ -5,12 +5,8 @@
  */
 package userInterface;
 
-import beans.Cliente;
-import beans.CuentaMonetariaCliente;
-import controller.CajeroController;
-import controller.CuentasCliente;
-import controller.PagoController;
-import javafx.application.Application;
+import beans.*;
+import controller.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,14 +14,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -62,7 +55,7 @@ public class UIPagoServicios {
     public void start(Stage primaryStage, Cliente cliente) {
         VBox v = new VBox();
         v.setStyle("-fx-background-color: white");
-        Scene scene = new Scene(v, 500, 400, Color.WHITE);
+        Scene scene = new Scene(v, 700, 700, Color.WHITE);
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -98,6 +91,18 @@ public class UIPagoServicios {
         Label labelCuenta = new Label("Numero de cuenta: ");
         gridPane.add(labelCuenta, 1, 6);
 
+        Label labelAgencia = new Label("Agencia Bancaria: ");
+        gridPane.add(labelAgencia, 1, 7);
+        
+        ComboBox comboAgencia = new ComboBox();
+          /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
+        ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
+
+        comboAgencia.getItems().addAll(agencias);
+        comboAgencia.setEditable(true);
+
+        gridPane.add(comboAgencia, 2, 7);
+
         ComboBox comboCuenta = new ComboBox();
 
         /* BUSCA LAS CUENTAS MONETARIAS DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
@@ -131,8 +136,10 @@ public class UIPagoServicios {
                 if (textFieldMonto.getText().trim().length() != 0 && PagoController.getInstancia().esNumero(textFieldMonto.getText().trim())) {
                     if (comboPago.getSelectionModel().getSelectedItem() != null
                             && comboTipo.getSelectionModel().getSelectedItem().toString().equals("Efectivo")) {
-
-                        PagoController.getInstancia().agregar(comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente);
+                        
+                        PagoController.getInstancia().agregar(comboPago.getSelectionModel().getSelectedItem().toString(),
+                                Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente, "",
+                                comboAgencia.getSelectionModel().getSelectedItem().toString());
                         
                         getAlert("Pago realizado con exito");
                         textFieldMonto.clear();
@@ -143,12 +150,29 @@ public class UIPagoServicios {
                         
                         
                         
-                        if (comboCuenta.getSelectionModel().getSelectedItem() != null) {
-                            String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
-                            PagoController.getInstancia().agregar(comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente);
-                            textFieldMonto.clear();
-                            getAlert("Pago realizado con exito");
-                        
+                        if (comboCuenta.getSelectionModel().getSelectedItem() != null ) {
+                            if (textFieldMonto.getText().trim().length() != 0) {
+                                CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(comboCuenta.getSelectionModel().getSelectedItem().toString()));
+                            
+                            if (c != null) {
+                                if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim())) {
+                                    
+                                        String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
+                                        PagoController.getInstancia().agregar(comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente,
+                                                comboCuenta.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString());
+                                        textFieldMonto.clear();
+                                        getAlert("Pago realizado con exito");
+
+                                    } else {
+                                        getAlert("El numero de cuenta no posee saldo suficiente");
+                                    }
+                                } else {
+                                    getAlert("Numero de cuenta no valido");
+                                }
+                            } else {
+                                getAlert("Ingrese el monto para pagar");
+                            }
+                            
                         } else {
                             getAlert("Por favor seleccione un numero cuenta valido");
                         }

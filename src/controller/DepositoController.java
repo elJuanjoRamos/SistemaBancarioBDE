@@ -40,36 +40,52 @@ public class DepositoController {
         return instance;
     }
 
-    public void agregar(int idDepositante, String cuenta, Double monto, String tipoDeposito, Cliente cliente, String otraCuenta) {
-        
-       
+    public void agregar(int idDepositante, String cuenta, Double monto, String tipoDeposito, Cliente cliente, String otraCuenta, String agencia) {
+        System.out.println(agencia);
         Date d = new Date();
 
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                array[i] = new Deposito(aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000, idDepositante, cuenta, monto, d, tipoDeposito, cliente);
+                array[i] = new Deposito(aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000, idDepositante, cuenta, monto, d, tipoDeposito, cliente, agencia);
                 break;
             }
         }
         
-      
+        AgenciaBancaria a = AgenciaController.getAgenciaController().buscarAgenciaUnica(agencia);
+        if (a != null) {
+            Double efectivo = a.getEfectivo();
+            a.setEfectivo(efectivo + monto);
+        }
+        
+        if (CuentasCliente.getCuentasCliente().getArrayCAClieteUnica(Integer.parseInt(cuenta)) != null) {
 
-        if (CuentasCliente.getCuentasCliente().buscarCuentaAhorros(Integer.parseInt(cuenta)) != null) {
+            CuentaAhorroCliente c = CuentasCliente.getCuentasCliente().getArrayCAClieteUnica(Integer.parseInt(cuenta));
 
-            Double montoInicial = CuentasCliente.getCuentasCliente().buscarCuentaAhorros(Integer.parseInt(cuenta)).getMontoInicial();
-            CuentasCliente.getCuentasCliente().buscarCuentaAhorros(Integer.parseInt(cuenta)).setMontoInicial(montoInicial + monto);
+            Double montoInicial = c.getMontoInicial();
 
-        } else if (CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(cuenta)) != null) {
+            c.getCuentaAhorro().setMontoInicial(montoInicial + monto);
+            c.setMontoInicial(montoInicial + monto);
 
-            Double montoInicial = CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(cuenta)).getMontoInicial();
-            CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(cuenta)).setMontoInicial(montoInicial + monto);
+        } else if (CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(cuenta)) != null) {
+
+            CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(cuenta));
+
+            Double montoInicial = c.getMontoInicial();
+
+            c.getCuenta().setMontoInicial(montoInicial + monto);
+            c.setMontoInicial(montoInicial + monto);
 
         }
 
         if (!otraCuenta.equals("")) {
-            if (CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(otraCuenta)) != null) {
-                Double montoInicial = CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(otraCuenta)).getMontoInicial();
-                CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(otraCuenta)).setMontoInicial(montoInicial - monto);
+            if (CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(otraCuenta)) != null) {
+
+                CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(otraCuenta));
+
+                Double montoInicial = c.getMontoInicial();
+
+                c.getCuenta().setMontoInicial(montoInicial - monto);
+                c.setMontoInicial(montoInicial - monto);
 
             }
         }

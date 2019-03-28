@@ -72,32 +72,32 @@ public class AdminInterface {
         Text t = new Text("Clientes");
         t.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
         
-        tab.setGraphic(new ImageView("resources/images/img001.png"));
+        tab.setGraphic(t);
         tab.setContent(UICliente.getCRUDCliente().getViewCliente());
         tab.setClosable(false);
         tab.setId("menuBar");
         
         Tab tab1 = new Tab();
-        tab1.setText("Empleados");
-        HBox hbox1 = new HBox();
-        hbox1.getChildren().add(new Label("Empleados"));
-        hbox1.setAlignment(Pos.CENTER);
+        Text t1 = new Text("Empleado");
+        t1.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
+        
+        tab1.setGraphic(t1);
+        
         tab1.setContent(UIEmpleado.getUIEmpleado().getVistaData());
         tab1.setClosable(false);
 
         Tab tab2 = new Tab();
-        tab2.setText("Agencias");
-        HBox hbox2 = new HBox();
-        hbox2.getChildren().add(new Label("Agencias"));
-        hbox2.setAlignment(Pos.CENTER);
+        Text t2 = new Text("Agencias");
+        t2.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
+        
+        tab2.setGraphic(t2);
         tab2.setContent(UIAgencia.getAgencia().getViewAgencia());
         tab2.setClosable(false);
         
         Tab tab3 = new Tab();
-        tab3.setText("Agencias AutoBanco");
-        HBox hbox3 = new HBox();
-        hbox3.getChildren().add(new Label("Agencias con AutoBanco"));
-        hbox3.setAlignment(Pos.CENTER);
+        Text t3 = new Text("Agencia con autobanco");
+        t3.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
+        tab3.setGraphic(t3);
         tab3.setContent(UIAgenciaAutobanco.getAgencia().getViewAgencia());
         tab3.setClosable(false);
         
@@ -106,10 +106,9 @@ public class AdminInterface {
         
         
         Tab tab4 = new Tab();
-        tab4.setText("Cajeros");
-        HBox hbox4 = new HBox();
-        hbox4.getChildren().add(new Label("Cajeros"));
-        hbox4.setAlignment(Pos.CENTER);
+        Text t4 = new Text("Cajeros Automaticos");
+        t4.setFont(Font.font("Arial", FontWeight.NORMAL, 14));
+        tab4.setGraphic(t4);
         tab4.setContent(UICajero.getCRUDCajero().getViewCajero());
         tab4.setClosable(false);
         

@@ -15,15 +15,16 @@ public class Empleado {
     private String direccion;
     private String telefono;
     private String departamento;
+    private int idAgencia;
     
-        public Empleado(int id,String nombre,String direccion,String telefono, String departamento){
+    public Empleado(int id,String nombre,String direccion,String telefono, String departamento, int idAgencia){
        
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.departamento = departamento;
-        
+        this.idAgencia = idAgencia;
     }
     public Empleado(){
         
@@ -62,4 +63,14 @@ public class Empleado {
     public void setDepartamento(String var) {
         this.departamento = var;
     }
+    
+    
+    public int getIdAgencia() {
+        return idAgencia;
+    }
+
+    public void setIdAgencia(int idAgencia) {
+        this.idAgencia = idAgencia;
+    }
+    
 }

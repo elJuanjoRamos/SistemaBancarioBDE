@@ -19,7 +19,7 @@ public class CuentaMonetariaCliente {
     
     private Date fechaApertura;
     private Double montoInicial;
-
+    private int idCuenta;
     
     public CuentaMonetariaCliente() {
     }
@@ -30,6 +30,7 @@ public class CuentaMonetariaCliente {
         this.cuenta = cuenta;
         this.fechaApertura = cuenta.getFechaApertura();
         this.montoInicial = cuenta.getMontoInicial();
+        this.idCuenta = cuenta.getId();
     }
 
     public int getId() {
@@ -62,6 +63,26 @@ public class CuentaMonetariaCliente {
 
     public Double getMontoInicial() {
         return montoInicial;
+    }
+
+    public int getIdCuenta() {
+        return idCuenta;
+    }
+
+    public void setIdCuenta(int idCuenta) {
+        this.idCuenta = idCuenta;
+    }
+
+    public void setCuenta(CuentaMonetaria cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public void setFechaApertura(Date fechaApertura) {
+        this.fechaApertura = fechaApertura;
+    }
+
+    public void setMontoInicial(Double montoInicial) {
+        this.montoInicial = montoInicial;
     }
 
     

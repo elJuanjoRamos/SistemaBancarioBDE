@@ -99,18 +99,7 @@ public class AgenciaController {
         }
         return arrayList;
     }   
-    
-     public AgenciaBancaria buscarUnica(String nombre){
-        for (int i = 0; i < 1000; i++) {
-            if (array[i] != null) {
-                if (array[i].getNombre().toUpperCase().equals(nombre.toUpperCase())) {
-                    return array[i];           
-                }
-            }
-        }
-        return null;
-    }
-    
+
     
     /*ARRAY DE LAS AGENCIAS SIN AUTOBANCO*/
     public ArrayList<AgenciaBancaria> getArray() {
@@ -161,13 +150,30 @@ public class AgenciaController {
         }
         return arrayListAutoBanco;    
     }
-    /*ARRAY DE NOMBRES DE AGENCIAS*/
+    /*ARRAY DE NOMBRES DE AGENCIAS SIN AUTOBANCO*/
     public ArrayList<String> getNombreAgencia() {
         ArrayList<String> agencias = new ArrayList();
         
         for (AgenciaBancaria agencia : array) {
             if (agencia != null)  {
-                agencias.add(agencia.getNombre());
+                if (agencia.getAuto() == 0) {
+                    agencias.add(agencia.getNombre());
+                }
+            }
+        }
+        
+        return agencias;    
+    }
+    
+    /*ARRAY DE NOMBRES DE AGENCIAS SIN AUTOBANCO*/
+    public ArrayList<String> getNombreAgenciaAutoBanco() {
+        ArrayList<String> agencias = new ArrayList();
+        
+        for (AgenciaBancaria agencia : array) {
+            if (agencia != null)  {
+                if (agencia.getAuto() != 0) {
+                    agencias.add(agencia.getNombre());
+                }
             }
         }
         
@@ -185,6 +191,37 @@ public class AgenciaController {
             }
         }
         return false;
+    }
+    
+    public AgenciaBancaria buscarAgenciaUnica(String nombre){
+        
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
+                if (nombre.equalsIgnoreCase(array[i].getNombre())) {
+                    return array[i];
+                }
+            }
+        }
+        return null;
+    }
+    
+    
+    public ArrayList<String> buscarCajasAgencia(int idAgencia){
+        ArrayList<String> noCajas = new ArrayList(); 
+        AgenciaBancaria a;
+        for (AgenciaBancaria d : array) {
+            if (d !=null) {
+                if (d.getId() == idAgencia) {
+                    if (d.getAuto() != 0) {
+                        for (int i = 0; i < d.getId(); i++) {
+                            noCajas.add(String.valueOf(i));
+                        }
+                    }
+                }
+            }
+        }
+        
+        return noCajas;
     }
     
     

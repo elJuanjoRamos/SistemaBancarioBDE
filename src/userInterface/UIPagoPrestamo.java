@@ -37,6 +37,7 @@ import javafx.stage.StageStyle;
  * @author Juan José Ramos
  */
 public class UIPagoPrestamo {
+
     private static final UIPagoPrestamo instance = new UIPagoPrestamo();
 
     private UIPagoPrestamo() {
@@ -45,11 +46,11 @@ public class UIPagoPrestamo {
     public static UIPagoPrestamo getUI() {
         return instance;
     }
-    
+
     public void start(Stage primaryStage, Cliente cliente) {
         VBox v = new VBox();
         v.setStyle("-fx-background-color: white");
-        Scene scene = new Scene(v, 500, 400, Color.WHITE);
+        Scene scene = new Scene(v, 700, 700, Color.WHITE);
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -61,8 +62,7 @@ public class UIPagoPrestamo {
 
         Label labelCombo = new Label("Codigo del Prestamo: ");
         gridPane.add(labelCombo, 1, 3);
-        
-        
+
         /* BUSCA LAS TARJETAS DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
         ObservableList tarjetas = FXCollections.observableArrayList(TarjetasYPrestamosCliente.getInstancia().getArrayPrestamoClienteEspecifico(cliente.getId()));
 
@@ -72,9 +72,6 @@ public class UIPagoPrestamo {
 
         gridPane.add(comboPago, 2, 3);
 
-        
-        
-        
         Label labelTipo = new Label("Tipo de Pago: ");
         gridPane.add(labelTipo, 1, 4);
 
@@ -94,6 +91,9 @@ public class UIPagoPrestamo {
         comboCuenta.getItems().addAll(cuentas);
         comboCuenta.setEditable(true);
         gridPane.add(comboCuenta, 2, 7);
+        
+        
+        
         labelCuenta.setVisible(false);
         comboCuenta.setVisible(false);
 
@@ -117,10 +117,6 @@ public class UIPagoPrestamo {
         TextField textFieldMonto = new TextField();
         gridPane.add(textFieldMonto, 2, 5);
 
-        
-        
-        
-        
         Label labelDeuda = new Label("Deuda del prestamo: ");
         gridPane.add(labelDeuda, 1, 6);
         TextField textFieldDeuda = new TextField();;
@@ -128,64 +124,110 @@ public class UIPagoPrestamo {
         labelDeuda.setVisible(false);
         textFieldDeuda.setVisible(false);
 
+        Label labelAgencia = new Label("Agencia Bancaria: ");
+        gridPane.add(labelAgencia, 1, 8);
+        
+        ComboBox comboAgencia = new ComboBox();
+          /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
+        ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
+
+        comboAgencia.getItems().addAll(agencias);
+        comboAgencia.setEditable(true);
+
+        gridPane.add(comboAgencia, 2, 8);
+
         
         
         comboPago.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue ov, String t, String t1) {
                 Prestamo prestamo = TarjetasYPrestamosCliente.getInstancia().buscarPrestamoCliente(comboPago.getSelectionModel().getSelectedItem().toString());
-                
-                
-                
+
                 textFieldDeuda.setText(String.valueOf(prestamo.getDeuda()));
-                
+
                 labelDeuda.setVisible(true);
                 textFieldDeuda.setVisible(true);
-                
+
             }
         });
-        
-        
-        
-        
-        
+
         Button buttonAceptar = new Button("Aceptar");
         buttonAceptar.setDefaultButton(true);
         buttonAceptar.setId("btnVerdeV");
         buttonAceptar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                Prestamo p = TarjetasYPrestamosCliente.getInstancia().buscarPrestamo(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()));
+                        
                 if (textFieldMonto.getText().trim().length() != 0 && PagoController.getInstancia().esNumero(textFieldMonto.getText().trim())) {
                     if (comboPago.getSelectionModel().getSelectedItem() != null
                             && comboTipo.getSelectionModel().getSelectedItem().toString().equals("Efectivo")) {
 
-                        PagoController.getInstancia().agregar("Prestamo Codigo. " + comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente);
                         
-                        TarjetasYPrestamosCliente.getInstancia().modificarPrestamo(comboPago.getSelectionModel().getSelectedItem().toString(), 
-                                                    Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
+                        
+                        if (p != null) {
+                            if (p.getDeuda() > 0) {
+                            
+                            
 
-                        getAlert("Pago realizado con exito");
-                        textFieldMonto.clear();
+                            PagoController.getInstancia().agregar("Prestamo Codigo. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
+                                    Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente, "",
+                                    comboAgencia.getSelectionModel().getSelectedItem().toString());
+
+                            TarjetasYPrestamosCliente.getInstancia().modificarPrestamo(comboPago.getSelectionModel().getSelectedItem().toString(),
+                                    Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
+
+                            getAlert("Pago realizado con exito");
+                            textFieldMonto.clear();
+
+                            
+                        } else {
+                            getAlert("El Prestamo ya esta cancelado");
+                        }
                         
+                        } else {
+                            getAlert("Codigo de Prestamo no valido");
+                        }
                         
                     } else if (comboPago.getSelectionModel().getSelectedItem() != null
                             && comboTipo.getSelectionModel().getSelectedItem().toString().equals("Cheque")) {
-                        
-                        
-                        
-                        if (comboCuenta.getSelectionModel().getSelectedItem() != null) {
-                            String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
-                            PagoController.getInstancia().agregar("Prestamo Codigo. " + comboPago.getSelectionModel().getSelectedItem().toString(), Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente);
-                            
-                            TarjetasYPrestamosCliente.getInstancia().modificarPrestamo(comboPago.getSelectionModel().getSelectedItem().toString(), 
-                                                    Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
 
-                            textFieldMonto.clear();
-                            getAlert("Pago realizado con exito");
+                        CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(comboCuenta.getSelectionModel().getSelectedItem().toString()));
                         
+                        
+                        if (c != null) {
+                            
+                            if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim())) {
+                                if (comboCuenta.getSelectionModel().getSelectedItem() != null) {
+                                    
+                                    if (p.getDeuda() > 0 ) {
+                                        String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
+                                    
+                                        PagoController.getInstancia().agregar("Prestamo Codigo. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
+                                                Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente, 
+                                                comboCuenta.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString());
+
+                                        TarjetasYPrestamosCliente.getInstancia().modificarPrestamo(comboPago.getSelectionModel().getSelectedItem().toString(),
+                                                Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
+
+                                        textFieldMonto.clear();
+                                        getAlert("Pago realizado con exito");
+
+                                    } else {
+                                        getAlert("El pago ya esta cancelado");
+                                    }
+                                    
+                                } else {
+                                    getAlert("Por favor seleccione un numero cuenta valido");
+                                }
+
+                            } else {
+                                getAlert("El saldo de la cuenta no es sufuciente");
+                            }
                         } else {
-                            getAlert("Por favor seleccione un numero cuenta valido");
+                            getAlert("Numero de cuenta no valido");
                         }
+
                     } else {
                         getAlert("No puede dejar campos en blanco");
                     }
@@ -197,7 +239,6 @@ public class UIPagoPrestamo {
             }
         });
 
-        
         Button buttonCancelar = new Button("Cancelar");
         buttonCancelar.setDefaultButton(true);
         buttonCancelar.setId("btnRojoR");
@@ -209,7 +250,7 @@ public class UIPagoPrestamo {
         });
         HBox hboxButtons = new HBox(10);
         hboxButtons.getChildren().addAll(buttonAceptar, buttonCancelar);
-        gridPane.add(hboxButtons, 1, 8);
+        gridPane.add(hboxButtons, 1, 9);
 
         scene.getStylesheets().addAll("/resources/root.css");
 
@@ -263,8 +304,5 @@ public class UIPagoPrestamo {
         alerta.initStyle(StageStyle.UTILITY);
         alerta.showAndWait();
     }
-    
-    
-    
-    
+
 }
