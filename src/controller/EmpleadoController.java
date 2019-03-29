@@ -36,10 +36,9 @@ public class EmpleadoController {
     /*---------------*/
     
     public void agregar(String nombre, String direccion, String telefono, String departamento, String cadena) {
-        System.out.println(cadena);
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                array[i] = new Empleado(i, nombre, direccion, telefono, departamento, Integer.parseInt(cadena));
+                array[i] = new Empleado(i, nombre, direccion, telefono, departamento, cadena);
              
                 break;
             }
@@ -66,7 +65,7 @@ public class EmpleadoController {
                 e.setDireccion(direccion);
                 e.setTelefono(telefono);
                 e.setDepartamento(departamento);
-                e.setIdAgencia(Integer.parseInt(cadena));
+                e.setIdAgencia(cadena);
             }
         }
     }
@@ -108,6 +107,9 @@ public class EmpleadoController {
         return arrayList;
     }
     
+    public Empleado[] obtenerEmpleados(){
+        return this.array;
+    }
     
     
 }

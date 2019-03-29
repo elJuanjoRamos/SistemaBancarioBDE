@@ -113,7 +113,7 @@ public class AdminInterface {
         tab4.setClosable(false);
         
         
-        tabPane.getTabs().addAll(tab4, tab3,tab2, tab1, tab);
+        tabPane.getTabs().addAll(tab, tab1,tab2, tab3, tab4);
 
         tabPane.setSide(Side.LEFT);
         borderPane.prefHeightProperty().bind(scene.heightProperty());

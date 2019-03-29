@@ -59,6 +59,7 @@ public class UICliente {
     private Button buttonModificar;
     private Button buttonEliminar;
     private Button buttonReestablecer;
+    private Button buttonReportes;
 
     private TableColumn<Cliente, Integer> tableColumnIdCliente;
     private TableColumn<Cliente, String> tableColumnNombreCliente;
@@ -84,9 +85,9 @@ public class UICliente {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(30, 30, 30, 30));
 
-        textTitle = new Text("  Clientes  ");
-        textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
-        gridPane.add(textTitle, 0, 0);
+        textTitle = new Text("  Registro de Clientes  ");
+        textTitle.setFont(Font.font("Century Gothic Bold", FontWeight.BOLD, 35));
+        gridPane.add(textTitle, 0, 2);
 
         
         
@@ -119,11 +120,10 @@ public class UICliente {
             }
         });
         hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar, buttonReestablecer);
-        gridPane.add(hBoxBuscar, 0, 1);
+        gridPane.add(hBoxBuscar, 0, 6);
         
 
         buttonNuevo = new Button("Nuevo");
-        buttonNuevo.setId("btnAzulA");
         buttonNuevo.setGraphic(new ImageView("/resources/1.png"));
         
         buttonNuevo.setOnAction(new EventHandler<ActionEvent>() {
@@ -144,7 +144,8 @@ public class UICliente {
             public void handle(ActionEvent event) {
                 if (tableView.getSelectionModel().getSelectedItem() != null) {
                     hBoxCRUD.getChildren().clear();
-                    hBoxCRUD.getChildren().addAll(gridPane, Actualizar.getActualizar().getGridPane(tableView.getSelectionModel().getSelectedItem()));
+                    
+                    hBoxCRUD.getChildren().addAll(gridPane, Animacion.getAnimatedGridPane().getAnimatedGridPane(Actualizar.getActualizar().getGridPane(tableView.getSelectionModel().getSelectedItem())));
                     tableView.getSelectionModel().clearSelection();
                     
                     actualizarDatosTabla();
@@ -158,6 +159,7 @@ public class UICliente {
 
             }
         });
+        
 
         buttonEliminar = new Button("Eliminar");
         buttonEliminar.setId("btnRojoR");
@@ -190,36 +192,46 @@ public class UICliente {
                 }
             }
         });
+        buttonReportes = new Button("Generar Reporte");
+        buttonReportes.setGraphic(new ImageView("/resources/6.png"));
+        
+        buttonReportes.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReporteController.getReporteController().CrearPDFClientes();
+            }
+        });
+
 
         hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar,
-                buttonEliminar);
-        gridPane.add(hBoxButtons, 0, 4);
+                buttonEliminar, buttonReportes);
+        gridPane.add(hBoxButtons, 0, 9);
 
         tableColumnIdCliente = new TableColumn<>();
         tableColumnIdCliente.setText("ID");
         tableColumnIdCliente.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnIdCliente.setMinWidth(70);
+        tableColumnIdCliente.setMinWidth(90);
 
         tableColumnNombreCliente = new TableColumn<>();
         tableColumnNombreCliente.setText("Nombre");
         tableColumnNombreCliente.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        tableColumnNombreCliente.setMinWidth(200);
+        tableColumnNombreCliente.setMinWidth(350);
 
         tableColumnTelefonoCliente = new TableColumn<>();
         tableColumnTelefonoCliente.setText("Telefono");
         tableColumnTelefonoCliente.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-        tableColumnTelefonoCliente.setMinWidth(200);
+        tableColumnTelefonoCliente.setMinWidth(310);
 
         tableColumnDireccionCliente = new TableColumn<>();
         tableColumnDireccionCliente.setText("Direccion");
         tableColumnDireccionCliente.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        tableColumnDireccionCliente.setMinWidth(200);
+        tableColumnDireccionCliente.setMinWidth(350);
 
         tableView = new TableView<>();
         tableView.setItems(getObservableList());
 
         tableView.getColumns().addAll(tableColumnIdCliente, tableColumnNombreCliente, tableColumnTelefonoCliente, tableColumnDireccionCliente);
-        tableView.setMinSize(100, 250);
+        tableView.setMinSize(1020, 600);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tableView.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -231,11 +243,11 @@ public class UICliente {
             }
         });
 
-        gridPane.add(tableView, 0, 7, 2, 1);
+        gridPane.add(tableView, 0, 11);
 
         hBoxCRUD.getChildren().add(gridPane);
         hBoxCRUD.setAlignment(Pos.CENTER_LEFT);
-        hBoxCRUD.setMinSize(700, 600);
+        hBoxCRUD.setMinSize(1100, 600);
         return hBoxCRUD;
     }
 
@@ -439,9 +451,19 @@ class Actualizar {
                 }
             }
         });
+        
+        Button buttonReporte = new Button("Reporte");
+        buttonReporte.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReporteController.getReporteController().CrearPDFCliente(cliente);
+            }
+        });
 
         gridPane.add(buttonModificar, 1, 6);
+        gridPane.add(buttonReporte, 1, 7);
 
+        
         Button buttonCerrar = new Button("Cerrar");
         buttonCerrar.setId("btnRojoR");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {

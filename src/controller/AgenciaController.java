@@ -225,6 +225,11 @@ public class AgenciaController {
     }
     
     
+    public AgenciaBancaria[] obtenerAgencias(){
+        return this.array;
+    }
+    
+    
     public boolean esNumero(String cadena, String cadena2, String cadena3, String cadena4) {
         boolean resultado;
         

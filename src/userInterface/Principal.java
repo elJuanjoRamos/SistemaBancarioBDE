@@ -51,9 +51,16 @@ public class Principal extends Application {
     public void start(Stage primaryStage) throws IOException{
       
       
-        ClienteController.getClienteController().agregar("pedro", "dir1", "tel");
-        ClienteController.getClienteController().agregar("raul", "dir2", "tel");
-        ClienteController.getClienteController().agregar("jenny", "dir3", "tel");
+        ClienteController.getClienteController().agregar("Juan José Ramos", "Jutapa, Guatemala", "12345678");
+        ClienteController.getClienteController().agregar("Anna Marison Castillo", "Jutiapa, Guatemala", "12345678");
+        ClienteController.getClienteController().agregar("Pedro Fernando Gonzalez" , "Guatemala", "12345678");
+        ClienteController.getClienteController().agregar("Jackeline Mendez", "Zona 18, Guatemala", "12345678");
+        ClienteController.getClienteController().agregar("Luis Fernando Garcia", "Villanueva, Guatemala", "12345678");
+        ClienteController.getClienteController().agregar("Didier Dominguez", "Villanueva, Guatemala", "12345678");
+        ClienteController.getClienteController().agregar("Lisseth Arevalo", "Jutiapa, Guatemala", "12345678");
+        ClienteController.getClienteController().agregar("Hector Maldonado", "Guatemala", "12345678");
+        ClienteController.getClienteController().agregar("Herbert Bustamante", "Guatemala", "12345678");
+        ClienteController.getClienteController().agregar("Herson Belteron", "Escuintla, Guatemala", "12345678");
         
         
         //AGENCIA
@@ -76,9 +83,59 @@ public class Principal extends Application {
         
         
         /*EMPLEADOS*/
-        EmpleadoController.getEmpleadoController().agregar("juan", "dir1", "tel", "Call-Center", "0");
-        EmpleadoController.getEmpleadoController().agregar("luis", "dir2", "tel", "Agencia", "1");
-        EmpleadoController.getEmpleadoController().agregar("pedro", "dir3", "tel", "Autobanco","8");
+        EmpleadoController.getEmpleadoController().agregar("María Carmen Villela", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("María Rodas", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("Carmen Armas", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("Javier Perez", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("Denis Perez", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("Acevedo Flores", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("Felisia Garcia", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("Carlos Campos", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("Carlos Marroquin", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("Kevin Flores", "Guatemala", "12345654", "Call-Center", "-");
+        
+        
+        
+        
+ 
+        
+        
+        
+        
+        
+        EmpleadoController.getEmpleadoController().agregar("Pedro Campos", "Guatemala", "12345654", "Agencia", "0");
+        EmpleadoController.getEmpleadoController().agregar("Eduardo Marroquin", "Guatemala", "12345654", "Agencia", "0");
+        EmpleadoController.getEmpleadoController().agregar("Amalia Flores", "Guatemala", "12345654", "Agencia", "0");
+        
+        
+        EmpleadoController.getEmpleadoController().agregar("Julia Castellano", "Guatemala", "12345654", "Agencia", "1");
+        EmpleadoController.getEmpleadoController().agregar("Arturo Najera", "Guatemala", "12345654", "Agencia", "1");
+        EmpleadoController.getEmpleadoController().agregar("Marvin Rosa", "Guatemala", "12345654", "Agencia", "1");
+        
+        
+        EmpleadoController.getEmpleadoController().agregar("Katherine Estrada", "Guatemala", "12345654", "Agencia", "2");
+        EmpleadoController.getEmpleadoController().agregar("Luis Ramos", "Guatemala", "12345654", "Agencia", "2");
+        EmpleadoController.getEmpleadoController().agregar("Miriam Ramos", "Guatemala", "12345654", "Agencia", "2");
+        
+        
+        EmpleadoController.getEmpleadoController().agregar("Teresa Estrada", "Guatemala", "12345654", "Agencia", "3");
+        EmpleadoController.getEmpleadoController().agregar("Maria Amalia", "Guatemala", "12345654", "Agencia", "3");
+        EmpleadoController.getEmpleadoController().agregar("Donald Castro", "Guatemala", "12345654", "Agencia", "3");
+        
+        
+        
+        EmpleadoController.getEmpleadoController().agregar("Pamela Estrada", "Guatemala", "12345654", "Oficinas Centrales", "-");
+        EmpleadoController.getEmpleadoController().agregar("Simon Vargas", "Guatemala", "12345654", "Oficinas Centrales", "-");
+        
+        
+        EmpleadoController.getEmpleadoController().agregar("Lis Campos", "Guatemala", "12345654", "Agencia", "4");
+        EmpleadoController.getEmpleadoController().agregar("Daniela Marroquin", "Guatemala", "12345654", "Agencia", "4");
+        EmpleadoController.getEmpleadoController().agregar("Teodoro Flores", "Guatemala", "12345654", "Agencia", "4");
+        
+        
+        
+        
+        
         
         
         
@@ -157,13 +214,13 @@ public class Principal extends Application {
         
         
         
-        UIMenu.getUI().start(primaryStage);
+        //UIMenu.getUI().start(primaryStage);
         
         
 
         //UIOperacionesCliente.getUI().start(primaryStage, ClienteController.getClienteController().buscar(0));
         //UISeleccionCliente.getUI().start(primaryStage);
-        //AdminInterface.getAdminInterface().start(primaryStage);
+        AdminInterface.getAdminInterface().start(primaryStage);
        // AccessWindow.getAccessWindow().getGridPane(primaryStage);        
 
 

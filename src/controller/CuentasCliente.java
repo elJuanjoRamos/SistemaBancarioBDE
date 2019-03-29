@@ -100,6 +100,29 @@ public class CuentasCliente {
         return arrayListCuentaAhorroCliente;
     }
 
+    
+    public CuentaAhorroCliente[] obtenerCuentaAhorro(int idCliente) {
+        
+        CuentaAhorroCliente[] ca = new CuentaAhorroCliente[1000];
+        
+        ca = null;
+        for (CuentaAhorroCliente c : cuentaAhorroCliente) {
+            if (c!= null) {
+                
+                if (c.getCliente().getId() == idCliente) {
+                    for (int i = 0; i < ca.length; i++) {
+                        if (ca[i] == null) {
+                            ca[i] = c;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return ca;
+    }
+
+    
    /*OBTIENE SOLO LOS ID DE LAS CUENTAS DE AHORRO DE UN CLIENTE*/
     public ArrayList<String> getArrayNoCACliete(int idCliente) {
         String[] result = new String[1000];
@@ -224,12 +247,28 @@ public class CuentasCliente {
     }
     
     
-    
-    
-    
-    
-    
-    
+    public CuentaMonetariaCliente[] obtenerCuentaMonetaria(int idCliente) {
+        
+        CuentaMonetariaCliente[] cm = new CuentaMonetariaCliente[100]; 
+        cm=null;
+        for (CuentaMonetariaCliente c : cuentaMonetariaCliente) {
+            if (c != null) {
+                if (c.getCliente().getId() == idCliente) {
+                    for (int i = 0; i < cm.length; i++) {
+                        if (cm[i] == null) {
+                            cm[i] = c;
+                            break;
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        
+        return cm;
+    }
     
     
     

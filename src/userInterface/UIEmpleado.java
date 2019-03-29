@@ -36,6 +36,7 @@ import controller.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -69,6 +70,7 @@ public class UIEmpleado {
     private TableColumn<Empleado, String> tableColumnDireccionEmpleado;
     private TableColumn<Empleado, String> tableColumnTelefonoEmpleado;
     private TableColumn<Empleado, String> tableColumnPuestoEmpleado;
+    private TableColumn<Empleado, String> tableColumnAgencia;
 
     private TableView<Empleado> tableView;
     private ObservableList<Empleado> observableList;
@@ -89,8 +91,8 @@ public class UIEmpleado {
         gridPane.setPadding(new Insets(30, 30, 30, 30));
 
         textTitle = new Text("  Empleados  ");
-        textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
-        gridPane.add(textTitle, 0, 0);
+        textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 35));
+        gridPane.add(textTitle, 0, 2);
 
         textFieldBuscar = new TextField();
         textFieldBuscar.setPromptText("Buscar Empleado");
@@ -114,9 +116,10 @@ public class UIEmpleado {
             }
         });
         hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar, buttonReestablecer);
-        gridPane.add(hBoxBuscar, 0, 1);
+        gridPane.add(hBoxBuscar, 0, 6);
         
         buttonNuevo = new Button("Nuevo");
+        buttonNuevo.setGraphic(new ImageView("/resources/1.png"));
         buttonNuevo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -126,6 +129,7 @@ public class UIEmpleado {
         });
 
         buttonModificar = new Button("Modificar");
+        buttonModificar.setGraphic(new ImageView("/resources/3.png"));
         buttonModificar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -147,6 +151,9 @@ public class UIEmpleado {
         });
 
         buttonEliminar = new Button("Eliminar");
+        buttonEliminar.setId("btnRojoR");
+        buttonEliminar.setGraphic(new ImageView("/resources/2.png"));
+        
         buttonEliminar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -175,9 +182,17 @@ public class UIEmpleado {
             }
         });
 
-        hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar,
-                buttonEliminar);
-        gridPane.add(hBoxButtons, 0, 2);
+        Button buttonReportes = new Button("Generar Reporte");
+        buttonReportes.setGraphic(new ImageView("/resources/6.png"));
+        
+        buttonReportes.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReporteController.getReporteController().CrearPDFEmpleado();
+            }
+        });
+        hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar, buttonEliminar, buttonReportes);
+        gridPane.add(hBoxButtons, 0, 9);
 
         tableColumnIdEmpleado = new TableColumn<>();
         tableColumnIdEmpleado.setText("ID");
@@ -205,10 +220,16 @@ public class UIEmpleado {
         tableColumnPuestoEmpleado.setCellValueFactory(new PropertyValueFactory<>("departamento"));
         tableColumnPuestoEmpleado.setMinWidth(200);
 
+        tableColumnAgencia = new TableColumn<>();
+        tableColumnAgencia.setText("Agencia");
+        tableColumnAgencia.setCellValueFactory(new PropertyValueFactory<>("idAgencia"));
+        tableColumnAgencia.setMinWidth(200);
+
+        
         tableView = new TableView<>();
         tableView.setItems(getObservableList());
 
-        tableView.getColumns().addAll(tableColumnIdEmpleado, tableColumnNombreEmpleado, tableColumnTelefonoEmpleado, tableColumnDireccionEmpleado, tableColumnPuestoEmpleado);
+        tableView.getColumns().addAll(tableColumnIdEmpleado, tableColumnNombreEmpleado, tableColumnTelefonoEmpleado, tableColumnDireccionEmpleado, tableColumnPuestoEmpleado, tableColumnAgencia);
         tableView.setMinSize(100, 300);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -221,8 +242,8 @@ public class UIEmpleado {
             }
         });
 
-        gridPane.add(tableView, 0, 6);
-
+        gridPane.add(tableView, 0, 11);
+        gridPane.maxWidth(1025);
         hBoxCRUD.getChildren().add(gridPane);
         hBoxCRUD.setAlignment(Pos.CENTER_LEFT);
         hBoxCRUD.setMinSize(700, 600);

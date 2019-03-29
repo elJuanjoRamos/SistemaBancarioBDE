@@ -142,6 +142,28 @@ public class TarjetasYPrestamosCliente {
         return resultado;
     }
     
+    public TarjetaCliente[] obtenerTarjetaCliente(int idCliente) {
+        
+        TarjetaCliente[] t = new TarjetaCliente[1000];
+        t = null;
+         for (TarjetaCliente c : arrayTarjetaCliente) {
+            if (c != null) {
+                if (c.getCliente().getId() == idCliente) {
+                    for (int i = 0; i < t.length; i++) {
+                        if (t[i] == null) {
+                            t[i]= c;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+        }
+         return t;
+    }
+    
+    
+    
     
     public ArrayList<String> getArrayTarjetaClienteEspecifico(int idCliente) {
         
@@ -165,9 +187,6 @@ public class TarjetasYPrestamosCliente {
         for (int i = 0; i < arrayTarjetaCliente.length; i++) {
             if (arrayTarjetaCliente[i] != null) {
                 if (arrayTarjetaCliente[i].getTarjeta().getId() == idTarjeta) {
-                    System.out.println(idTarjeta);
-                    System.out.println(arrayTarjetaCliente[i].getTarjeta().getId());
-                    System.out.println(arrayTarjetaCliente[i].getTarjeta().getDeuda());
                     
                     Double deuda = arrayTarjetaCliente[i].getTarjeta().getDeuda();
                     arrayTarjetaCliente[i].getTarjeta().setDeuda(deuda - monto);
@@ -243,6 +262,28 @@ public class TarjetasYPrestamosCliente {
         
         return arrayListPrestamo;
     }
+    
+    public PrestamoCliente[] obtenerPrestamos(int idCliente) {
+        
+        PrestamoCliente[] p = new PrestamoCliente[1000];
+        p = null;
+        for (PrestamoCliente c : arrayPrestamoCliente) {
+            if (c != null) {
+                if (c.getCliente().getId() == idCliente) {
+                    for (int i = 0; i < p.length; i++) {
+                        if (p[i] == null) {
+                            p[i] = c;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return p;
+    }
+    
+    
     
     /*----------BUSCAR UN PRESTAMO POR CODIGO DE UN CLIENTE ESPECIFICO ----------*/
     public Prestamo buscarPrestamoCliente(String id) {

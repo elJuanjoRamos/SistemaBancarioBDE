@@ -32,6 +32,7 @@ import java.util.Optional;
 import javafx.scene.control.ButtonType;
 
 import beans.*;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -87,9 +88,11 @@ public class UIAgencia {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(30, 30, 30, 30));
 
-        textTitle = new Text("  AgenciaBancarias  ");
-        textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
-        gridPane.add(textTitle, 0, 0);
+        textTitle = new Text("  Agencias Bancarias  ");
+        textTitle.setFont(Font.font("Century Gothic Bold", FontWeight.BOLD, 35));
+        gridPane.add(textTitle, 0, 2);
+        
+        
 
         textFieldBuscar = new TextField();
         textFieldBuscar.setPromptText("Buscar AgenciaBancaria");
@@ -113,9 +116,11 @@ public class UIAgencia {
             }
         });
         hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar, buttonReestablecer);
-        gridPane.add(hBoxBuscar, 0, 1);
+        gridPane.add(hBoxBuscar, 0, 6);
 
         buttonNuevo = new Button("Nuevo");
+        buttonNuevo.setGraphic(new ImageView("/resources/1.png"));
+        
         buttonNuevo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -125,6 +130,7 @@ public class UIAgencia {
         });
 
         buttonModificar = new Button("Modificar");
+        buttonModificar.setGraphic(new ImageView("/resources/3.png"));
         buttonModificar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -147,6 +153,7 @@ public class UIAgencia {
         });
 
         buttonEliminar = new Button("Eliminar");
+        buttonEliminar.setGraphic(new ImageView("/resources/2.png"));
         buttonEliminar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -175,18 +182,28 @@ public class UIAgencia {
             }
         });
 
-        hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar, buttonEliminar);
-        gridPane.add(hBoxButtons, 0, 4);
+        Button buttonReportes = new Button("Generar Reporte");
+        buttonReportes.setGraphic(new ImageView("/resources/6.png"));
+        
+        buttonReportes.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReporteController.getReporteController().CrearPDFAgencias("NoAuto");
+            }
+        });
+        
+        hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar, buttonEliminar, buttonReportes);
+        gridPane.add(hBoxButtons, 0, 9);
 
         tableColumnIdAgenciaBancaria = new TableColumn<>();
         tableColumnIdAgenciaBancaria.setText("ID");
         tableColumnIdAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnIdAgenciaBancaria.setMinWidth(40);
+        tableColumnIdAgenciaBancaria.setMinWidth(80);
 
         tableColumnNombreAgenciaBancaria = new TableColumn<>();
         tableColumnNombreAgenciaBancaria.setText("Nombre");
         tableColumnNombreAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        tableColumnNombreAgenciaBancaria.setMinWidth(150);
+        tableColumnNombreAgenciaBancaria.setMinWidth(300);
 
         tableColumnTelefonoAgenciaBancaria = new TableColumn<>();
         tableColumnTelefonoAgenciaBancaria.setText("Telefono");
@@ -196,22 +213,22 @@ public class UIAgencia {
         tableColumnDireccionAgenciaBancaria = new TableColumn<>();
         tableColumnDireccionAgenciaBancaria.setText("Direccion");
         tableColumnDireccionAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        tableColumnDireccionAgenciaBancaria.setMinWidth(100);
+        tableColumnDireccionAgenciaBancaria.setMinWidth(200);
 
         tableColumnNoCajasAgenciaBancaria = new TableColumn<>();
         tableColumnNoCajasAgenciaBancaria.setText("No Cajas");
         tableColumnNoCajasAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("noCajas"));
-        tableColumnNoCajasAgenciaBancaria.setMinWidth(60);
+        tableColumnNoCajasAgenciaBancaria.setMinWidth(100);
 
         tableColumnNoEscritoriosAgenciaBancaria = new TableColumn<>();
-        tableColumnNoEscritoriosAgenciaBancaria.setText("Escritorios SEalCl");
+        tableColumnNoEscritoriosAgenciaBancaria.setText("Esc. SE");
         tableColumnNoEscritoriosAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("escritorios"));
-        tableColumnNoEscritoriosAgenciaBancaria.setMinWidth(60);
+        tableColumnNoEscritoriosAgenciaBancaria.setMinWidth(130);
 
         tableColumnEfectivoAgenciaBancaria = new TableColumn<>();
         tableColumnEfectivoAgenciaBancaria.setText("Efectivo Q.00");
         tableColumnEfectivoAgenciaBancaria.setCellValueFactory(new PropertyValueFactory<>("efectivo"));
-        tableColumnEfectivoAgenciaBancaria.setMinWidth(80);
+        tableColumnEfectivoAgenciaBancaria.setMinWidth(200);
 
         tableView = new TableView<>();
         tableView.setItems(getObservableList());
@@ -220,7 +237,7 @@ public class UIAgencia {
                 tableColumnTelefonoAgenciaBancaria, tableColumnDireccionAgenciaBancaria,
                 tableColumnNoCajasAgenciaBancaria, tableColumnNoEscritoriosAgenciaBancaria,
                 tableColumnEfectivoAgenciaBancaria);
-        tableView.setMinSize(730, 150);
+        tableView.setMinSize(1100, 600);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tableView.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -232,11 +249,11 @@ public class UIAgencia {
             }
         });
 
-        gridPane.add(tableView, 0, 7, 2, 1);
+        gridPane.add(tableView, 0, 11);
 
         hBoxCRUD.getChildren().add(gridPane);
         hBoxCRUD.setAlignment(Pos.CENTER_LEFT);
-        hBoxCRUD.setMinSize(730, 600);
+        hBoxCRUD.setMinSize(1000, 900);
         return hBoxCRUD;
     }
 
@@ -307,31 +324,31 @@ class CrearAgencia {
         textTitle.setFont(Font.font("Montserrat", FontWeight.BOLD, 20));
         gridPane.add(textTitle, 0, 0, 3, 1);
 
-        labelNombre = new Label("Nombre Agencia: ");
+        labelNombre = new Label("Nombre: ");
         gridPane.add(labelNombre, 0, 3);
 
         textFieldNombre = new TextField();
         gridPane.add(textFieldNombre, 1, 3, 2, 1);
 
-        labelDireccion = new Label("Direccion Agencia: ");
+        labelDireccion = new Label("Direccion: ");
         gridPane.add(labelDireccion, 0, 4);
 
         textFieldDireccion = new TextField();
         gridPane.add(textFieldDireccion, 1, 4, 2, 1);
 
-        labelTelefono = new Label("Telefono Agencia: ");
+        labelTelefono = new Label("Telefono: ");
         gridPane.add(labelTelefono, 0, 5);
 
         textFieldTelefono = new TextField();
         gridPane.add(textFieldTelefono, 1, 5, 2, 1);
 
-        labelcajas = new Label("Cajas de la Agencia: ");
+        labelcajas = new Label("No. Cajas: ");
         gridPane.add(labelcajas, 0, 6);
 
         textFieldcajas = new TextField();
         gridPane.add(textFieldcajas, 1, 6, 2, 1);
 
-        labelescritorio = new Label("Escitorios Servicio al Cliente: ");
+        labelescritorio = new Label("Esc Servicio: ");
         gridPane.add(labelescritorio, 0, 7);
 
         textFieldescritorio = new TextField();
@@ -438,8 +455,6 @@ class ActualizarAgencia {
     private Label labelefectivo;
     private TextField textFieldefectivo;
 
-    private Button buttonAgregar;
-    private Button buttonCerrar;
 
     private Alert alert = new Alert(AlertType.INFORMATION);
 
@@ -460,32 +475,32 @@ class ActualizarAgencia {
         textTitle.setFont(Font.font("Montserrat", FontWeight.BOLD, 20));
         gridPane.add(textTitle, 0, 0, 3, 1);
 
-        labelNombre = new Label("Nombre Agecia: ");
+        labelNombre = new Label("Nombre: ");
         gridPane.add(labelNombre, 0, 3);
 
         textFieldNombre = new TextField(Agencia.getNombre());
         gridPane.add(textFieldNombre, 1, 3, 3, 1);
 
-        labelDireccion = new Label("Direccion Agencia: ");
+        labelDireccion = new Label("Direccion: ");
         gridPane.add(labelDireccion, 0, 4);
 
         textFieldDireccion = new TextField(Agencia.getDireccion());
         gridPane.add(textFieldDireccion, 1, 4, 3, 1);
 
-        labelTelefono = new Label("Telefono Agencia: ");
+        labelTelefono = new Label("Telefono: ");
         gridPane.add(labelTelefono, 0, 5);
 
         textFieldTelefono = new TextField(Agencia.getTelefono());
         gridPane.add(textFieldTelefono, 1, 5, 3, 1);
 
         
-        labelcajas = new Label("Cajas de la Agencia: ");
+        labelcajas = new Label("No. Cajas: ");
         gridPane.add(labelcajas, 0, 6);
 
         textFieldcajas = new TextField(String.valueOf(Agencia.getNoCajas()));
         gridPane.add(textFieldcajas, 1, 6, 3, 1);
 
-        labelescritorio = new Label("Escitorios Servicio al Cliente: ");
+        labelescritorio = new Label("Esc Servicio: ");
         gridPane.add(labelescritorio, 0, 7);
 
         textFieldescritorio = new TextField(String.valueOf(Agencia.getEscritorios()));

@@ -92,10 +92,10 @@ public class UIAgenciaAutobanco {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(30, 30, 30, 30));
 
-        textTitle = new Text("  Agencia con Auto Banco  ");
-        textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
-        gridPane.add(textTitle, 0, 0);
-
+        textTitle = new Text("  Agencia Bancaria con Auto Banco  ");
+        textTitle.setFont(Font.font("Century Gothic Bold", FontWeight.BOLD, 35));
+        gridPane.add(textTitle, 0, 2);
+        
         textFieldBuscar = new TextField();
         textFieldBuscar.setPromptText("Buscar AgenciaBancariaBancaria");
 
@@ -121,7 +121,7 @@ public class UIAgenciaAutobanco {
             }
         });
         hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar, buttonReestablecer);
-        gridPane.add(hBoxBuscar, 0, 1);
+        gridPane.add(hBoxBuscar, 0, 6);
 
         buttonNuevo = new Button("Nuevo");
         buttonNuevo.setId("btnAzulA");
@@ -189,9 +189,18 @@ public class UIAgenciaAutobanco {
                 }
             }
         });
-
-        hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar, buttonEliminar);
-        gridPane.add(hBoxButtons, 0, 4);
+        Button buttonReportes = new Button("Generar Reporte");
+            buttonReportes.setGraphic(new ImageView("/resources/6.png"));
+        
+        buttonReportes.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReporteController.getReporteController().CrearPDFAgencias("Auto");
+            }
+        });
+        
+        hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar, buttonEliminar, buttonReportes);
+        gridPane.add(hBoxButtons, 0, 9);
 
         tableColumnIdAgenciaBancariaBancaria = new TableColumn<>();
         tableColumnIdAgenciaBancariaBancaria.setText("ID");
@@ -201,7 +210,7 @@ public class UIAgenciaAutobanco {
         tableColumnNombreAgenciaBancariaBancaria = new TableColumn<>();
         tableColumnNombreAgenciaBancariaBancaria.setText("Nombre");
         tableColumnNombreAgenciaBancariaBancaria.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        tableColumnNombreAgenciaBancariaBancaria.setMinWidth(150);
+        tableColumnNombreAgenciaBancariaBancaria.setMinWidth(300);
 
         tableColumnTelefonoAgenciaBancariaBancaria = new TableColumn<>();
         tableColumnTelefonoAgenciaBancariaBancaria.setText("Telefono");
@@ -211,29 +220,29 @@ public class UIAgenciaAutobanco {
         tableColumnDireccionAgenciaBancariaBancaria = new TableColumn<>();
         tableColumnDireccionAgenciaBancariaBancaria.setText("Direccion");
         tableColumnDireccionAgenciaBancariaBancaria.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        tableColumnDireccionAgenciaBancariaBancaria.setMinWidth(100);
+        tableColumnDireccionAgenciaBancariaBancaria.setMinWidth(200);
 
         tableColumnNoCajasAgenciaBancariaBancaria = new TableColumn<>();
         tableColumnNoCajasAgenciaBancariaBancaria.setText("No Cajas");
         tableColumnNoCajasAgenciaBancariaBancaria.setCellValueFactory(new PropertyValueFactory<>("noCajas"));
-        tableColumnNoCajasAgenciaBancariaBancaria.setMinWidth(60);
+        tableColumnNoCajasAgenciaBancariaBancaria.setMinWidth(100);
 
         tableColumnNoEscritoriosAgenciaBancariaBancaria = new TableColumn<>();
-        tableColumnNoEscritoriosAgenciaBancariaBancaria.setText("Escritorios SEalCl");
+        tableColumnNoEscritoriosAgenciaBancariaBancaria.setText("Esc. SC");
         tableColumnNoEscritoriosAgenciaBancariaBancaria.setCellValueFactory(new PropertyValueFactory<>("escritorios"));
-        tableColumnNoEscritoriosAgenciaBancariaBancaria.setMinWidth(60);
+        tableColumnNoEscritoriosAgenciaBancariaBancaria.setMinWidth(100);
 
         
         tableColumnAutoBancoAgenciaBancariaBancaria = new TableColumn<>();
-        tableColumnAutoBancoAgenciaBancariaBancaria.setText("Cajas AutoB");
+        tableColumnAutoBancoAgenciaBancariaBancaria.setText("Cajas AB");
         tableColumnAutoBancoAgenciaBancariaBancaria.setCellValueFactory(new PropertyValueFactory<>("auto"));
-        tableColumnAutoBancoAgenciaBancariaBancaria.setMinWidth(60);
+        tableColumnAutoBancoAgenciaBancariaBancaria.setMinWidth(100);
 
         
         tableColumnEfectivoAgenciaBancariaBancaria = new TableColumn<>();
         tableColumnEfectivoAgenciaBancariaBancaria.setText("Efectivo Q.00");
         tableColumnEfectivoAgenciaBancariaBancaria.setCellValueFactory(new PropertyValueFactory<>("efectivo"));
-        tableColumnEfectivoAgenciaBancariaBancaria.setMinWidth(80);
+        tableColumnEfectivoAgenciaBancariaBancaria.setMinWidth(150);
 
         tableView = new TableView<>();
         tableView.setItems(getObservableList());
@@ -243,23 +252,15 @@ public class UIAgenciaAutobanco {
                 tableColumnNoCajasAgenciaBancariaBancaria, tableColumnNoEscritoriosAgenciaBancariaBancaria,
                 tableColumnAutoBancoAgenciaBancariaBancaria, tableColumnEfectivoAgenciaBancariaBancaria);
         
-        tableView.setMinSize(730, 150);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        tableView.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                    hBoxCRUD.getChildren().clear();
-                }
-            }
-        });
+        
 
-        gridPane.add(tableView, 0, 7, 2, 1);
-
+        gridPane.add(tableView, 0, 11);
+        gridPane.setMaxWidth(1152);
         hBoxCRUD.getChildren().add(gridPane);
         hBoxCRUD.setAlignment(Pos.CENTER_LEFT);
-        hBoxCRUD.setMinSize(730, 600);
+        
         return hBoxCRUD;
     }
 
@@ -335,31 +336,31 @@ class CrearAgenciaBancaria {
         textTitle.setFont(Font.font("Montserrat", FontWeight.BOLD, 20));
         gridPane.add(textTitle, 0, 0, 3, 1);
 
-        labelNombre = new Label("Nombre AgenciaBancaria: ");
+        labelNombre = new Label("Nombre: ");
         gridPane.add(labelNombre, 0, 3);
 
         textFieldNombre = new TextField();
         gridPane.add(textFieldNombre, 1, 3, 2, 1);
 
-        labelDireccion = new Label("Direccion AgenciaBancaria: ");
+        labelDireccion = new Label("Direccion: ");
         gridPane.add(labelDireccion, 0, 4);
 
         textFieldDireccion = new TextField();
         gridPane.add(textFieldDireccion, 1, 4, 2, 1);
 
-        labelTelefono = new Label("Telefono AgenciaBancaria: ");
+        labelTelefono = new Label("Telefono: ");
         gridPane.add(labelTelefono, 0, 5);
 
         textFieldTelefono = new TextField();
         gridPane.add(textFieldTelefono, 1, 5, 2, 1);
 
-        labelcajas = new Label("Cajas de la AgenciaBancaria: ");
+        labelcajas = new Label("No. Cajas: ");
         gridPane.add(labelcajas, 0, 6);
 
         textFieldcajas = new TextField();
         gridPane.add(textFieldcajas, 1, 6, 2, 1);
 
-        labelescritorio = new Label("Escitorios Servicio al Cliente: ");
+        labelescritorio = new Label("Esc. SC: ");
         gridPane.add(labelescritorio, 0, 7);
 
         textFieldescritorio = new TextField();
@@ -397,27 +398,25 @@ class CrearAgenciaBancaria {
                             textFieldCajasAuto.getText())) {
 
                         if (AgenciaController.getAgenciaController().buscarAgencia(textFieldNombre.getText())) {
-                            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                            alerta.setTitle("Information!");
-                            alerta.setHeaderText(null);
-                            alerta.setContentText("Ya existe una agencia o agencia con autobanco asociada con ese nombre");
-                            alerta.initStyle(StageStyle.UTILITY);
-                            alerta.showAndWait();
+                            getAlert("Ya existe una agencia o agencia con autobanco asociada con ese nombre");
                         } else {
+                            if (Double.parseDouble(textFieldefectivo.getText()) >= 10000.00) {
+                                AgenciaController.getAgenciaController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
+                                Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()), 
+                                Integer.parseInt(textFieldCajasAuto.getText()),
+                                Double.parseDouble(textFieldefectivo.getText()));
+                                textFieldNombre.clear();
+                                textFieldDireccion.clear();
+                                textFieldTelefono.clear();
+                                textFieldcajas.clear();
+                                textFieldescritorio.clear();
+                                textFieldCajasAuto.clear();
+                                textFieldefectivo.clear();
+                                UIAgenciaAutobanco.getAgencia().actualizarDatosTabla();
 
-                            AgenciaController.getAgenciaController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
-                                    Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()), 
-                                    Integer.parseInt(textFieldCajasAuto.getText()),
-                                    Double.parseDouble(textFieldefectivo.getText()));
-                            textFieldNombre.clear();
-                            textFieldDireccion.clear();
-                            textFieldTelefono.clear();
-                            textFieldcajas.clear();
-                            textFieldescritorio.clear();
-                            textFieldCajasAuto.clear();
-                            textFieldefectivo.clear();
-                            UIAgenciaAutobanco.getAgencia().actualizarDatosTabla();
-
+                            } else {
+                                getAlert("El monto del efectivo debe ser mayor o igual a Q10,000.00");
+                            }
                         }
 
                     } else {
@@ -447,6 +446,15 @@ class CrearAgenciaBancaria {
         gridPane.getStyleClass().add("gridPane");
 
         return gridPane;
+    }
+    
+    public void getAlert(String cadena) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Information!");
+        alerta.setHeaderText(null);
+        alerta.setContentText(cadena);
+        alerta.initStyle(StageStyle.UTILITY);
+        alerta.showAndWait();
     }
 }
 
@@ -553,37 +561,26 @@ class ActualizarAgenciaBancaria {
                     if (AgenciaController.getAgenciaController().esNumero(textFieldcajas.getText(), textFieldescritorio.getText(), textFieldCajasAuto.getText(),  textFieldefectivo.getText())) {
 
                         if (AgenciaController.getAgenciaController().buscarAgencia(textFieldNombre.getText())) {
-                            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                            alerta.setTitle("Information!");
-                            alerta.setHeaderText(null);
-                            alerta.setContentText("Ya existe una agencia o agencia con autobanco asociada con ese nombre");
-                            alerta.initStyle(StageStyle.UTILITY);
-                            alerta.showAndWait();
+                            getAlert("Ya existe una agencia o agencia con autobanco asociada con ese nombre");
                         } else {
 
-                            AgenciaController.getAgenciaController().actualizar(agenciaBancaria.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
+                            if (Double.parseDouble(textFieldefectivo.getText()) >= 10000.00 )  {
+                                 AgenciaController.getAgenciaController().actualizar(agenciaBancaria.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
                                     Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()), Integer.parseInt(textFieldCajasAuto.getText()), Double.parseDouble(textFieldefectivo.getText()));
                             
-                            UIAgenciaAutobanco.getAgencia().actualizarDatosTabla();
-                            UIAgenciaAutobanco.getAgencia().restarthBoxCRUD();
+                                    UIAgenciaAutobanco.getAgencia().actualizarDatosTabla();
+                                     UIAgenciaAutobanco.getAgencia().restarthBoxCRUD();
+                            } else {
+                                getAlert("El monto del efectivo debe ser mayor o igual a Q10,000.00");
+                            }
+                           
                         }
 
                     } else {
-                        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                        alerta.setTitle("Error!");
-                        alerta.setHeaderText(null);
-                        alerta.setContentText("No puede introducir letras donde van valores numericos");
-                        alerta.initStyle(StageStyle.UTILITY);
-                        alerta.showAndWait();
+                        getAlert("No puede introducir letras donde van valores numericos");
                     }
                 } else {
-                    Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-                    alerta.setTitle("Error!");
-                    alerta.setHeaderText(null);
-                    alerta.setContentText("No puede dejar campos en blanco.");
-                    alerta.initStyle(StageStyle.UTILITY);
-                    alerta.showAndWait();
-
+                    getAlert("No puede dejar campos en blanco.");
                 }
 
             }
@@ -604,5 +601,13 @@ class ActualizarAgenciaBancaria {
         gridPane.setMinSize(200, 400);
 
         return gridPane;
+    }
+    public void getAlert(String cadena) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Information!");
+        alerta.setHeaderText(null);
+        alerta.setContentText(cadena);
+        alerta.initStyle(StageStyle.UTILITY);
+        alerta.showAndWait();
     }
 }

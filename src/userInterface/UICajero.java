@@ -90,8 +90,8 @@ public class UICajero {
         gridPane.setPadding(new Insets(30, 30, 30, 30));
 
         textTitle = new Text("  Cajeros Automaticos  ");
-        textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
-        gridPane.add(textTitle, 0, 0);
+        textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 35));
+        gridPane.add(textTitle, 0, 2);
 
         textFieldBuscar = new TextField();
         textFieldBuscar.setPromptText("Buscar direccion");
@@ -117,7 +117,7 @@ public class UICajero {
             }
         });
         hBoxBuscar.getChildren().addAll(textFieldBuscar, buttonBuscar, buttonReestablecer);
-        gridPane.add(hBoxBuscar, 0, 1);
+        gridPane.add(hBoxBuscar, 0, 6);
         
 
         buttonNuevo = new Button("Nuevo");
@@ -127,7 +127,8 @@ public class UICajero {
             @Override
             public void handle(ActionEvent event) {
                 hBoxCRUD.getChildren().clear();
-                hBoxCRUD.getChildren().addAll(gridPane, CrearCajero.getCrearCajero().getGridPane());
+                
+                hBoxCRUD.getChildren().addAll(gridPane, Animacion.getAnimatedGridPane().getAnimatedGridPane(CrearCajero.getCrearCajero().getGridPane()));
             }
         });
 
@@ -189,9 +190,19 @@ public class UICajero {
             }
         });
 
+        Button buttonReportes = new Button("Generar Reporte");
+        buttonReportes.setGraphic(new ImageView("/resources/6.png"));
+        
+        buttonReportes.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReporteController.getReporteController().CrearPDFCajeros();
+            }
+        });
+
         hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar,
-                buttonEliminar);
-        gridPane.add(hBoxButtons, 0, 4);
+                buttonEliminar, buttonReportes);
+        gridPane.add(hBoxButtons, 0, 9);
 
         tableColumnId = new TableColumn<>();
         tableColumnId.setText("ID");
@@ -203,12 +214,12 @@ public class UICajero {
         tableColumnUbicacion = new TableColumn<>();
         tableColumnUbicacion.setText("Ubicacion");
         tableColumnUbicacion.setCellValueFactory(new PropertyValueFactory<>("ubicacion"));
-        tableColumnUbicacion.setMinWidth(200);
+        tableColumnUbicacion.setMinWidth(250);
 
         tableColumnEfectivo = new TableColumn<>();
         tableColumnEfectivo.setText("Efectivo");
         tableColumnEfectivo.setCellValueFactory(new PropertyValueFactory<>("efectivo"));
-        tableColumnEfectivo.setMinWidth(200);
+        tableColumnEfectivo.setMinWidth(250);
 
         tableColumnEstado = new TableColumn<>();
         tableColumnEstado.setText("Estado");
@@ -224,7 +235,6 @@ public class UICajero {
         tableView = new TableView<>();
         tableView.setItems(getObservableList());
         tableView.getColumns().addAll(tableColumnId, tableColumnUbicacion, tableColumnEfectivo, tableColumnEstado, tableColumnTransaccion);
-        tableView.setMinSize(100, 250);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tableView.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -236,11 +246,10 @@ public class UICajero {
             }
         });
 
-        gridPane.add(tableView, 0, 7, 2, 1);
-
+        gridPane.add(tableView, 0, 11);
+        gridPane.setMaxWidth(1032);
         hBoxCRUD.getChildren().add(gridPane);
         hBoxCRUD.setAlignment(Pos.CENTER_LEFT);
-        hBoxCRUD.setMinSize(700, 600);
         return hBoxCRUD;
 
     }

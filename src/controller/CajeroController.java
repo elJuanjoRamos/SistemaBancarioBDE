@@ -69,11 +69,19 @@ public class CajeroController {
     /*bucar*/
     public ArrayList<Cajero> buscar(String valor) {
         this.arrayList.clear();
-        Cajero[] c = new Cajero[1000];
+        
+        for (Cajero c : cajero) {
+            if (c != null) {
+                if (c.getUbicacion().toUpperCase().contains(valor.toUpperCase()) ||
+                    c.getEstado().toUpperCase().contains(valor.toUpperCase())) {
+                    arrayList.add(c);
+                }
+            }
+        }
+        /*Cajero[] c = new Cajero[1000];
         for (int i = 0; i < cajero.length; i++) {
             if (cajero[i] != null) {
-                if (cajero[i].getUbicacion().toUpperCase().contains(valor.toUpperCase()) ||
-                    cajero[i].getEstado().toUpperCase().contains(valor.toUpperCase())) {
+                if (cajero[i].) {
                     for (int j = 0; j < c.length; j++) {
                         if (c[j] == null) {
                             c[j] = cajero[i];
@@ -87,7 +95,7 @@ public class CajeroController {
             if (ca != null) {
                arrayList.add(ca);
             }
-        }
+        }*/
         return arrayList;
     }
 
@@ -100,10 +108,13 @@ public class CajeroController {
             }
         }
         
-        
-        
         return arrayList;
     }
+    
+    public Cajero[] obtenerCajeros(){
+        return this.cajero;
+    }
+    
     
     /*OBTIENE TODAS LAS DIRECCIONES*/
     public ArrayList<String> getDireccion() {

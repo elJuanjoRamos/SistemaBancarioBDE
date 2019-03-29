@@ -15,9 +15,9 @@ public class Empleado {
     private String direccion;
     private String telefono;
     private String departamento;
-    private int idAgencia;
+    private String idAgencia;
     
-    public Empleado(int id,String nombre,String direccion,String telefono, String departamento, int idAgencia){
+    public Empleado(int id,String nombre,String direccion,String telefono, String departamento, String idAgencia){
        
         this.id = id;
         this.nombre = nombre;
@@ -65,11 +65,11 @@ public class Empleado {
     }
     
     
-    public int getIdAgencia() {
+    public String getIdAgencia() {
         return idAgencia;
     }
 
-    public void setIdAgencia(int idAgencia) {
+    public void setIdAgencia(String idAgencia) {
         this.idAgencia = idAgencia;
     }
     
