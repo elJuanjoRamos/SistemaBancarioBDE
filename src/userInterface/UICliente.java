@@ -201,6 +201,10 @@ public class UICliente {
                 ReporteController.getReporteController().CrearPDFClientes();
             }
         });
+        
+        
+
+
 
 
         hBoxButtons.getChildren().addAll(buttonNuevo, buttonModificar,
@@ -442,7 +446,7 @@ class Actualizar {
                         && textFieldTelefono.getText().trim().length() != 0) {
                     ClienteController.getClienteController().actualizar(cliente.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText());
                     UICliente.getCRUDCliente().actualizarDatosTabla();
-
+                    UICliente.getCRUDCliente().restarthBoxCRUD();
 
                 } else {
                     
@@ -453,6 +457,8 @@ class Actualizar {
         });
         
         Button buttonReporte = new Button("Reporte");
+        buttonReporte.setGraphic(new ImageView("/resources/6.png"));
+        
         buttonReporte.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -461,7 +467,7 @@ class Actualizar {
         });
 
         gridPane.add(buttonModificar, 1, 6);
-        gridPane.add(buttonReporte, 1, 7);
+        gridPane.add(buttonReporte, 1, 9,2,1);
 
         
         Button buttonCerrar = new Button("Cerrar");

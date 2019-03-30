@@ -35,10 +35,10 @@ public class EmpleadoController {
     }
     /*---------------*/
     
-    public void agregar(String nombre, String direccion, String telefono, String departamento, String cadena) {
+    public void agregar(String nombre, String direccion, String telefono, String departamento, String cadena, String id) {
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                array[i] = new Empleado(i, nombre, direccion, telefono, departamento, cadena);
+                array[i] = new Empleado(i, nombre, direccion, telefono, departamento, cadena, id);
              
                 break;
             }
@@ -57,7 +57,7 @@ public class EmpleadoController {
             } 
         }
     }
-    public void actualizar(int id, String nombre, String direccion, String telefono, String departamento, String cadena) {
+    public void actualizar(int id, String nombre, String direccion, String telefono, String departamento, String cadena, String idA) {
         for (int i = 0; i < array.length; i++) {
             if (i == id) {
                 Empleado e = array[i];
@@ -65,7 +65,8 @@ public class EmpleadoController {
                 e.setDireccion(direccion);
                 e.setTelefono(telefono);
                 e.setDepartamento(departamento);
-                e.setIdAgencia(cadena);
+                e.setAgencia(cadena);
+                e.setIdAgencia(idA);
             }
         }
     }
@@ -78,7 +79,8 @@ public class EmpleadoController {
                 if (array[i].getNombre().toUpperCase().contains(valor.toUpperCase()) ||
                     array[i].getDepartamento().toUpperCase().contains(valor.toUpperCase())  ||
                     array[i].getDireccion().toUpperCase().contains(valor.toUpperCase())  ||
-                    array[i].getTelefono().toUpperCase().contains(valor.toUpperCase())     ) {
+                    array[i].getTelefono().toUpperCase().contains(valor.toUpperCase())  ||
+                    array[i].getAgencia().toUpperCase().contains(valor.toUpperCase())    ) {
                     for (int j = 0; j < 1000; j++) {
                         if (resultado[j] == null) {
                             resultado[j] = array[i];

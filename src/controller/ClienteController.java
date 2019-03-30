@@ -90,8 +90,10 @@ public class ClienteController {
         return arrayList;
     }   
     
+    
     public Cliente buscar(int id){
         Cliente resultado = new Cliente();
+        resultado = null;
         for (int i = 0; i < 1000; i++) {
             if (array[i] != null) {
                 if (array[i].getId() ==  id) {
@@ -103,8 +105,7 @@ public class ClienteController {
         return resultado;
     }
     
-    
-        public boolean buscarNombre(String nombre){
+    public boolean buscarNombre(String nombre){
         
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {

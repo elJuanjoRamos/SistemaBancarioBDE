@@ -36,13 +36,9 @@ public class CuentasCliente {
 
     public int noCuentaMonetaria;
     public int noCuentaAhorro;
-    
-    
+
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
     Date d = new Date();
-        
-    
-    
 
     private CuentasCliente() {
         arrayListCuentaAhorro = new ArrayList();
@@ -89,27 +85,26 @@ public class CuentasCliente {
 
     public ArrayList<CuentaAhorroCliente> getArrayCACliete(int idCliente) {
         this.arrayListCuentaAhorroCliente.clear();
-        
+
         for (CuentaAhorroCliente c : cuentaAhorroCliente) {
-            if (c!= null) {
+            if (c != null) {
                 if (c.getCliente().getId() == idCliente) {
-                    arrayListCuentaAhorroCliente.add(c);                
+                    arrayListCuentaAhorroCliente.add(c);
                 }
             }
         }
         return arrayListCuentaAhorroCliente;
     }
 
-    
     public CuentaAhorroCliente[] obtenerCuentaAhorro(int idCliente) {
-        
-        CuentaAhorroCliente[] ca = new CuentaAhorroCliente[1000];
-        
-        ca = null;
+
+        CuentaAhorroCliente[] ca = new CuentaAhorroCliente[1000];;
+
         for (CuentaAhorroCliente c : cuentaAhorroCliente) {
-            if (c!= null) {
-                
+            if (c != null) {
+
                 if (c.getCliente().getId() == idCliente) {
+
                     for (int i = 0; i < ca.length; i++) {
                         if (ca[i] == null) {
                             ca[i] = c;
@@ -121,9 +116,24 @@ public class CuentasCliente {
         }
         return ca;
     }
+    public CuentaAhorroCliente[] obtenerCuentaAhorro() {
 
-    
-   /*OBTIENE SOLO LOS ID DE LAS CUENTAS DE AHORRO DE UN CLIENTE*/
+        CuentaAhorroCliente[] ca = new CuentaAhorroCliente[1000];;
+
+        for (CuentaAhorroCliente c : cuentaAhorroCliente) {
+            if (c != null) {
+                for (int i = 0; i < ca.length; i++) {
+                        if (ca[i] == null) {
+                            ca[i] = c;
+                            break;
+                        }
+                }
+            }
+        }
+        return ca;
+    }
+
+    /*OBTIENE SOLO LOS ID DE LAS CUENTAS DE AHORRO DE UN CLIENTE*/
     public ArrayList<String> getArrayNoCACliete(int idCliente) {
         String[] result = new String[1000];
         ArrayList<String> arrayCuentaAhorro = new ArrayList();
@@ -149,14 +159,12 @@ public class CuentasCliente {
         }
         return arrayCuentaAhorro;
     }
-    
-    
-    
+
     /*BUSCA UNA UNICA CUENTA*/
     public CuentaAhorroCliente getArrayCAClieteUnica(int idCuenta) {
         for (CuentaAhorroCliente a : cuentaAhorroCliente) {
             if (a != null) {
-                if (a.getIdCuenta()== idCuenta) {
+                if (a.getIdCuenta() == idCuenta) {
                     return a;
                 }
             }
@@ -165,7 +173,6 @@ public class CuentasCliente {
     }
 
     /*----------------CUENTA MONETARIA---------------*/
-    
     /*AGREGAR*/
     public void agregarCuentaMonetaria(Double montoInicial) {
         this.noCuentaMonetaria = aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000;
@@ -195,8 +202,7 @@ public class CuentasCliente {
     /*MOSTRAR*/
     public ArrayList<CuentaMonetariaCliente> getArrayCMCliete(int idCliente) {
         this.arrayListCuentaMonetariaCliente.clear();
-        
-        
+
         for (CuentaMonetariaCliente c : cuentaMonetariaCliente) {
             if (c != null) {
                 if (c.getCliente().getId() == idCliente) {
@@ -206,12 +212,12 @@ public class CuentasCliente {
         }
         return arrayListCuentaMonetariaCliente;
     }
-    
+
     /*BUSCA UNA UNICA CUENTA MONETARIA*/
     public CuentaMonetariaCliente getArrayCMClieteUnica(int idCuenta) {
         for (CuentaMonetariaCliente a : cuentaMonetariaCliente) {
             if (a != null) {
-                if (a.getIdCuenta()== idCuenta) {
+                if (a.getIdCuenta() == idCuenta) {
                     return a;
                 }
             }
@@ -245,45 +251,51 @@ public class CuentasCliente {
         }
         return arrayCuentaMonetaria;
     }
-    
-    
+
     public CuentaMonetariaCliente[] obtenerCuentaMonetaria(int idCliente) {
-        
-        CuentaMonetariaCliente[] cm = new CuentaMonetariaCliente[100]; 
-        cm=null;
+
+        CuentaMonetariaCliente[] cm = new CuentaMonetariaCliente[1000];;
         for (CuentaMonetariaCliente c : cuentaMonetariaCliente) {
             if (c != null) {
                 if (c.getCliente().getId() == idCliente) {
+
                     for (int i = 0; i < cm.length; i++) {
                         if (cm[i] == null) {
                             cm[i] = c;
                             break;
-                            
+
                         }
                     }
                 }
             }
         }
-        
-        
-        
         return cm;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public CuentaMonetariaCliente[] obtenerCuentaMonetaria() {
+
+        CuentaMonetariaCliente[] cm = new CuentaMonetariaCliente[1000];;
+        for (CuentaMonetariaCliente c : cuentaMonetariaCliente) {
+            if (c != null) {
+
+                for (int i = 0; i < cm.length; i++) {
+                    if (cm[i] == null) {
+                        cm[i] = c;
+                        break;
+
+                    }
+                }
+
+            }
+        }
+        return cm;
+    }
 
     /*----------------CUENTA MONETARIA CLIENTE-------------------*/
     public void agregarCuentaMonetariaCliente(int idCliente) {
         for (int i = 0; i < cuentaMonetariaCliente.length; i++) {
             if (cuentaMonetariaCliente[i] == null) {
-                cuentaMonetariaCliente[i] = new CuentaMonetariaCliente(i, ClienteController.getClienteController().buscar(idCliente), buscarCuentaMonetaria(this.noCuentaMonetaria));
+                cuentaMonetariaCliente[i] = new CuentaMonetariaCliente(i, ClienteController.getClienteController().buscar(idCliente), buscarCuentaMonetaria(this.noCuentaMonetaria), 1);
                 break;
             }
         }
@@ -292,7 +304,7 @@ public class CuentasCliente {
     public void agregarCuentaAhorroCliente(int idCliente) {
         for (int i = 0; i < cuentaAhorroCliente.length; i++) {
             if (cuentaAhorroCliente[i] == null) {
-                cuentaAhorroCliente[i] = new CuentaAhorroCliente(i, ClienteController.getClienteController().buscar(idCliente), buscarCuentaAhorros(this.noCuentaAhorro));
+                cuentaAhorroCliente[i] = new CuentaAhorroCliente(i, ClienteController.getClienteController().buscar(idCliente), buscarCuentaAhorros(this.noCuentaAhorro), 1);
                 break;
             }
         }
@@ -339,5 +351,69 @@ public class CuentasCliente {
         }
         return arrayCuentaMonetaria;
     }
+    
+    public String[] obtnerCantidadCuentas() {
+        int[] result = new int[100];
+        String[] texto = new String[100];
+        String contenido = "";
+        Cliente[] a = ClienteController.getClienteController().getArregloCliente();
+        int cuenta1 = 0;
+        int cuenta2 = 0;
+        int total = 0;
+        for (int t = 0; t < a.length; t++) {
+            if (a[t] != null ) {
+                 for (int i = 0; i < this.cuentaMonetariaCliente.length; i++) {
 
+                    if (cuentaMonetariaCliente[i] != null) {
+                        if (String.valueOf(cuentaMonetariaCliente[i].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+                            
+                            cuenta1 = cuenta1 + cuentaMonetariaCliente[i].getContador(); 
+                        }
+                    }
+                }
+                 
+                for (int r = 0; r < this.cuentaAhorroCliente.length; r++) {
+                    if (cuentaAhorroCliente[r] != null) {
+                        if (String.valueOf(cuentaAhorroCliente[r].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+                            cuenta2 = cuenta2 + cuentaAhorroCliente[r].getContador();
+                           
+                        }
+                    }
+                }
+                total = cuenta1 + cuenta2;
+                result[t] = total;
+                
+                
+                
+                System.out.println(a[t].getNombre() + " CuenasMonetarias" + cuenta1 + " CuentasAhorro" + cuenta2 + "TOTAL " + total );
+                
+                texto[t] = a[t].getId() + "'" +  a[t].getNombre() + "'" + cuenta1 + "'" + + cuenta2 + "'" + total+ "\n";; 
+    
+                cuenta1 = 0;
+                cuenta2 = 0;
+
+
+            }
+            
+            
+            
+            
+            
+            
+            /*total = cuenta1 + cuenta2;
+            for (int m = 0; m < result.length; m++) {
+                if (result[m] == 0) {
+                   result[m] = total;
+                   break;
+                    
+                }
+                System.out.println(result[m]);
+            }*/
+
+        }
+        
+        
+        return texto;
+
+    }
 }

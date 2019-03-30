@@ -537,7 +537,7 @@ class ActualizarAgencia {
                             AgenciaController.getAgenciaController().actualizar(Agencia.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
                                     Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()), 0, Double.parseDouble(textFieldefectivo.getText()));
                             UIAgencia.getAgencia().actualizarDatosTabla();
-                             UIAgencia.getAgencia().restarthBoxCRUD();
+                            UIAgencia.getAgencia().restarthBoxCRUD();
                         }
 
                     } else {
@@ -562,6 +562,8 @@ class ActualizarAgencia {
 
         });
 
+        
+        
         gridPane.add(buttonModificar, 1, 9);
 
         Button buttonCerrar = new Button("Cerrar");
@@ -571,7 +573,25 @@ class ActualizarAgencia {
                 UIAgencia.getAgencia().restarthBoxCRUD();
             }
         });
+        
+        
         gridPane.add(buttonCerrar, 2, 9);
+        
+
+        Button buttonReporte = new Button("Reporte de Empleados");
+        buttonReporte.setGraphic(new ImageView("/resources/6.png"));
+        
+        buttonReporte.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReporteController.getReporteController().CrearPDFEmpleadoAgencia(Agencia.getId());
+            }
+        });
+        
+        
+        gridPane.add(buttonReporte, 1, 12, 3, 1);
+        
+        
         gridPane.getStyleClass().add("gridPane");
         gridPane.setMinSize(200, 400);
 

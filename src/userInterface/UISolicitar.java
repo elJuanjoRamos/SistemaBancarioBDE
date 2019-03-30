@@ -48,7 +48,7 @@ public class UISolicitar {
     public void start(Stage primaryStage, Cliente cliente) {
         VBox v = new VBox();
         v.setStyle("-fx-background-color: white");
-        Scene scene = new Scene(v, 500, 400, Color.WHITE);
+        Scene scene = new Scene(v, 700, 700, Color.WHITE);
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -74,7 +74,7 @@ public class UISolicitar {
             public void handle(ActionEvent event) {
                     
                     
-                SolicitudController.getSolicitudController().generarSolicitudTarjeta(cliente.getId(), cliente);
+                SolicitudController.getSolicitudController().generarSolicitud(cliente.getId(), cliente, 0.0, 1);
                     getAlert("Solicitud generada con exito");
 
                 
@@ -104,7 +104,7 @@ public class UISolicitar {
                 if (esNumero(textMonto.getText())) {
                     
                     
-                    SolicitudController.getSolicitudController().generarSolicitudPrestamo(cliente.getId(), cliente, Double.parseDouble(textMonto.getText()));
+                    SolicitudController.getSolicitudController().generarSolicitud(cliente.getId(), cliente, Double.parseDouble(textMonto.getText()), 0);
                     getAlert("Solicitud generada con exito");
 
                 } else {
@@ -114,6 +114,79 @@ public class UISolicitar {
         });
         gridPane.add(buttonPrestamo, 1,6);
 
+       
+        
+        
+        Label labelCuentaA = new Label("SOLICITUD DE CUENTA AHORRO ");
+        gridPane.add(labelCuentaA, 1,8);
+
+        TextField textCuentaA = new TextField();
+        textCuentaA.setPromptText("Monto");
+        gridPane.add(textCuentaA, 1,9);
+
+        
+        
+        
+        Button buttonCuentaA = new Button("Generar Solicitud");
+        buttonCuentaA.setDefaultButton(true);
+        buttonCuentaA.setId("btnRojoR");
+        buttonCuentaA.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (esNumero(textCuentaA.getText())) {
+                    
+                    
+                    SolicitudController.getSolicitudController().generarSolicitud(cliente.getId(), cliente, Double.parseDouble(textCuentaA.getText()), 3);
+                    getAlert("Solicitud generada con exito");
+
+                } else {
+                    getAlert("Solo puede instroducir valores numericos en el monto");
+                }
+            }
+        });
+        gridPane.add(buttonCuentaA, 1,10);
+
+        
+        
+        
+        
+        
+        
+        
+                
+        Label labelCuentaM = new Label("SOLICITUD DE CUENTA MONETARIA ");
+        gridPane.add(labelCuentaM, 1,11);
+
+        TextField textCuentaM = new TextField();
+        textCuentaM.setPromptText("Monto");
+        gridPane.add(textCuentaM, 1,12);
+
+        
+        
+        
+        Button buttonCuentaN = new Button("Generar Solicitud");
+        buttonCuentaN.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (esNumero(textCuentaM.getText())) {
+                    
+                    
+                    SolicitudController.getSolicitudController().generarSolicitud(cliente.getId(), cliente, Double.parseDouble(textCuentaM.getText()), 2);
+                    getAlert("Solicitud generada con exito");
+
+                } else {
+                    getAlert("Solo puede instroducir valores numericos en el monto");
+                }
+            }
+        });
+        gridPane.add(buttonCuentaN, 1,13);
+
+        
+        
+        
+        
+        
+        
         
          scene.getStylesheets().addAll("/resources/root.css");
 

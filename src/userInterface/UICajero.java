@@ -468,7 +468,7 @@ class ActualizarCajero {
                         CajeroController.getCajeroControler().actualizar(c.getId(), Integer.parseInt(textFieldT.getText()), 
                                 Double.parseDouble(textFieldEfectivo.getText()), textFieldUbicacion.getText(), comboEstado.getSelectionModel().getSelectedItem().toString());
                         UICajero.getCRUDCajero().actualizarDatosTabla();
-
+                        UICajero.getCRUDCajero().restarthBoxCRUD();
                         
                     } else {
                          Alert alerta = new Alert(Alert.AlertType.INFORMATION);

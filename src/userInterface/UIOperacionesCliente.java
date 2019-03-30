@@ -339,6 +339,10 @@ public class UIOperacionesCliente {
         
         
         
+
+        
+        
+        
         
         menuPago.getItems().addAll(menuItemPagoServicio, menuItemPagoTarjeta, menuItemPagoPrestamo, menuItemDeposito, 
                                     menuItemRetiro);

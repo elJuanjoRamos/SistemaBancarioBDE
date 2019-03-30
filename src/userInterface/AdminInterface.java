@@ -6,6 +6,7 @@
 package userInterface;
 
 import beans.Cliente;
+import controller.ReporteController;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javafx.event.ActionEvent;
@@ -135,11 +136,17 @@ public class AdminInterface {
         MenuBar menuBar = new MenuBar();
 
         Menu menuArchivo = new Menu("OPCIONES");
+        Menu menuReportes = new Menu("REPORTES");
         
         MenuItem menuItemSalir = new MenuItem("_Salir");
         MenuItem menuItemRegresar = new MenuItem("_Regresar");
         
         
+        MenuItem reporte1 = new MenuItem("_Top 3 Clientes mas cuentas");
+        MenuItem reporte2 = new MenuItem("_Top 3 Clientes mayor suma dinero");
+        MenuItem reporte3 = new MenuItem("_Top 3 Clientes mayor deuda");
+        MenuItem reporte4 = new MenuItem("_Top 3 Agencias usadas");
+        MenuItem reporte5 = new MenuItem("_Listado Mayor numero de empleados en Agencias");
         
         
         
@@ -156,9 +163,48 @@ public class AdminInterface {
             }
         });
         
+        reporte1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               ReporteController.getReporteController().CrearPdfTopClienteCuenta();
+            }
+          });
+        
+        reporte2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               ReporteController.getReporteController().CrearPDFClienteMayorDinero();
+            }
+          });
+        
+        reporte3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReporteController.getReporteController().CrearPDFMayorDeuda();
+            }
+          });
+        
+        reporte4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //
+            }
+          });
+        
+        reporte5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               ReporteController.getReporteController().CrearPDFAgenciaMayorEmpleado();
+            }
+          });
+        
+        
+        
+        menuReportes.getItems().addAll(reporte1,reporte2,reporte3,reporte4,reporte5);
+        
         menuArchivo.getItems().addAll(menuItemRegresar, menuItemSalir);
         
-        menuBar.getMenus().addAll(menuArchivo);
+        menuBar.getMenus().addAll(menuArchivo, menuReportes);
         return menuBar;
         
         

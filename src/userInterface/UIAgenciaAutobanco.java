@@ -502,38 +502,38 @@ class ActualizarAgenciaBancaria {
         textTitle.setFont(Font.font("Montserrat", FontWeight.BOLD, 20));
         gridPane.add(textTitle, 0, 0, 3, 1);
 
-        labelNombre = new Label("Nombre Agecia: ");
+        labelNombre = new Label("Nombre: ");
         gridPane.add(labelNombre, 0, 3);
 
         textFieldNombre = new TextField(agenciaBancaria.getNombre());
         gridPane.add(textFieldNombre, 1, 3, 3, 1);
 
-        labelDireccion = new Label("Direccion AgenciaBancaria: ");
+        labelDireccion = new Label("Direccion: ");
         gridPane.add(labelDireccion, 0, 4);
 
         textFieldDireccion = new TextField(agenciaBancaria.getDireccion());
         gridPane.add(textFieldDireccion, 1, 4, 3, 1);
 
-        labelTelefono = new Label("Telefono AgenciaBancaria: ");
+        labelTelefono = new Label("Telefono: ");
         gridPane.add(labelTelefono, 0, 5);
 
         textFieldTelefono = new TextField(agenciaBancaria.getTelefono());
         gridPane.add(textFieldTelefono, 1, 5, 3, 1);
 
         
-        labelcajas = new Label("Cajas de la AgenciaBancaria: ");
+        labelcajas = new Label("No. Cajas: ");
         gridPane.add(labelcajas, 0, 6);
 
         textFieldcajas = new TextField(String.valueOf(agenciaBancaria.getNoCajas()));
         gridPane.add(textFieldcajas, 1, 6, 3, 1);
 
-        labelescritorio = new Label("Escitorios Servicio al Cliente: ");
+        labelescritorio = new Label("Esc. SC: ");
         gridPane.add(labelescritorio, 0, 7);
 
         textFieldescritorio = new TextField(String.valueOf(agenciaBancaria.getEscritorios()));
         gridPane.add(textFieldescritorio, 1, 7, 3, 1);
 
-        Label labelCajasAuto = new Label("No. Cajas Autobanco: ");
+        Label labelCajasAuto = new Label("No. Cajas AB: ");
         gridPane.add(labelCajasAuto, 0, 8);
 
         TextField textFieldCajasAuto = new TextField(String.valueOf(agenciaBancaria.getAuto()));
@@ -569,7 +569,7 @@ class ActualizarAgenciaBancaria {
                                     Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()), Integer.parseInt(textFieldCajasAuto.getText()), Double.parseDouble(textFieldefectivo.getText()));
                             
                                     UIAgenciaAutobanco.getAgencia().actualizarDatosTabla();
-                                     UIAgenciaAutobanco.getAgencia().restarthBoxCRUD();
+                                    UIAgenciaAutobanco.getAgencia().restarthBoxCRUD();
                             } else {
                                 getAlert("El monto del efectivo debe ser mayor o igual a Q10,000.00");
                             }

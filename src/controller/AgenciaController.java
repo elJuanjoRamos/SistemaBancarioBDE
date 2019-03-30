@@ -72,6 +72,13 @@ public class AgenciaController {
                 c.setEfectivo(efectivo);
             }
         }
+        for (Empleado e : EmpleadoController.getEmpleadoController().getArray()) {
+            if (e != null) {
+                if (e.getIdAgencia().equals(String.valueOf(id))) {
+                    e.setAgencia(nombre);
+                }
+            }
+        }
     }
     
     /*BUSCAR*/

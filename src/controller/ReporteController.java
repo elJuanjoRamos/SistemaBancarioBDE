@@ -7,6 +7,7 @@ package controller;
 
 import java.io.IOException;
 import beans.*;
+import java.util.Arrays;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -83,7 +84,7 @@ public class ReporteController {
                     String direccion = c.getDireccion();
                     String telefono = c.getTelefono();
                     String departamento = c.getDepartamento();
-                    String agencia = c.getIdAgencia();
+                    String agencia = c.getAgencia();
                     contenido = contenido + id + "'" + nombre + "'" + direccion + "'" + telefono + "'" + departamento + "'" + agencia + "\n";;
 
                 }
@@ -126,7 +127,7 @@ public class ReporteController {
                                     + "'" + noCajas + "'" + escritorios + "'" + efectivo + "\n";
 
                             size = new float[]{2, 10, 6, 6, 3, 3, 3};
-                            nombrePdf = "pdfAgenciasSinAutoBanco";
+                            nombrePdf = "pdfAgenciasSinAutoBanco.pdf";
                         }
                     } else if (cadena.equals("Auto")) {
                         title = "Agencias con Autobanco Registradas";
@@ -146,7 +147,7 @@ public class ReporteController {
                                     + "'" + noCajas + "'" + escritorios + "'" + efectivo + "\n";
 
                             size = new float[]{2, 10, 6, 6, 3, 3, 3};
-                            nombrePdf = "pdfAgenciasConAutoBanco";
+                            nombrePdf = "pdfAgenciasConAutoBanco.pdf";
                         }
                     }
                 }
@@ -154,7 +155,6 @@ public class ReporteController {
         } catch (Exception a) {
         }
         contenido = contenido + "-'-'-'-'-'TOTAL EFECTIVO'" + total + "'";
-
         CrearTH(nombrePdf, contenido, title, size);
 
     }
@@ -188,66 +188,68 @@ public class ReporteController {
     }
 
     public void CrearPDFCliente(Cliente cliente) {
-
+        System.out.println(cliente.getNombre());
         String contenido = "ID" + "'" + "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + "-" + "\n";
-        String contenidoTarjeta = "Id Tarjeta" + "'" + "Fecha" + "'" + "Credito" + "'" + "Deuda" + "'" + "-" + "\n";
+        String contenidoTarjeta = "Id Tarjeta" + "'" + "Fecha" + "'" + "Credito" + "'" + "Ultimo abono" + "'" + "-" + "\n";
         String contenidoPrestamo = "Id Prestamo" + "'" + "Fecha" + "'" + "Estado" + "'" + "Ultimo abono" + "'" + "Deuda" + "\n";;
         String contenidoCuentaAhorro = "Id Cuenta Ahorro" + "'" + "Fecha" + "'" + "Credito" + "'" + "-" + "'" + "-" + "\n";
         String contenidoCuentaMonetaria = "Id Cuenta Monetaria" + "'" + "Fecha" + "'" + "Credito" + "'" + "-" + "'" + "-" + "\n";
 
-        Cliente c = ClienteController.getClienteController().buscar(cliente.getId());
         PrestamoCliente[] p = TarjetasYPrestamosCliente.getInstancia().obtenerPrestamos(cliente.getId());
         TarjetaCliente[] t = TarjetasYPrestamosCliente.getInstancia().obtenerTarjetaCliente(cliente.getId());
         CuentaAhorroCliente[] ca = CuentasCliente.getCuentasCliente().obtenerCuentaAhorro(cliente.getId());
         CuentaMonetariaCliente[] cm = CuentasCliente.getCuentasCliente().obtenerCuentaMonetaria(cliente.getId());
 
         try {
+            Cliente c = ClienteController.getClienteController().buscar(cliente.getId());
             contenido = contenido + c.getId() + "'" + c.getNombre() + "'" + c.getDireccion() + "'" + c.getTelefono() + "'" + "-" + "\n";
 
-            if (p != null) {
-                for (PrestamoCliente pc : p) {
-                    if (pc != null) {
-                        contenidoPrestamo = contenidoPrestamo + "'" + pc.getCodigo() + "'" + pc.getFechaPrestamo() + "'" + pc.getEstado() + "'" + pc.getAbono() + "'" + pc.getDeuda() + "'" + "\n";
-                    }
-
-                }
-            } else {
-                contenidoPrestamo = contenidoPrestamo + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "\n";
-            }
-
-            if (t != null) {
-                for (TarjetaCliente tc : t) {
-                    if (tc != null) {
-                        contenidoTarjeta = contenidoTarjeta + tc.getNumero() + "'" + tc.getFechaVencimiento() + "'" + tc.getCredito() + "'" + tc.getDeuda() + "'" + "-" + "\n";
-                    }
-                }
-
-            } else {
-                contenidoTarjeta = contenidoTarjeta + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "\n";
-            }
-
-            if (cm != null) {
-                for (CuentaMonetariaCliente cm1 : cm) {
-                    if (cm1 != null) {
-                        contenidoCuentaMonetaria = contenidoCuentaMonetaria + cm1.getIdCuenta() + "'" + cm1.getFechaApertura() + "'" + cm1.getMontoInicial() + "'" + "-" + "'" + "-" + "\n";
+            if (c != null) {
+                if (p != null) {
+                    for (PrestamoCliente pc : p) {
+                        if (pc != null) {
+                            contenidoPrestamo = contenidoPrestamo + "'" + pc.getCodigo() + "'" + pc.getFechaPrestamo() + "'" + pc.getEstado() + "'" + pc.getAbono() + "'" + pc.getDeuda() + "'" + "\n";
+                        }
 
                     }
+                } else {
+                    contenidoPrestamo = contenidoPrestamo + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "\n";
                 }
-            } else {
-                contenidoCuentaMonetaria = contenidoCuentaMonetaria + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "\n";
 
-            }
-
-            if (ca != null) {
-                for (CuentaAhorroCliente cm1 : ca) {
-                    if (cm1 != null) {
-                        contenidoCuentaAhorro = contenidoCuentaAhorro + cm1.getIdCuenta() + "'" + cm1.getFechaApertura() + "'" + cm1.getMontoInicial() + "'" + "-" + "'" + "-" + "\n";
-
+                if (t != null) {
+                    for (TarjetaCliente tc : t) {
+                        if (tc != null) {
+                            contenidoTarjeta = contenidoTarjeta + tc.getNumero() + "'" + tc.getFechaVencimiento() + "'" + tc.getCredito() + "'" + tc.getDeuda() + "'" + "-" + "\n";
+                        }
                     }
-                }
-            } else {
-                contenidoCuentaAhorro = contenidoCuentaAhorro + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "\n";
 
+                } else {
+                    contenidoTarjeta = contenidoTarjeta + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "\n";
+                }
+
+                if (cm != null) {
+                    for (CuentaMonetariaCliente cm1 : cm) {
+                        if (cm1 != null) {
+                            contenidoCuentaMonetaria = contenidoCuentaMonetaria + cm1.getIdCuenta() + "'" + cm1.getFechaApertura() + "'" + cm1.getMontoInicial() + "'" + "-" + "'" + "-" + "\n";
+
+                        }
+                    }
+                } else {
+                    contenidoCuentaMonetaria = contenidoCuentaMonetaria + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "\n";
+
+                }
+
+                if (ca != null) {
+                    for (CuentaAhorroCliente cm1 : ca) {
+                        if (cm1 != null) {
+                            contenidoCuentaAhorro = contenidoCuentaAhorro + cm1.getIdCuenta() + "'" + cm1.getFechaApertura() + "'" + cm1.getMontoInicial() + "'" + "-" + "'" + "-" + "\n";
+
+                        }
+                    }
+                } else {
+                    contenidoCuentaAhorro = contenidoCuentaAhorro + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "-" + "'" + "\n";
+
+                }
             }
 
         } catch (Exception a) {
@@ -258,6 +260,436 @@ public class ReporteController {
         String title = "Detalles del cliente";
         float[] size = {2, 10, 6, 6, 6};
         CrearTH(nombrePdf, todo, title, size);
+
+    }
+
+    public void CrearPdfTopClienteCuenta() {
+        String contenido = "Nombre" + "'" + "Cuenas Monetarias" + "'" + "Cuentas Ahorro" + "'" + "Total Cuentas" + "\n";
+
+        try {
+
+            int[] result = new int[100];
+            String[] texto = new String[100];
+            Cliente[] a = ClienteController.getClienteController().getArregloCliente();
+            int cuenta1 = 0;
+            int cuenta2 = 0;
+            int total = 0;
+            for (int t = 0; t < a.length; t++) {
+                if (a[t] != null) {
+                    for (int i = 0; i < CuentasCliente.getCuentasCliente().obtenerCuentaMonetaria().length; i++) {
+
+                        if (CuentasCliente.getCuentasCliente().obtenerCuentaMonetaria()[i] != null) {
+                            if (String.valueOf(CuentasCliente.getCuentasCliente().obtenerCuentaMonetaria()[i].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+
+                                cuenta1 = cuenta1 + CuentasCliente.getCuentasCliente().obtenerCuentaMonetaria()[i].getContador();
+                            }
+                        }
+                    }
+
+                    for (int r = 0; r < CuentasCliente.getCuentasCliente().obtenerCuentaAhorro().length; r++) {
+                        if (CuentasCliente.getCuentasCliente().obtenerCuentaAhorro()[r] != null) {
+                            if (String.valueOf(CuentasCliente.getCuentasCliente().obtenerCuentaAhorro()[r].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+                                cuenta2 = cuenta2 + CuentasCliente.getCuentasCliente().obtenerCuentaAhorro()[r].getContador();
+
+                            }
+                        }
+                    }
+                    total = cuenta1 + cuenta2;
+                    result[t] = total;
+                    texto[t] = a[t].getNombre() + "'" + cuenta1 + "'" + +cuenta2 + "'" + total + "'" + "\n";
+
+                    cuenta1 = 0;
+                    cuenta2 = 0;
+
+                }
+
+            }
+
+            for (int i = 0; i < result.length - 1; i++) {
+                for (int j = 0; j < result.length - 1; j++) {
+                    if (result[j] < result[j + 1]) {
+                        int tmp = result[j + 1];
+                        result[j + 1] = result[j];
+                        result[j] = tmp;
+                    }
+                }
+            }
+
+            String uno = "";
+            String dos = "";
+            String tres = "";
+
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[0]))) {
+                        uno = texto[i];
+                    }
+                }
+            }
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[1]))) {
+                        dos = texto[i];
+                    }
+                }
+            }
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[2]))) {
+                        tres = texto[i];
+                    }
+                }
+            }
+
+            String[] abc = new String[3];
+
+            abc[0] = uno;
+            abc[1] = dos;
+            abc[2] = tres;
+
+            for (int i = 0; i < abc.length; i++) {
+                contenido = contenido + abc[i];
+            }
+
+        } catch (Exception a) {
+        }
+        String nombrePdf = "pdfTopClienteCuentas.pdf";
+        String title = "Top 3 clientes con más cuentas";
+        float[] size = {10, 6, 6, 6};
+        CrearTH(nombrePdf, contenido, title, size);
+    }
+
+    public void CrearPDFClienteMayorDinero() {
+
+        String contenido = "ID" + "'" + "Nombre" + "'" + " Cuentas Monetaria " + "'" + " Cuentas Ahorro" + "'" + " Tarjetas Credito" + "'" + "Pestamos" + "'" + "TOTAL" + "\n";
+
+        try {
+
+            int[] result = new int[100];
+            String[] texto = new String[100];
+            Cliente[] a = ClienteController.getClienteController().getArregloCliente();
+            Double dinero1 = 0.0;
+            Double dinero2 = 0.0;
+            Double dinero3 = 0.0;
+            Double dinero4 = 0.0;
+
+            for (int t = 0; t < a.length; t++) {
+                if (a[t] != null) {
+                    for (int i = 0; i < CuentasCliente.getCuentasCliente().obtenerCuentaMonetaria().length; i++) {
+                        if (CuentasCliente.getCuentasCliente().obtenerCuentaMonetaria()[i] != null) {
+                            if (String.valueOf(CuentasCliente.getCuentasCliente().obtenerCuentaMonetaria()[i].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+                                dinero1 = dinero1 + CuentasCliente.getCuentasCliente().obtenerCuentaMonetaria()[i].getMontoInicial();
+
+                            }
+                        }
+                    }
+
+                    for (int r = 0; r < CuentasCliente.getCuentasCliente().obtenerCuentaAhorro().length; r++) {
+                        if (CuentasCliente.getCuentasCliente().obtenerCuentaAhorro()[r] != null) {
+                            if (String.valueOf(CuentasCliente.getCuentasCliente().obtenerCuentaAhorro()[r].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+                                dinero2 = dinero2 + CuentasCliente.getCuentasCliente().obtenerCuentaAhorro()[r].getMontoInicial();
+                            }
+                        }
+                    }
+
+                    for (int s = 0; s < TarjetasYPrestamosCliente.getInstancia().obtenerTarjetasCliente().length; s++) {
+
+                        if (TarjetasYPrestamosCliente.getInstancia().obtenerTarjetasCliente()[s] != null) {
+                            if (String.valueOf(TarjetasYPrestamosCliente.getInstancia().obtenerTarjetasCliente()[s].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+                                dinero3 = dinero3 + TarjetasYPrestamosCliente.getInstancia().obtenerTarjetasCliente()[s].getCredito();
+
+                            }
+
+                        }
+                    }
+
+                    for (int i = 0; i < TarjetasYPrestamosCliente.getInstancia().obtenerPrestamoClente().length; i++) {
+                        if (TarjetasYPrestamosCliente.getInstancia().obtenerPrestamoClente()[i] != null) {
+                            if (String.valueOf(TarjetasYPrestamosCliente.getInstancia().obtenerPrestamoClente()[i].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+                                dinero4 = dinero4 + TarjetasYPrestamosCliente.getInstancia().obtenerPrestamoClente()[i].getDeuda();
+                            }
+                        }
+                    }
+
+                    double d = Double.parseDouble(String.valueOf(dinero1 + dinero2 + dinero3 + dinero4));
+                    int i = (int) d;
+                    result[t] = i;
+                    texto[t] = a[t].getId() + "'" + a[t].getNombre() + "'" + dinero1 + "'" + dinero2 + "'" + dinero3 + "'" + dinero4 + "'" + result[t] + "\n";
+
+                    dinero1 = 0.0;
+                    dinero2 = 0.0;
+                    dinero3 = 0.0;
+                    dinero4 = 0.0;
+
+                }
+
+            }
+            for (int i = 0; i < result.length - 1; i++) {
+                for (int j = 0; j < result.length - 1; j++) {
+                    if (result[j] < result[j + 1]) {
+                        int tmp = result[j + 1];
+                        result[j + 1] = result[j];
+                        result[j] = tmp;
+                    }
+                }
+            }
+
+            String uno = "";
+            String dos = "";
+            String tres = "";
+
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[0]))) {
+                        uno = texto[i];
+                    }
+                }
+            }
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[1]))) {
+                        dos = texto[i];
+                    }
+                }
+            }
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[2]))) {
+                        tres = texto[i];
+                    }
+                }
+            }
+
+            String[] abc = new String[3];
+
+            abc[0] = uno;
+            abc[1] = dos;
+            abc[2] = tres;
+
+            for (int i = 0; i < abc.length; i++) {
+                contenido = contenido + abc[i];
+
+                System.out.println(contenido);
+            }
+
+        } catch (Exception a) {
+        }
+
+        String nombrePdf = "pdfTopClienteMayorDinero.pdf";
+        String title = "Top 3 clientes con mayor dinero";
+        float[] size = {2, 10, 6, 6, 6, 6, 6};
+        CrearTH(nombrePdf, contenido, title, size);
+    }
+
+    public void CrearPDFMayorDeuda() {
+
+        String contenido = "ID" + "'" + "Nombre" + "'" + " Deuda Tarjetas Credito" + "'" + "Deuda Pestamos" + "'" + "TOTAL" + "\n";
+
+        try {
+
+            int[] result = new int[100];
+            String[] texto = new String[100];
+            Cliente[] a = ClienteController.getClienteController().getArregloCliente();
+            Double dinero3 = 0.0;
+            Double dinero4 = 0.0;
+
+            for (int t = 0; t < a.length; t++) {
+                if (a[t] != null) {
+                    for (int s = 0; s < TarjetasYPrestamosCliente.getInstancia().obtenerTarjetasCliente().length; s++) {
+
+                        if (TarjetasYPrestamosCliente.getInstancia().obtenerTarjetasCliente()[s] != null) {
+                            if (String.valueOf(TarjetasYPrestamosCliente.getInstancia().obtenerTarjetasCliente()[s].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+                                dinero3 = dinero3 + TarjetasYPrestamosCliente.getInstancia().obtenerTarjetasCliente()[s].getCredito();
+
+                            }
+
+                        }
+                    }
+
+                    for (int i = 0; i < TarjetasYPrestamosCliente.getInstancia().obtenerPrestamoClente().length; i++) {
+                        if (TarjetasYPrestamosCliente.getInstancia().obtenerPrestamoClente()[i] != null) {
+                            if (String.valueOf(TarjetasYPrestamosCliente.getInstancia().obtenerPrestamoClente()[i].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
+                                dinero4 = dinero4 + TarjetasYPrestamosCliente.getInstancia().obtenerPrestamoClente()[i].getDeuda();
+                            }
+                        }
+                    }
+
+                    double d = Double.parseDouble(String.valueOf(dinero3 + dinero4));
+                    int i = (int) d;
+                    result[t] = i;
+                    texto[t] = a[t].getId() + "'" + a[t].getNombre() + "'" + dinero3 + "'" + dinero4 + "'" + result[t] + "\n";
+
+                    dinero3 = 0.0;
+                    dinero4 = 0.0;
+
+                }
+
+            }
+            for (int i = 0; i < result.length - 1; i++) {
+                for (int j = 0; j < result.length - 1; j++) {
+                    if (result[j] < result[j + 1]) {
+                        int tmp = result[j + 1];
+                        result[j + 1] = result[j];
+                        result[j] = tmp;
+                    }
+                }
+            }
+
+            String uno = "";
+            String dos = "";
+            String tres = "";
+
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[0]))) {
+                        uno = texto[i];
+                    }
+                }
+            }
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[1]))) {
+                        dos = texto[i];
+                    }
+                }
+            }
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[2]))) {
+                        tres = texto[i];
+                    }
+                }
+            }
+
+            String[] abc = new String[3];
+
+            abc[0] = uno;
+            abc[1] = dos;
+            abc[2] = tres;
+
+            for (int i = 0; i < abc.length; i++) {
+                contenido = contenido + abc[i];
+
+                System.out.println(contenido);
+            }
+
+        } catch (Exception a) {
+        }
+
+        String nombrePdf = "pdfTopClienteMayorDeuda.pdf";
+        String title = "Top 3 clientes con mayor deuda al banco";
+        float[] size = {2, 10, 6, 6, 6};
+        CrearTH(nombrePdf, contenido, title, size);
+
+    }
+
+    public void CrearPDFEmpleadoAgencia(int idAgencia) {
+
+        String contenido = "ID" + "'" + "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + " Departamento" + "'" + " Agencia" + "\n";
+        String nagencia = "";
+        try {
+            Empleado[] empleado = EmpleadoController.getEmpleadoController().obtenerEmpleados();
+
+            for (Empleado c : empleado) {
+                if (c != null) {
+                    if (c.getIdAgencia().equals(String.valueOf(idAgencia))) {
+                        int id = c.getId();
+                        String nombre = c.getNombre();
+                        String direccion = c.getDireccion();
+                        String telefono = c.getTelefono();
+                        String departamento = c.getDepartamento();
+                        String agencia = c.getAgencia();
+                        nagencia = agencia;
+                        contenido = contenido + id + "'" + nombre + "'" + direccion + "'" + telefono + "'" + departamento + "'" + agencia + "\n";;
+
+                    }
+                }
+            }
+        } catch (Exception a) {
+        }
+
+        String nombrePdf = "pdfClienteAgencia.pdf";
+        String title = "Empleado de la agencia " + nagencia;
+        float[] size = {2, 10, 6, 6, 6, 6};
+        CrearTH(nombrePdf, contenido, title, size);
+
+    }
+
+    public void CrearPDFAgenciaMayorEmpleado() {
+
+        String contenido = "ID" + "'" + "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + "Numero Cajas" + "'" + "Escritorios SC" + "'" + "Efectivo" + "'" + "Total Empleados" + "\n";
+        AgenciaBancaria[] agencias = AgenciaController.getAgenciaController().obtenerAgencias();
+        int[] result = new int[100];
+        String[] texto = new String[100];
+        float[] size = new float[]{2, 10, 6, 6, 3, 3, 3};
+
+        int contador = 0;
+
+        int id = 0;
+        String nombre = "";
+        String direccion = "";
+        String telefono = "";
+        int noCajas = 0;
+        int escritorios = 0;
+        double efectivo = 0.0;
+
+        
+        /*id = AgenciaController.getAgenciaController().obtenerAgencias()[c].getId();
+                            nombre = AgenciaController.getAgenciaController().obtenerAgencias()[c].getNombre();
+                            direccion = AgenciaController.getAgenciaController().obtenerAgencias()[c].getDireccion();
+                            telefono = AgenciaController.getAgenciaController().obtenerAgencias()[c].getTelefono();
+                            noCajas = AgenciaController.getAgenciaController().obtenerAgencias()[c].getNoCajas();
+                            escritorios = AgenciaController.getAgenciaController().obtenerAgencias()[c].getEscritorios();
+                            efectivo = AgenciaController.getAgenciaController().obtenerAgencias()[c].getEfectivo();*/
+        try {
+            for (int i = 0; i < AgenciaController.getAgenciaController().obtenerAgencias().length; i++) {
+                if (AgenciaController.getAgenciaController().obtenerAgencias()[i] != null) {
+                    
+                    for (int j = 0; j < EmpleadoController.getEmpleadoController().obtenerEmpleados().length; j++) {
+                        if (EmpleadoController.getEmpleadoController().obtenerEmpleados()[j] != null) {
+                            Empleado e = EmpleadoController.getEmpleadoController().obtenerEmpleados()[j];
+                            
+                            AgenciaBancaria a = AgenciaController.getAgenciaController().obtenerAgencias()[i];
+                            
+                            if (e.getId().equals(a.getId())) {
+                                System.out.println("El empleado" + e.getNombre() +  "pertenece a la agencia " + a.getNombre());
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
+            
+            /*for (int i = 0; i < result.length; i++) {
+                System.out.println(result[i]);
+            }*/
+            
+            
+            for (int i = 0; i < result.length - 1; i++) {
+                for (int j = 0; j < result.length - 1; j++) {
+                    if (result[j] < result[j + 1]) {
+                        int tmp = result[j + 1];
+                        result[j + 1] = result[j];
+                        result[j] = tmp;
+                    }
+                }
+            }
+
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[0]))) {
+                        contenido = contenido + texto[i];
+                    }
+                }
+            }
+
+        } catch (Exception a) {
+        }
+        //String nombrePdf = "pdfMayorCantidadEmpleados.pdf";
+        //String title = "Agencia bancaria con mayor cantidad de empleados";
+        //CrearTH(nombrePdf, contenido, title, size);
 
     }
 

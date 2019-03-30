@@ -64,10 +64,11 @@ public class Principal extends Application {
         
         
         //AGENCIA
-        AgenciaController.getAgenciaController().agregar("1", "DIR1", "TEL", 1, 1, 0, 100000.00);
-        AgenciaController.getAgenciaController().agregar("2", "DIR1", "TEL", 1, 1, 0, 100000.00);
-        AgenciaController.getAgenciaController().agregar("3", "DIR1", "TEL", 1, 1, 0, 100000.00);
-        AgenciaController.getAgenciaController().agregar("4", "DIR1", "TEL", 1, 1, 0, 100000.00);
+        AgenciaController.getAgenciaController().agregar("Agencia1", "DIR1", "TEL1", 1, 1, 0, 100000.00);
+        AgenciaController.getAgenciaController().agregar("Agencia2", "DIR2", "TEL2", 8, 9, 0, 100000.00);
+        AgenciaController.getAgenciaController().agregar("Agencia3", "DIR3", "TEL3", 3, 5, 0, 100000.00);
+        AgenciaController.getAgenciaController().agregar("Agencia4", "DIR4", "TEL4", 4, 1, 0, 100000.00);
+        AgenciaController.getAgenciaController().agregar("Agencia5", "DIR5", "TEL5", 2, 5, 0, 100000.00);
         
         
         
@@ -75,24 +76,24 @@ public class Principal extends Application {
         
         
         //AGENCIAAUTOBANCOS
-        AgenciaController.getAgenciaController().agregar("A", "dir1", "tel1", 5, 5, 1, 332.997);
-        AgenciaController.getAgenciaController().agregar("B", "dir2", "tel2", 15, 5, 2, 15265.03);
-        AgenciaController.getAgenciaController().agregar("C", "dir3", "tel3", 11, 5, 3, 998.03);
-        AgenciaController.getAgenciaController().agregar("D", "dir4", "tel4", 9, 5, 4, 50.03);
-        AgenciaController.getAgenciaController().agregar("E", "dir5", "tel5", 7, 5, 5, 37.03);
+        AgenciaController.getAgenciaController().agregar("Agencia AutoBanco1", "DIR1", "TEL1", 5, 5, 1, 332.997);
+        AgenciaController.getAgenciaController().agregar("Agencia AutoBanco2", "DIR2", "TEL2", 15, 5, 2, 15265.03);
+        AgenciaController.getAgenciaController().agregar("Agencia AutoBanco3", "DIR3", "TEL3", 11, 5, 3, 998.03);
+        AgenciaController.getAgenciaController().agregar("Agencia AutoBanco4", "DIR4", "TEL4", 9, 5, 4, 50.03);
+        AgenciaController.getAgenciaController().agregar("Agencia AutoBanco5", "DIR5", "TEL5", 7, 5, 5, 37.03);
         
         
         /*EMPLEADOS*/
-        EmpleadoController.getEmpleadoController().agregar("María Carmen Villela", "Guatemala", "12345654", "Call-Center", "-");
-        EmpleadoController.getEmpleadoController().agregar("María Rodas", "Guatemala", "12345654", "Call-Center", "-");
-        EmpleadoController.getEmpleadoController().agregar("Carmen Armas", "Guatemala", "12345654", "Call-Center", "-");
-        EmpleadoController.getEmpleadoController().agregar("Javier Perez", "Guatemala", "12345654", "Call-Center", "-");
-        EmpleadoController.getEmpleadoController().agregar("Denis Perez", "Guatemala", "12345654", "Call-Center", "-");
-        EmpleadoController.getEmpleadoController().agregar("Acevedo Flores", "Guatemala", "12345654", "Call-Center", "-");
-        EmpleadoController.getEmpleadoController().agregar("Felisia Garcia", "Guatemala", "12345654", "Call-Center", "-");
-        EmpleadoController.getEmpleadoController().agregar("Carlos Campos", "Guatemala", "12345654", "Call-Center", "-");
-        EmpleadoController.getEmpleadoController().agregar("Carlos Marroquin", "Guatemala", "12345654", "Call-Center", "-");
-        EmpleadoController.getEmpleadoController().agregar("Kevin Flores", "Guatemala", "12345654", "Call-Center", "-");
+        EmpleadoController.getEmpleadoController().agregar("María Carmen Villela", "Guatemala", "12345654", "Call-Center", "-","-");
+        EmpleadoController.getEmpleadoController().agregar("María Rodas", "Guatemala", "12345654", "Call-Center", "-","-");
+        EmpleadoController.getEmpleadoController().agregar("Carmen Armas", "Guatemala", "12345654", "Call-Center", "-","-");
+        EmpleadoController.getEmpleadoController().agregar("Javier Perez", "Guatemala", "12345654", "Call-Center", "-","-");
+        EmpleadoController.getEmpleadoController().agregar("Denis Perez", "Guatemala", "12345654", "Call-Center", "-","-");
+        EmpleadoController.getEmpleadoController().agregar("Acevedo Flores", "Guatemala", "12345654", "Call-Center", "-","-");
+        EmpleadoController.getEmpleadoController().agregar("Felisia Garcia", "Guatemala", "12345654", "Call-Center", "-","-");
+        EmpleadoController.getEmpleadoController().agregar("Carlos Campos", "Guatemala", "12345654", "Call-Center", "-","-");
+        EmpleadoController.getEmpleadoController().agregar("Carlos Marroquin", "Guatemala", "12345654", "Call-Center", "-","-");
+        EmpleadoController.getEmpleadoController().agregar("Kevin Flores", "Guatemala", "12345654", "Call-Center", "-","-");
         
         
         
@@ -103,34 +104,33 @@ public class Principal extends Application {
         
         
         
-        EmpleadoController.getEmpleadoController().agregar("Pedro Campos", "Guatemala", "12345654", "Agencia", "0");
-        EmpleadoController.getEmpleadoController().agregar("Eduardo Marroquin", "Guatemala", "12345654", "Agencia", "0");
-        EmpleadoController.getEmpleadoController().agregar("Amalia Flores", "Guatemala", "12345654", "Agencia", "0");
+        EmpleadoController.getEmpleadoController().agregar("Pedro Campos", "Guatemala", "12345654", "Agencia", "Agencia1", "0");
+        EmpleadoController.getEmpleadoController().agregar("Eduardo Marroquin", "Guatemala", "12345654", "Agencia","Agencia1", "0");
+        EmpleadoController.getEmpleadoController().agregar("Amalia Flores", "Guatemala", "12345654", "Agencia","Agencia1", "0");
         
         
-        EmpleadoController.getEmpleadoController().agregar("Julia Castellano", "Guatemala", "12345654", "Agencia", "1");
-        EmpleadoController.getEmpleadoController().agregar("Arturo Najera", "Guatemala", "12345654", "Agencia", "1");
-        EmpleadoController.getEmpleadoController().agregar("Marvin Rosa", "Guatemala", "12345654", "Agencia", "1");
+        EmpleadoController.getEmpleadoController().agregar("Julia Castellano", "Guatemala", "12345654", "Agencia","Agencia2", "1");
+        EmpleadoController.getEmpleadoController().agregar("Arturo Najera", "Guatemala", "12345654", "Agencia", "Agencia2","1");
+        EmpleadoController.getEmpleadoController().agregar("Marvin Rosa", "Guatemala", "12345654", "Agencia","Agencia2", "1");
         
         
-        EmpleadoController.getEmpleadoController().agregar("Katherine Estrada", "Guatemala", "12345654", "Agencia", "2");
-        EmpleadoController.getEmpleadoController().agregar("Luis Ramos", "Guatemala", "12345654", "Agencia", "2");
-        EmpleadoController.getEmpleadoController().agregar("Miriam Ramos", "Guatemala", "12345654", "Agencia", "2");
+        EmpleadoController.getEmpleadoController().agregar("Katherine Estrada", "Guatemala", "12345654", "Agencia", "Agencia3", "2");
+        EmpleadoController.getEmpleadoController().agregar("Luis Ramos", "Guatemala", "12345654", "Agencia","Agencia3", "2");
+        EmpleadoController.getEmpleadoController().agregar("Miriam Ramos", "Guatemala", "12345654", "Agencia", "Agencia3", "2");
         
         
-        EmpleadoController.getEmpleadoController().agregar("Teresa Estrada", "Guatemala", "12345654", "Agencia", "3");
-        EmpleadoController.getEmpleadoController().agregar("Maria Amalia", "Guatemala", "12345654", "Agencia", "3");
-        EmpleadoController.getEmpleadoController().agregar("Donald Castro", "Guatemala", "12345654", "Agencia", "3");
+        EmpleadoController.getEmpleadoController().agregar("Teresa Estrada", "Guatemala", "12345654", "Agencia","Agencia4", "3");
+        EmpleadoController.getEmpleadoController().agregar("Maria Amalia", "Guatemala", "12345654", "Agencia","Agencia4", "3");
+        EmpleadoController.getEmpleadoController().agregar("Donald Castro", "Guatemala", "12345654", "Agencia","Agencia4", "3");
         
         
         
-        EmpleadoController.getEmpleadoController().agregar("Pamela Estrada", "Guatemala", "12345654", "Oficinas Centrales", "-");
-        EmpleadoController.getEmpleadoController().agregar("Simon Vargas", "Guatemala", "12345654", "Oficinas Centrales", "-");
         
-        
-        EmpleadoController.getEmpleadoController().agregar("Lis Campos", "Guatemala", "12345654", "Agencia", "4");
-        EmpleadoController.getEmpleadoController().agregar("Daniela Marroquin", "Guatemala", "12345654", "Agencia", "4");
-        EmpleadoController.getEmpleadoController().agregar("Teodoro Flores", "Guatemala", "12345654", "Agencia", "4");
+        EmpleadoController.getEmpleadoController().agregar("Lis Campos", "Guatemala", "12345654", "Agencia","Agencia5", "4");
+        EmpleadoController.getEmpleadoController().agregar("Daniela Marroquin", "Guatemala", "12345654", "Agencia","Agencia5", "4");
+        EmpleadoController.getEmpleadoController().agregar("Teodoro Flores", "Guatemala", "12345654", "Agencia","Agencia5", "4");
+        EmpleadoController.getEmpleadoController().agregar("Marco Castellano", "Guatemala", "12345654", "Agencia","Agencia5", "4");
+        EmpleadoController.getEmpleadoController().agregar("Estuardo Arevalo", "Guatemala", "12345654", "Agencia","Agencia5", "4");
         
         
         
@@ -151,7 +151,7 @@ public class Principal extends Application {
         Date d = new Date();
         
         /*Agregar Tarjetas a Clientes*/
-        TarjetasYPrestamosCliente.getInstancia().agregarTarjeta(dateFormat.format(d), 15320.215, 4545.5);
+        TarjetasYPrestamosCliente.getInstancia().agregarTarjeta(dateFormat.format(d), 15000.0, 0.0);
         TarjetasYPrestamosCliente.getInstancia().agregarTarjetaCliente(0);
         
     
@@ -163,21 +163,42 @@ public class Principal extends Application {
         TarjetasYPrestamosCliente.getInstancia().agregarPrestamoCliente(0);
         
         
+        TarjetasYPrestamosCliente.getInstancia().agregarPrestamo(100000.00, 0.0);
+        TarjetasYPrestamosCliente.getInstancia().agregarPrestamoCliente(5);
+        
+        
         /*Agregar cuentas a cliente */
         
-        //Clente 1
-        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(100.0);
-        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(0);
+
+        
+        
+        
+        
+        //cliente 3
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(500.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(50.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(1500.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
         CuentasCliente.getCuentasCliente().agregarCuentaAhorro(200.0);
-        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(654.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(231.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(4654.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
+        //CuentasCliente.getCuentasCliente().agregarCuentaAhorro(600.0);
+        //CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
         
         
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(150.00);
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(0);
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(200.00);
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(0);
         
         
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(550.00);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(2);
+        //CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(650.00);
+        //CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(2);
         
         //cliente 2
         CuentasCliente.getCuentasCliente().agregarCuentaAhorro(300.0);
@@ -191,38 +212,28 @@ public class Principal extends Application {
         CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(1);
         
         
-        //cliente 3
-        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(500.0);
-        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
-        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(600.0);
-        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(2);
+        
+                //Clente 1
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(100.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(200.0);
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(0);
         
         
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(550.00);
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(2);
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(650.00);
-        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(2);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(150.00);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(0);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(200.00);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(0);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(300.00);
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(0);
         
         
-        //PDFController.getPDFController().crearPDFClientes();
-//RETIROS
-        
-        
-        
-        
-        //DepositoController.getInstancia().agregar(0, "8987898797", 46554.4, "Efectivo", ClienteController.getClienteController().buscar(0));
         
         
         
         //UIMenu.getUI().start(primaryStage);
-        
-        
-
-        //UIOperacionesCliente.getUI().start(primaryStage, ClienteController.getClienteController().buscar(0));
-        //UISeleccionCliente.getUI().start(primaryStage);
         AdminInterface.getAdminInterface().start(primaryStage);
-       // AccessWindow.getAccessWindow().getGridPane(primaryStage);        
-
+      
 
     }
 

@@ -6,6 +6,7 @@
 package controller;
 
 import beans.*;
+import controller.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,11 +22,8 @@ public class SolicitudController {
     
     private static SolicitudController instance;
     
-    SolicitudTarjeta[] solicitudTarjeta = new SolicitudTarjeta[1000];
-    ArrayList<SolicitudTarjeta> arrayTarjeta = new ArrayList();
-    
-    SolicitudPrestamo[] solicitudPrestamo = new SolicitudPrestamo[1000];
-   ArrayList<SolicitudPrestamo> arrayPrestamo = new ArrayList();
+    Solicitudes[] solicitud = new Solicitudes[1000];
+    ArrayList<Solicitudes> arrayListSolicitud = new ArrayList();
     
     
     Date d = new Date();
@@ -40,86 +38,139 @@ public class SolicitudController {
         return instance;
     }
     
-    public void generarSolicitudTarjeta(int idCliente, Cliente cliente){
-        
-        for (int i = 0; i < solicitudTarjeta.length; i++) {
-            
-            if (solicitudTarjeta[i] == null) {
-                solicitudTarjeta[i] = new SolicitudTarjeta(aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000, idCliente, d, false, cliente);
-                break;
-            }
-        }
-       
-    }
     
-    public ArrayList<SolicitudTarjeta> getSolicitudTarjeta() {
-        this.arrayTarjeta.clear();
-        for (SolicitudTarjeta c : solicitudTarjeta) {
-            if (c != null) {
-                if (c.getEstado() == false) {
-                    arrayTarjeta.add(c);
-                }
-            }
-        }
-        return arrayTarjeta;
-    }
     
      
     
-    public void generarSolicitudPrestamo(int idCliente, Cliente cliente, Double monto){
+    public void generarSolicitud(int idCliente, Cliente cliente, Double monto, int indicador){
         
-        for (int i = 0; i < solicitudPrestamo.length; i++) {
-            if (solicitudPrestamo[i] == null) {
-                solicitudPrestamo[i] = new SolicitudPrestamo(aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000, idCliente, d, false, monto, cliente);
+        for (int i = 0; i < solicitud.length; i++) {
+            if (solicitud[i] == null) {
+                solicitud[i] = new Solicitudes(aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000, idCliente, d, false, monto, cliente, indicador);
                 break;
             }
         }
     }
     
-     public ArrayList<SolicitudPrestamo> getSolicitudPrestamo() {
-        this.arrayPrestamo.clear();
-        for (SolicitudPrestamo c : solicitudPrestamo) {
+     public ArrayList<Solicitudes> getSolicitudPrestamo() {
+        this.arrayListSolicitud.clear();
+        for (Solicitudes c : solicitud) {
             if (c != null) {
-                if (c.getEstado() == false) {
-                    arrayPrestamo.add(c);
+                if (c.getIndicador() == 0 &&  c.getEstado() == false) {
+                    arrayListSolicitud.add(c);
                 }
             }
         }
-        return arrayPrestamo;
+        return arrayListSolicitud;
     }
      
      
+     public ArrayList<Solicitudes> getSolicitudTarjeta() {
+        this.arrayListSolicitud.clear();
+        for (Solicitudes c : solicitud) {
+            if (c != null) {
+                if (c.getIndicador() == 1 &&  c.getEstado() == false) {
+                    arrayListSolicitud.add(c);
+                }
+            }
+        }
+        return arrayListSolicitud;
+    } 
      
-    public void aceptarPrestamo(SolicitudPrestamo solicitud){
+     
+    public ArrayList<Solicitudes> getSolicitudCuentaM() {
+        this.arrayListSolicitud.clear();
+        for (Solicitudes c : solicitud) {
+            if (c != null) {
+                if (c.getIndicador() == 2 &&  c.getEstado() == false) {
+                    arrayListSolicitud.add(c);
+                }
+            }
+        }
+        return arrayListSolicitud;
+    } 
+     
+    public ArrayList<Solicitudes> getSolicitudCuentaA() {
+        this.arrayListSolicitud.clear();
+        for (Solicitudes c : solicitud) {
+            if (c != null) {
+                if (c.getIndicador() == 3 &&  c.getEstado() == false) {
+                    arrayListSolicitud.add(c);
+                }
+            }
+        }
+        return arrayListSolicitud;
+    }  
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+    public void aceptarSolicitud(Solicitudes solicitud1){
          
-         TarjetasYPrestamosCliente.getInstancia().agregarPrestamo(solicitud.getMonto(), 0.0);
-         TarjetasYPrestamosCliente.getInstancia().agregarPrestamoCliente(solicitud.getCliente().getId());
+         TarjetasYPrestamosCliente.getInstancia().agregarPrestamo(solicitud1.getMonto(), 0.0);
+         TarjetasYPrestamosCliente.getInstancia().agregarPrestamoCliente(solicitud1.getCliente().getId());
          
-         for (int i = 0; i < solicitudPrestamo.length; i++) {
-             if (solicitudPrestamo[i] != null) {
-                 if (solicitudPrestamo[i].getIdSolicitud() == solicitud.getIdSolicitud()) {
-                     System.out.println("eta entrando aceptar prestamo");
-                     solicitudPrestamo[i].setEstado(true);
+         for (int i = 0; i < solicitud.length; i++) {
+             if (solicitud[i] != null) {
+                 if (solicitud[i].getIdSolicitud() == solicitud1.getIdSolicitud()) {
+                     solicitud[i].setEstado(true);
                 }
              }
          }  
      }
     
-    public void aceptarTarjeta(SolicitudTarjeta solicitud, Double monto){
+    public void aceptarTarjeta(Solicitudes s, Double monto){
          
         
-        TarjetasYPrestamosCliente.getInstancia().agregarTarjeta(dateFormat.format(solicitud.getFecha()), monto, 0.0);
-        TarjetasYPrestamosCliente.getInstancia().agregarTarjetaCliente(solicitud.getCliente().getId());
+        TarjetasYPrestamosCliente.getInstancia().agregarTarjeta(dateFormat.format(s.getFecha()), monto, 0.0);
+        TarjetasYPrestamosCliente.getInstancia().agregarTarjetaCliente(s.getCliente().getId());
         
          
-         for (int i = 0; i < solicitudTarjeta.length; i++) {
-             if (solicitudTarjeta[i] != null) {
-                 if (solicitudTarjeta[i].getIdSolicitud() == solicitud.getIdSolicitud()) {
-                     System.out.println("esta etrando aceptar tarjeta");
-                     solicitudTarjeta[i].setEstado(true);
-                     System.out.println(solicitudTarjeta[i].getEstado());
+         for (int i = 0; i < solicitud.length; i++) {
+             if (solicitud[i] != null) {
+                 if (solicitud[i].getIdSolicitud() == s.getIdSolicitud()) {
+                     solicitud[i].setEstado(true);
                 }
              }
          }  
      }
+ 
+    
+    public void aceptarSolicitudCuentaM(Solicitudes solicitud1){
+         
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetaria(solicitud1.getMonto());
+        CuentasCliente.getCuentasCliente().agregarCuentaMonetariaCliente(solicitud1.getCliente().getId());
+        
+         for (int i = 0; i < solicitud.length; i++) {
+             if (solicitud[i] != null) {
+                 if (solicitud[i].getIdSolicitud() == solicitud1.getIdSolicitud()) {
+                     solicitud[i].setEstado(true);
+                }
+             }
+         }  
+    }
+    
+    
+    public void aceptarSolicitudCuentaA(Solicitudes solicitud1){
+         
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorro(solicitud1.getMonto());
+        CuentasCliente.getCuentasCliente().agregarCuentaAhorroCliente(solicitud1.getCliente().getId());
+        
+         for (int i = 0; i < solicitud.length; i++) {
+             if (solicitud[i] != null) {
+                 if (solicitud[i].getIdSolicitud() == solicitud1.getIdSolicitud()) {
+                     solicitud[i].setEstado(true);
+                }
+             }
+         }  
+    }
 }
