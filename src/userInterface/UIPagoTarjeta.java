@@ -71,7 +71,7 @@ public class UIPagoTarjeta {
 
         ComboBox comboPago = new ComboBox();
         comboPago.getItems().addAll(tarjetas);
-        comboPago.setEditable(true);
+        comboPago.setEditable(false);
 
         gridPane.add(comboPago, 2, 3);
 
@@ -84,7 +84,7 @@ public class UIPagoTarjeta {
         ComboBox comboTipo = new ComboBox();
         comboTipo.getItems().addAll("Efectivo", "Cheque");
         comboTipo.setPromptText("Tipo de pago");
-        comboTipo.setEditable(true);
+        comboTipo.setEditable(false);
 
         Label labelCuenta = new Label("Numero de cuenta: ");
         gridPane.add(labelCuenta, 1, 6);
@@ -95,7 +95,7 @@ public class UIPagoTarjeta {
         ObservableList cuentas = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayNoCMCliete(cliente.getId()));
 
         comboCuenta.getItems().addAll(cuentas);
-        comboCuenta.setEditable(true);
+        comboCuenta.setEditable(false);
         gridPane.add(comboCuenta, 2, 6);
         labelCuenta.setVisible(false);
         comboCuenta.setVisible(false);
@@ -125,23 +125,23 @@ public class UIPagoTarjeta {
         
         
         Label labelDeuda = new Label("Deuda de la Tarjeta: ");
-        gridPane.add(labelDeuda, 1, 6);
+        gridPane.add(labelDeuda, 1, 7);
         TextField textFieldDeuda = new TextField();;
-        gridPane.add(textFieldDeuda, 2, 6);
+        gridPane.add(textFieldDeuda, 2, 7);
         labelDeuda.setVisible(false);
         textFieldDeuda.setVisible(false);
 
         Label labelAgencia = new Label("Agencia Bancaria: ");
-        gridPane.add(labelAgencia, 1, 7);
+        gridPane.add(labelAgencia, 1, 8);
         
         ComboBox comboAgencia = new ComboBox();
           /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
         ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
         comboAgencia.getItems().addAll(agencias);
-        comboAgencia.setEditable(true);
+        comboAgencia.setEditable(false);
 
-        gridPane.add(comboAgencia, 2, 7);
+        gridPane.add(comboAgencia, 2, 8);
 
         
         
@@ -168,7 +168,8 @@ public class UIPagoTarjeta {
         buttonAceptar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (textFieldMonto.getText().trim().length() != 0 && PagoController.getInstancia().esNumero(textFieldMonto.getText().trim())) {
+                if (textFieldMonto.getText().trim().length() != 0 && comboAgencia.getSelectionModel().getSelectedItem()!= null
+                        && PagoController.getInstancia().esNumero(textFieldMonto.getText().trim())) {
                     if (comboPago.getSelectionModel().getSelectedItem() != null
                             && comboTipo.getSelectionModel().getSelectedItem().toString().equals("Efectivo")) {
 
@@ -241,7 +242,7 @@ public class UIPagoTarjeta {
         });
         HBox hboxButtons = new HBox(10);
         hboxButtons.getChildren().addAll(buttonAceptar, buttonCancelar);
-        gridPane.add(hboxButtons, 1, 8);
+        gridPane.add(hboxButtons, 1, 9);
 
         scene.getStylesheets().addAll("/resources/root.css");
 

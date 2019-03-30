@@ -60,6 +60,36 @@ public class AgenciaController {
         }
     }
     public void actualizar(int id, String nombre, String direccion, String telefono, int noCajas, int escritorios, int auto, double efectivo) {
+        
+        for (Empleado e : EmpleadoController.getEmpleadoController().getArray()) {
+            if (e != null) {
+                if (e.getIdAgencia().equals(String.valueOf(id))) {
+                    e.setAgencia(nombre);
+                }
+            }
+        }
+        for (Pago p : PagoController.getInstancia().obtenerPagos()) {
+            if (p != null) {
+                if (p.getAgencia().getId() == id) {
+                    p.getAgencia().setNombre(nombre);
+                    p.setNombreAgencia(nombre);
+                }
+            }
+        }
+        for (Deposito d : DepositoController.getInstancia().obtenerDepositos()) {
+            if (d != null) {
+                if (d.getNombreAgencia().contains(buscarAgencia(id).getNombre())) {
+                    d.setNombreAgencia(nombre);
+                }
+            }
+        }
+        for (Retiro r : RetiroController.getRetiroController().obtenerRetiros()) {
+            if (r != null) {
+                if (r.getCadena().contains(buscarAgencia(id).getNombre())) {
+                    r.setCadena(nombre);
+                }
+            }
+        }
         for (int i = 0; i < array.length; i++) {
             if (i == id) {
                 AgenciaBancaria c = array[i];
@@ -70,13 +100,6 @@ public class AgenciaController {
                 c.setNoCajas(noCajas);
                 c.setAuto(auto);
                 c.setEfectivo(efectivo);
-            }
-        }
-        for (Empleado e : EmpleadoController.getEmpleadoController().getArray()) {
-            if (e != null) {
-                if (e.getIdAgencia().equals(String.valueOf(id))) {
-                    e.setAgencia(nombre);
-                }
             }
         }
     }
@@ -200,6 +223,18 @@ public class AgenciaController {
         return false;
     }
     
+    public AgenciaBancaria buscarAgencia(int id){
+        
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
+                if (array[i].getId() == id) {
+                    return array[i];
+                }
+            }
+        }
+        return null;
+    }
+    
     public AgenciaBancaria buscarAgenciaUnica(String nombre){
         
         for (int i = 0; i < array.length; i++) {
@@ -233,8 +268,24 @@ public class AgenciaController {
     
     
     public AgenciaBancaria[] obtenerAgencias(){
-        return this.array;
+        AgenciaBancaria b[] = new AgenciaBancaria[1000];
+         for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
+                if (array[i].getAuto() == 0) {
+                    for (int j = 0; j < b.length; j++) {
+                        if(b[j] == null) {
+                            b[j] = array[i];
+                         break;
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        return b;
     }
+    
     
     
     public boolean esNumero(String cadena, String cadena2, String cadena3, String cadena4) {

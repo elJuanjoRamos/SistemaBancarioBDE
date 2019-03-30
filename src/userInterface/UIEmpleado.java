@@ -230,7 +230,7 @@ public class UIEmpleado {
         tableView.setItems(getObservableList());
 
         tableView.getColumns().addAll(tableColumnIdEmpleado, tableColumnNombreEmpleado, tableColumnTelefonoEmpleado, tableColumnDireccionEmpleado, tableColumnPuestoEmpleado, tableColumnAgencia);
-        tableView.setMinSize(1100, 650);
+        tableView.setMinSize(1130, 650);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         tableView.setOnMousePressed(new EventHandler<MouseEvent>() {

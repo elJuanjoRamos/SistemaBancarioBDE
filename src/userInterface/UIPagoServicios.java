@@ -70,15 +70,14 @@ public class UIPagoServicios {
         ComboBox comboPago = new ComboBox();
         comboPago.getItems().addAll("Agua", "Luz", "Telefono");
         comboPago.setPromptText("Servicio");
-        comboPago.setEditable(true);
-
-        gridPane.add(comboPago, 2, 3);
+        
+        gridPane.add(comboPago, 2, 3,2,1);
 
         Label labelMonto = new Label("Monto: ");
         gridPane.add(labelMonto, 1, 4);
 
         TextField textFieldMonto = new TextField();
-        gridPane.add(textFieldMonto, 2, 4);
+        gridPane.add(textFieldMonto, 2, 4,2,1);
 
         Label labelTipo = new Label("Tipo de Pago: ");
         gridPane.add(labelTipo, 1, 5);
@@ -86,30 +85,27 @@ public class UIPagoServicios {
         ComboBox comboTipo = new ComboBox();
         comboTipo.getItems().addAll("Efectivo", "Cheque");
         comboTipo.setPromptText("Tipo de pago");
-        comboTipo.setEditable(true);
 
         Label labelCuenta = new Label("Numero de cuenta: ");
         gridPane.add(labelCuenta, 1, 6);
 
         Label labelAgencia = new Label("Agencia Bancaria: ");
-        gridPane.add(labelAgencia, 1, 7);
+        gridPane.add(labelAgencia, 1, 7,2,1);
         
         ComboBox comboAgencia = new ComboBox();
           /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
         ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
         comboAgencia.getItems().addAll(agencias);
-        comboAgencia.setEditable(true);
-
-        gridPane.add(comboAgencia, 2, 7);
+        
+        gridPane.add(comboAgencia, 2, 7,2,1);
 
         ComboBox comboCuenta = new ComboBox();
 
         /* BUSCA LAS CUENTAS MONETARIAS DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
         
         comboCuenta.getItems().addAll(getCuentaMonetaria(cliente.getId()));
-        comboCuenta.setEditable(true);
-        gridPane.add(comboCuenta, 2, 6);
+        gridPane.add(comboCuenta, 2, 6,2,1);
         labelCuenta.setVisible(false);
         comboCuenta.setVisible(false);
 
@@ -125,7 +121,7 @@ public class UIPagoServicios {
                 }
             }
         });
-        gridPane.add(comboTipo, 2, 5);
+        gridPane.add(comboTipo, 2, 5,2,1);
 
         Button buttonAceptar = new Button("Aceptar");
         buttonAceptar.setDefaultButton(true);

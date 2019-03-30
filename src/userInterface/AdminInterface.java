@@ -187,7 +187,7 @@ public class AdminInterface {
         reporte4.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //
+                ReporteController.getReporteController().CrearPDFAgenciaMasUsada();
             }
           });
         

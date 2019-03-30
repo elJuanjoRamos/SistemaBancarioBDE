@@ -596,6 +596,18 @@ class ActualizarAgenciaBancaria {
                 UIAgenciaAutobanco.getAgencia().restarthBoxCRUD();
             }
         });
+         Button buttonReporte = new Button("Reporte de Empleados");
+        buttonReporte.setGraphic(new ImageView("/resources/6.png"));
+        
+        buttonReporte.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ReporteController.getReporteController().CrearPDFEmpleadoAgencia(agenciaBancaria.getId());
+            }
+        });
+        
+        
+        gridPane.add(buttonReporte, 1, 12, 3, 1);
         gridPane.add(buttonCerrar, 2, 10);
         gridPane.getStyleClass().add("gridPane");
         gridPane.setMinSize(200, 400);

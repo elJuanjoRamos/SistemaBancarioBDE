@@ -534,6 +534,7 @@ class ActualizarSolicitudPrestamo {
                 
                 SolicitudController.getSolicitudController().aceptarSolicitud(solicitud);
                 obtenerPrestamos.getobtenerPrestamos().actualizarDatosTabla();
+                 obtenerPrestamos.getobtenerPrestamos().restarthBoxCRUD();
                 getAlert("Solicitud aceptada con exito");
             }
         });
@@ -648,6 +649,7 @@ class ActualizarSolicitudTarjeta {
                 if (esNumero(textFieldMonto.getText())) {
                     SolicitudController.getSolicitudController().aceptarTarjeta(solicitud, Double.parseDouble(textFieldMonto.getText()));
                     obtenerTarjeta.getobtenerTarjeta().actualizarDatosTabla();
+                     obtenerTarjeta.getobtenerTarjeta().restarthBoxCRUD();
                     getAlert("Solicitud Aceptada con exito");
                 } else {
                     getAlert("Debe introducir valore validos para el monto de la tarjeta");
@@ -930,6 +932,7 @@ class ActualizarSolicitudCuentaM {
                 
                 SolicitudController.getSolicitudController().aceptarSolicitudCuentaM(solicitud);
                 obtenerCuentaM.getobtenerCuentaM().actualizarDatosTabla();
+                 obtenerCuentaM.getobtenerCuentaM().restarthBoxCRUD();
                 getAlert("Solicitud aceptada con exito");
             }
         });
@@ -1188,6 +1191,7 @@ class ActualizarSolicitudCuentaA {
                 
                 SolicitudController.getSolicitudController().aceptarSolicitudCuentaA(solicitud);
                 obtenerCuentaA.getobtenerCuentaA().actualizarDatosTabla();
+                 obtenerCuentaA.getobtenerCuentaA().restarthBoxCRUD();
                 getAlert("Solicitud aceptada con exito");
             }
         });

@@ -469,7 +469,6 @@ public class ReporteController {
             for (int i = 0; i < abc.length; i++) {
                 contenido = contenido + abc[i];
 
-                System.out.println(contenido);
             }
 
         } catch (Exception a) {
@@ -569,8 +568,6 @@ public class ReporteController {
 
             for (int i = 0; i < abc.length; i++) {
                 contenido = contenido + abc[i];
-
-                System.out.println(contenido);
             }
 
         } catch (Exception a) {
@@ -617,11 +614,11 @@ public class ReporteController {
 
     public void CrearPDFAgenciaMayorEmpleado() {
 
-        String contenido = "ID" + "'" + "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + "Numero Cajas" + "'" + "Escritorios SC" + "'" + "Efectivo" + "'" + "Total Empleados" + "\n";
+        String contenido = "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + "Efectivo" + "'" + "Total Empleados" + "\n";
         AgenciaBancaria[] agencias = AgenciaController.getAgenciaController().obtenerAgencias();
         int[] result = new int[100];
         String[] texto = new String[100];
-        float[] size = new float[]{2, 10, 6, 6, 3, 3, 3};
+        float[] size = new float[]{2, 10, 6, 6, 3};
 
         int contador = 0;
 
@@ -629,44 +626,37 @@ public class ReporteController {
         String nombre = "";
         String direccion = "";
         String telefono = "";
-        int noCajas = 0;
-        int escritorios = 0;
         double efectivo = 0.0;
 
-        
-        /*id = AgenciaController.getAgenciaController().obtenerAgencias()[c].getId();
-                            nombre = AgenciaController.getAgenciaController().obtenerAgencias()[c].getNombre();
-                            direccion = AgenciaController.getAgenciaController().obtenerAgencias()[c].getDireccion();
-                            telefono = AgenciaController.getAgenciaController().obtenerAgencias()[c].getTelefono();
-                            noCajas = AgenciaController.getAgenciaController().obtenerAgencias()[c].getNoCajas();
-                            escritorios = AgenciaController.getAgenciaController().obtenerAgencias()[c].getEscritorios();
-                            efectivo = AgenciaController.getAgenciaController().obtenerAgencias()[c].getEfectivo();*/
+        /*                  */
         try {
             for (int i = 0; i < AgenciaController.getAgenciaController().obtenerAgencias().length; i++) {
                 if (AgenciaController.getAgenciaController().obtenerAgencias()[i] != null) {
-                    
+
                     for (int j = 0; j < EmpleadoController.getEmpleadoController().obtenerEmpleados().length; j++) {
                         if (EmpleadoController.getEmpleadoController().obtenerEmpleados()[j] != null) {
+
                             Empleado e = EmpleadoController.getEmpleadoController().obtenerEmpleados()[j];
-                            
+
                             AgenciaBancaria a = AgenciaController.getAgenciaController().obtenerAgencias()[i];
-                            
-                            if (e.getId().equals(a.getId())) {
-                                System.out.println("El empleado" + e.getNombre() +  "pertenece a la agencia " + a.getNombre());
-                                
+
+                            if (e.getAgencia().equals(a.getNombre())) {
+                                contador = contador + 1;
+
+                                nombre = AgenciaController.getAgenciaController().obtenerAgencias()[i].getNombre();
+                                direccion = AgenciaController.getAgenciaController().obtenerAgencias()[i].getDireccion();
+                                telefono = AgenciaController.getAgenciaController().obtenerAgencias()[i].getTelefono();
+                                efectivo = AgenciaController.getAgenciaController().obtenerAgencias()[i].getEfectivo();
+
                             }
                         }
                     }
+                    result[i] = contador;
+                    texto[i] = nombre + "'" + direccion + "'" + telefono + "'" + efectivo + "'" + result[i] + "\n";
+                    contador = 0;
                 }
             }
-            
-            
-            
-            /*for (int i = 0; i < result.length; i++) {
-                System.out.println(result[i]);
-            }*/
-            
-            
+
             for (int i = 0; i < result.length - 1; i++) {
                 for (int j = 0; j < result.length - 1; j++) {
                     if (result[j] < result[j + 1]) {
@@ -677,9 +667,12 @@ public class ReporteController {
                 }
             }
 
-            for (int i = 0; i < texto.length; i++) {
+            for (int i = 0; i < 100; i++) {
                 if (texto[i] != null) {
-                    if (texto[i].contains(String.valueOf(result[0]))) {
+                    System.out.println(texto[i]);
+                    String[] parts = texto[i].split("'");
+
+                    if (parts[4].contains(String.valueOf(result[0]))) {
                         contenido = contenido + texto[i];
                     }
                 }
@@ -687,10 +680,126 @@ public class ReporteController {
 
         } catch (Exception a) {
         }
-        //String nombrePdf = "pdfMayorCantidadEmpleados.pdf";
-        //String title = "Agencia bancaria con mayor cantidad de empleados";
-        //CrearTH(nombrePdf, contenido, title, size);
+        String nombrePdf = "pdfMayorCantidadEmpleados.pdf";
+        String title = "Agencia bancaria con mayor cantidad de empleados";
+        CrearTH(nombrePdf, contenido, title, size);
 
+    }
+
+    public void CrearPDFAgenciaMasUsada() {
+
+        String contenido = "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + "Efectivo" + "'" + "Total Usos" + "\n";
+        AgenciaBancaria[] agencias = AgenciaController.getAgenciaController().obtenerAgencias();
+        int[] result = new int[100];
+        String[] texto = new String[100];
+        float[] size = new float[]{2, 10, 6, 6, 3};
+
+        int contador = 0;
+
+        int id = 0;
+        String nombre = "";
+        String direccion = "";
+        String telefono = "";
+        double efectivo = 0.0;
+
+        AgenciaBancaria[] agencia = AgenciaController.getAgenciaController().obtenerAgencias();
+        Pago[] p = PagoController.getInstancia().obtenerPagos();
+        Deposito[] d = DepositoController.getInstancia().obtenerDepositos();
+        Retiro[] r = RetiroController.getRetiroController().obtenerRetiros();
+        try {
+            for (int i = 0; i < agencia.length; i++) {
+                if (agencia[i] != null) {
+
+                    for (Pago p1 : p) {
+                        if (p1 != null) {
+                            if (p1.getAgencia().getNombre().contains(agencia[i].getNombre())) {
+                                contador = contador + 1;
+                            }
+                        }
+                    }
+
+                    for (Deposito d1 : d) {
+                        if (d1 != null) {
+                            if (d1.getNombreAgencia().contains(agencia[i].getNombre())) {
+                                contador = contador + 1;
+                                System.out.println(contador);
+                            }
+                        }
+                    }
+                    for (Retiro r1 : r) {
+                        if (r1 != null) {
+                            if (r1.getCadena().contains(agencia[i].getNombre())) {
+                                contador = contador + 1;
+                            }
+                        }
+                    }
+
+                    id = agencia[i].getId();
+                    nombre = agencia[i].getNombre();
+                    direccion = agencia[i].getDireccion();
+                    telefono = agencia[i].getTelefono();
+                    efectivo = agencia[i].getEfectivo();
+                }
+                result[i] = contador;
+                texto[i] = nombre + "'" + direccion + "'" + telefono + "'" + efectivo + "'" + result[i] + "\n";
+                contador = 0;
+            }
+            
+
+
+        } catch (Exception a) {
+        }
+            for (int i = 0; i < result.length - 1; i++) {
+                for (int j = 0; j < result.length - 1; j++) {
+                    if (result[j] < result[j + 1]) {
+                        int tmp = result[j + 1];
+                        result[j + 1] = result[j];
+                        result[j] = tmp;
+                    }
+                }
+            }
+            
+            String uno = "";
+            String dos = "";
+            String tres = "";
+
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[0]))) {
+                        uno = texto[i];
+                    }
+                }
+            }
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[1]))) {
+                        dos = texto[i];
+                    }
+                }
+            }
+            for (int i = 0; i < texto.length; i++) {
+                if (texto[i] != null) {
+                    if (texto[i].contains(String.valueOf(result[2]))) {
+                        tres = texto[i];
+                    }
+                }
+            }
+
+            String[] abc = new String[3];
+
+            abc[0] = uno;
+            abc[1] = dos;
+            abc[2] = tres;
+
+            for (int i = 0; i < abc.length; i++) {
+                contenido = contenido + abc[i];
+            }
+
+            
+            
+        String nombrePdf = "pdfAgenciaMasUsada.pdf";
+        String title = "Agencia Más Usada por los clientes";
+        CrearTH(nombrePdf, contenido, title, size);
     }
 
     //////////////CREAR PDF////////////////////////////////////

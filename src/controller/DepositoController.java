@@ -41,7 +41,6 @@ public class DepositoController {
     }
 
     public void agregar(int idDepositante, String cuenta, Double monto, String tipoDeposito, Cliente cliente, String otraCuenta, String agencia) {
-        System.out.println(agencia);
         Date d = new Date();
 
         for (int i = 0; i < array.length; i++) {
@@ -115,6 +114,11 @@ public class DepositoController {
 
         return arrayList;
     }
+    
+    public Deposito[] obtenerDepositos(){
+        return this.array;
+    }
+    
 
     public boolean esNumero(String cadena) {
         boolean resultado;

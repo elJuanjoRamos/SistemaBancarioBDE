@@ -136,14 +136,19 @@ public class CajeroController {
     public Cajero bucarCajeroUnico(String cadena){
         String[] parts = cadena.split("-");
         String id = parts[0];
-                
-        for (int i = 0; i < cajero.length ; i++) {
+        if (esNumero(id)) {
+            for (int i = 0; i < cajero.length ; i++) {
             if (cajero[i] != null) {
                 if (cajero[i].getId() == Integer.parseInt(id)) {
                     return cajero[i];
                 }
             }
+            }
+        } else {
+            return null;
         }
+        
+        
         return null;
     }
 
@@ -174,4 +179,18 @@ public class CajeroController {
         return cantidad;
     }
 
+    public boolean esNumero(String cadena) {
+        boolean resultado;
+        
+        try {
+            Integer.parseInt(cadena);
+            resultado = true;
+        } catch (NumberFormatException e) {
+            resultado = false;
+        } catch (InputMismatchException a) {
+            resultado = false;
+        }
+        
+        return resultado;
+    }
 }

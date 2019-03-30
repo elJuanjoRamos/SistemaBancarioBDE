@@ -89,9 +89,9 @@ public class PagoController {
         return arrayList;
     }
     
-    
-    
-    
+    public Pago[] obtenerPagos() {
+        return this.pago;
+    }
     
     public boolean esNumero(String cadena) {
         boolean resultado;

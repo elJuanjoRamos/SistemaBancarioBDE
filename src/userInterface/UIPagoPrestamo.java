@@ -68,7 +68,7 @@ public class UIPagoPrestamo {
 
         ComboBox comboPago = new ComboBox();
         comboPago.getItems().addAll(tarjetas);
-        comboPago.setEditable(true);
+        comboPago.setEditable(false);
 
         gridPane.add(comboPago, 2, 3);
 
@@ -78,7 +78,7 @@ public class UIPagoPrestamo {
         ComboBox comboTipo = new ComboBox();
         comboTipo.getItems().addAll("Efectivo", "Cheque");
         comboTipo.setPromptText("Tipo de pago");
-        comboTipo.setEditable(true);
+        comboTipo.setEditable(false);
 
         Label labelCuenta = new Label("Numero de cuenta: ");
         gridPane.add(labelCuenta, 1, 7);
@@ -89,7 +89,7 @@ public class UIPagoPrestamo {
         ObservableList cuentas = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayNoCMCliete(cliente.getId()));
 
         comboCuenta.getItems().addAll(cuentas);
-        comboCuenta.setEditable(true);
+        comboCuenta.setEditable(false);
         gridPane.add(comboCuenta, 2, 7);
         
         
@@ -132,7 +132,7 @@ public class UIPagoPrestamo {
         ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
         comboAgencia.getItems().addAll(agencias);
-        comboAgencia.setEditable(true);
+        comboAgencia.setEditable(false);
 
         gridPane.add(comboAgencia, 2, 8);
 

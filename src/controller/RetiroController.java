@@ -50,38 +50,23 @@ public class RetiroController {
     /*Agregar retiro de agencia*/
     public void agregar(String cuenta, Double monto, int cliente, String objeto){
         
-        String[] cadena = objeto.split("-");
         
-        String detalle ="";
         
-         
-        if (AgenciaController.getAgenciaController().buscarAgenciaUnica(objeto) != null)  {
-            AgenciaBancaria resultado = AgenciaController.getAgenciaController().buscarAgenciaUnica(cadena[0]);
-            
-            detalle =  "Agencia " + cadena[0];
-            
-            System.out.println(cadena[0]);
-            
-            
-        } else if(CajeroController.getCajeroControler().bucarCajeroUnico(cadena[0]) != null) {
-            System.out.println("cajero");
-            detalle = "Cajero No." + cadena[0];
-            System.out.println(cadena[0]);
-            
-        }
+       
+            AgenciaBancaria a = AgenciaController.getAgenciaController().buscarAgenciaUnica(objeto);
         
-        AgenciaBancaria a = AgenciaController.getAgenciaController().buscarAgenciaUnica(cadena[0]);
-        
-        Cajero cajero = CajeroController.getCajeroControler().bucarCajeroUnico(objeto);
+            Cajero cajero = CajeroController.getCajeroControler().bucarCajeroUnico(objeto);
         
         if (a != null) {
-            
+            System.out.println("entro");
             Double efectivo = a.getEfectivo();
             if (efectivo >= monto) {
                 a.setEfectivo(efectivo - monto);
+                a.getEfectivo();
         
             }
         } else if(cajero != null) {
+            System.out.println("entro");
             Double efectivo = cajero.getEfectivo();
             
             if (efectivo >= monto) {
@@ -94,9 +79,11 @@ public class RetiroController {
         
         
         
+        
+        
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
-                array[i] = new Retiro(aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000 , cuenta, monto, d, cliente, detalle);
+                array[i] = new Retiro(aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000 , cuenta, monto, d, cliente, objeto);
                 break;
             }
         }
@@ -122,9 +109,7 @@ public class RetiroController {
 
         }
         
-        if (esNumero(cadena[0])) {
-            
-        }
+   
         
         
     }
@@ -156,6 +141,10 @@ public class RetiroController {
             }
         }
         return arrayList;
+    }
+    
+    public Retiro[] obtenerRetiros(){
+        return this.array;
     }
 
     
