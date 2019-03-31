@@ -407,7 +407,8 @@ class CrearEmpleado {
                     } 
                     
                     
-                    EmpleadoController.getEmpleadoController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), a.getNombre(), valor);
+                    EmpleadoController.getEmpleadoController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), 
+                            textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), a.getNombre(), String.valueOf(a.getId()));
                     textFieldNombre.clear();
                     textFieldDireccion.clear();
                     textFieldTelefono.clear();
@@ -563,7 +564,7 @@ class ActualizarEmpleado {
                     
                     
                       EmpleadoController.getEmpleadoController().actualizar(empleado.getId(), textFieldNombre.getText(), 
-                            textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), a.getNombre(), valor);
+                            textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), a.getNombre(), String.valueOf(a.getId()));
                     UIEmpleado.getUIEmpleado().actualizarDatosTabla();
                     UIEmpleado.getUIEmpleado().restarthBoxCRUD();
                 } else {

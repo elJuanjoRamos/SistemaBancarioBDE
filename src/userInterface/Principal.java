@@ -243,10 +243,8 @@ public class Principal extends Application {
         
         
         
-        //UIMenu.getUI().start(primaryStage);
-        AdminInterface.getAdminInterface().start(primaryStage);
-      
-
+        UIMenu.getUI().start(primaryStage);
+     
     }
 
     /**

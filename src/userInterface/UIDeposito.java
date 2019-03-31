@@ -180,7 +180,7 @@ class MisDepositos {
         ObservableList cuentas = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayCuentasCliete(cliente.getId()));
 
         comboCuenta.getItems().addAll(cuentas);
-        comboCuenta.setEditable(false);
+        comboCuenta.setEditable(true);
         gridPane.add(comboCuenta, 2, 0);
 
         Label labelMonto = new Label("Monto: ");
@@ -195,7 +195,7 @@ class MisDepositos {
         ComboBox comboTipo = new ComboBox();
         comboTipo.getItems().addAll("Efectivo", "Cheque");
         comboTipo.setPromptText("Tipo de pago");
-        comboTipo.setEditable(false);
+        comboTipo.setEditable(true);
         gridPane.add(comboTipo, 2, 4);
 
         Label labelCuenta2 = new Label("Numero Cuenta monetaria: ");
@@ -213,7 +213,7 @@ class MisDepositos {
         ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
         comboAgencia.getItems().addAll(agencias);
-        comboAgencia.setEditable(false);
+        comboAgencia.setEditable(true);
 
         gridPane.add(comboAgencia, 2, 7);
 
@@ -221,7 +221,7 @@ class MisDepositos {
         ObservableList cuentas2 = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayNoCMCliete(cliente.getId()));
 
         comboCuenta2.getItems().addAll(cuentas2);
-        comboCuenta2.setEditable(false);
+        comboCuenta2.setEditable(true);
         gridPane.add(comboCuenta2, 2, 6);
         labelCuenta2.setVisible(false);
         comboCuenta2.setVisible(false);
@@ -345,7 +345,7 @@ class MisDepositosOtroCliente {
         ObservableList clientes = FXCollections.observableArrayList(ClienteController.getClienteController().getNombresClietes());
 
         comboCliente.getItems().addAll(clientes);
-        comboCliente.setEditable(false);
+        comboCliente.setEditable(true);
         gridPane.add(comboCliente, 2, 0);
 
         
@@ -354,7 +354,7 @@ class MisDepositosOtroCliente {
         gridPane.add(labelCombo, 1, 1);
 
         ComboBox comboCuenta = new ComboBox();
-        comboCuenta.setEditable(false);
+        comboCuenta.setEditable(true);
         gridPane.add(comboCuenta, 2, 1);
 
         
@@ -388,7 +388,7 @@ class MisDepositosOtroCliente {
         ComboBox comboTipo = new ComboBox();
         comboTipo.getItems().addAll("Efectivo", "Cheque");
         comboTipo.setPromptText("Tipo de pago");
-        comboTipo.setEditable(false);
+        comboTipo.setEditable(true);
         gridPane.add(comboTipo, 2, 4);
 
         Label labelCuenta2 = new Label("Numero Cuenta monetaria: ");
@@ -404,14 +404,14 @@ class MisDepositosOtroCliente {
         ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
         comboAgencia.getItems().addAll(agencias);
-        comboAgencia.setEditable(false);
+        comboAgencia.setEditable(true);
 
         gridPane.add(comboAgencia, 2, 7);
         /* BUSCA LAS CUENTAS MONETARIAS DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
         ObservableList cuentas2 = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayNoCMCliete(cliente.getId()));
 
         comboCuenta2.getItems().addAll(cuentas2);
-        comboCuenta2.setEditable(false);
+        comboCuenta2.setEditable(true);
         gridPane.add(comboCuenta2, 2, 6);
         labelCuenta2.setVisible(false);
         comboCuenta2.setVisible(false);

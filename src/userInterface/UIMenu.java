@@ -118,16 +118,7 @@ public class UIMenu {
         primaryStage.show();
       
        
-        
- 
-        
-        
-
-        //UIOperacionesCliente.getUI().start(primaryStage, ClienteController.getClienteController().buscar(0));
-        //UISeleccionCliente.getUI().start(primaryStage);
-        //AdminInterface.getAdminInterface().start(primaryStage);
-       // AccessWindow.getAccessWindow().getGridPane(primaryStage);        
-
+     
 
     }
    

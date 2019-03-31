@@ -10,6 +10,7 @@ import controller.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.InputMismatchException;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -371,6 +373,9 @@ class obtenerPrestamos {
             }
         });
 
+        
+        
+        
         gridPane.add(buttonModificar, 0, 1);
         
         
@@ -539,8 +544,37 @@ class ActualizarSolicitudPrestamo {
             }
         });
 
+        
+        
         gridPane.add(buttonAceptar, 1, 8);
 
+        Button buttonEliminar = new Button();
+        buttonEliminar.setText("Rechazar");
+        
+        buttonEliminar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (solicitud != null) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.initStyle(StageStyle.DECORATED);
+                    alert.setTitle("Materialogo de Cofirmacion");
+                    alert.setHeaderText("Segudo Que Desea Rechazar la solicitud");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        
+                        SolicitudController.getSolicitudController().EliminarSolicitud(solicitud);
+                        obtenerPrestamos.getobtenerPrestamos().actualizarDatosTabla();
+                         obtenerPrestamos.getobtenerPrestamos().restarthBoxCRUD();
+                        getAlert("Solicitud rechazada con exito");
+                    }
+
+                } 
+            }
+        });
+        
+        gridPane.add(buttonEliminar, 2, 8);
+        
         Button buttonCerrar = new Button("Cerrar");
         buttonCerrar.setId("btnRojoR");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
@@ -549,7 +583,7 @@ class ActualizarSolicitudPrestamo {
                 obtenerPrestamos.getobtenerPrestamos().restarthBoxCRUD();
             }
         });
-        gridPane.add(buttonCerrar, 2, 8);
+        gridPane.add(buttonCerrar, 1, 9);
         gridPane.getStyleClass().add("gridPane");
         gridPane.setMinSize(200, 400);
 
@@ -660,6 +694,32 @@ class ActualizarSolicitudTarjeta {
 
         gridPane.add(buttonAceptar, 1, 8);
 
+        Button buttonEliminar = new Button();
+        buttonEliminar.setText("Rechazar");
+        
+        buttonEliminar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (solicitud != null) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.initStyle(StageStyle.DECORATED);
+                    alert.setTitle("Materialogo de Cofirmacion");
+                    alert.setHeaderText("Segudo Que Desea Rechazar la solicitud");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        
+                        SolicitudController.getSolicitudController().EliminarSolicitud(solicitud);
+                       obtenerTarjeta.getobtenerTarjeta().actualizarDatosTabla();
+                     obtenerTarjeta.getobtenerTarjeta().restarthBoxCRUD();
+                        getAlert("Solicitud rechazada con exito");
+                    }
+
+                } 
+            }
+        });
+        gridPane.add(buttonEliminar, 2, 8);
+        
         Button buttonCerrar = new Button("Cerrar");
         buttonCerrar.setId("btnRojoR");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
@@ -668,7 +728,7 @@ class ActualizarSolicitudTarjeta {
                 obtenerTarjeta.getobtenerTarjeta().restarthBoxCRUD();
             }
         });
-        gridPane.add(buttonCerrar, 2, 8);
+        gridPane.add(buttonCerrar, 1, 9);
         gridPane.getStyleClass().add("gridPane");
         gridPane.setMinSize(200, 400);
 
@@ -936,7 +996,31 @@ class ActualizarSolicitudCuentaM {
                 getAlert("Solicitud aceptada con exito");
             }
         });
+        Button buttonEliminar = new Button();
+        buttonEliminar.setText("Rechazar");
+                
+        buttonEliminar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (solicitud != null) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.initStyle(StageStyle.DECORATED);
+                    alert.setTitle("Materialogo de Cofirmacion");
+                    alert.setHeaderText("Segudo Que Desea Rechazar la solicitud");
 
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        
+                        SolicitudController.getSolicitudController().EliminarSolicitud(solicitud);
+                        obtenerCuentaM.getobtenerCuentaM().actualizarDatosTabla();
+                        obtenerCuentaM.getobtenerCuentaM().restarthBoxCRUD();
+                        getAlert("Solicitud rechazada con exito");
+                    }
+
+                } 
+            }
+        });
+        gridPane.add(buttonEliminar, 2, 8);
         gridPane.add(buttonAceptar, 1, 8);
 
         Button buttonCerrar = new Button("Cerrar");
@@ -947,7 +1031,7 @@ class ActualizarSolicitudCuentaM {
                 obtenerCuentaM.getobtenerCuentaM().restarthBoxCRUD();
             }
         });
-        gridPane.add(buttonCerrar, 2, 8);
+        gridPane.add(buttonCerrar, 1, 9);
         gridPane.getStyleClass().add("gridPane");
         gridPane.setMinSize(200, 400);
 
@@ -1198,6 +1282,32 @@ class ActualizarSolicitudCuentaA {
 
         gridPane.add(buttonAceptar, 1, 8);
 
+        Button buttonEliminar = new Button();
+        buttonEliminar.setText("Rechazar");
+        
+        buttonEliminar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (solicitud != null) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.initStyle(StageStyle.DECORATED);
+                    alert.setTitle("Materialogo de Cofirmacion");
+                    alert.setHeaderText("Segudo Que Desea Rechazar la solicitud");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        
+                        SolicitudController.getSolicitudController().EliminarSolicitud(solicitud);
+                        obtenerCuentaA.getobtenerCuentaA().actualizarDatosTabla();
+                        obtenerCuentaA.getobtenerCuentaA().restarthBoxCRUD();
+                        getAlert("Solicitud rechazada con exito");
+                    }
+
+                } 
+            }
+        });
+        gridPane.add(buttonEliminar, 2, 8);
+        
         Button buttonCerrar = new Button("Cerrar");
         buttonCerrar.setId("btnRojoR");
         buttonCerrar.setOnAction(new EventHandler<ActionEvent>() {
@@ -1206,7 +1316,7 @@ class ActualizarSolicitudCuentaA {
                 obtenerCuentaA.getobtenerCuentaA().restarthBoxCRUD();
             }
         });
-        gridPane.add(buttonCerrar, 2, 8);
+        gridPane.add(buttonCerrar, 1, 9);
         gridPane.getStyleClass().add("gridPane");
         gridPane.setMinSize(200, 400);
 

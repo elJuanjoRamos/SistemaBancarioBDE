@@ -59,7 +59,7 @@ public class AccessWindow {
         grid.add(view, 1, 0);
         
         
-        userTextField = new TextField("admin");
+        userTextField = new TextField();
         userTextField.setPromptText("User Name");
         grid.add(userTextField, 1, 2);
 

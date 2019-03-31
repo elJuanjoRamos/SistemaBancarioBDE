@@ -431,13 +431,13 @@ class ObtenerTarjetasCliente {
 
         tableView.getColumns().addAll(tableColumnTarjeta, tableColumnFecha, tableColumnCredito, tableColumnDeuda);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        tableView.setMinSize(4000, 1000);
-        gridPane.add(tableView, 0, 3, 2, 1);
+        tableView.setMinSize(4000, 750);
+        gridPane.add(tableView, 0, 5);
 
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(5000, 750);
+        hBoxVista.setMinSize(5000, 1000);
         return hBoxVista;
         
     }
@@ -519,14 +519,14 @@ class ObtenerPrestamoCliente {
         tableView.setItems(getObservableList(idCliente));
 
         tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnCredito, tableColumnDeuda, tableColumnEstado);
-        tableView.setMinSize(400, 1000);
+        tableView.setMinSize(400, 750);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        gridPane.add(tableView, 0, 3, 2, 1);
+        gridPane.add(tableView, 0, 5);
 
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(5000, 750);
+        hBoxVista.setMinSize(5000, 1000);
         return hBoxVista;
         
     }
@@ -574,7 +574,7 @@ class ObtenerPagosCliente{
         tableColumnId = new TableColumn<>();
         tableColumnId.setText("ID");
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnId.setMinWidth(50);
+        tableColumnId.setMinWidth(100);
 
         
         
@@ -610,9 +610,9 @@ class ObtenerPagosCliente{
         tableView.setItems(getObservableList(idCliente));
 
         tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnMonto, tableColumnTipoPago, tableColumnServicio, tableColumnAgencia);
-        tableView.setMinSize(4000, 570);
+        tableView.setMinSize(4000, 750);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        gridPane.add(tableView, 0, 3, 2, 1);
+        gridPane.add(tableView, 0, 5);
 
 
         hBoxVista.getChildren().add(gridPane);
@@ -721,7 +721,7 @@ class ObtenerDepositosCliente {
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(5000, 750);
+        hBoxVista.setMinSize(5000, 1000);
         return hBoxVista;
         
     }
@@ -811,7 +811,7 @@ class ObtenerRetiroCliente {
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(5000, 750);
+        hBoxVista.setMinSize(5000, 1000);
         return hBoxVista;
         
     }
@@ -883,7 +883,7 @@ class ObtenerCuentasAhorro {
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(5000, 750);
+        hBoxVista.setMinSize(5000, 1000);
         return hBoxVista;
         
     }
@@ -960,7 +960,7 @@ class ObtenerCuentasMonetaria {
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
-        hBoxVista.setMinSize(5000, 750);
+        hBoxVista.setMinSize(5000, 1000);
         return hBoxVista;
         
     }

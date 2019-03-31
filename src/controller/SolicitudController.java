@@ -127,6 +127,16 @@ public class SolicitudController {
              }
          }  
      }
+    public void EliminarSolicitud(Solicitudes solicitud1){
+         
+         for (int i = 0; i < solicitud.length; i++) {
+             if (solicitud[i] != null) {
+                 if (solicitud[i].getIdSolicitud() == solicitud1.getIdSolicitud()) {
+                     solicitud[i] = null;
+                }
+             }
+         }  
+     }
     
     public void aceptarTarjeta(Solicitudes s, Double monto){
          
