@@ -142,7 +142,7 @@ public class Principal extends Application {
         Date d = new Date();
         
         /*Agregar Tarjetas a Clientes*/
-        TarjetasYPrestamosCliente.getInstancia().agregarTarjeta(dateFormat.format(d), 15000.0, 15000.0);
+        TarjetasYPrestamosCliente.getInstancia().agregarTarjeta(dateFormat.format(d), 15000.0, 7500.0);
         TarjetasYPrestamosCliente.getInstancia().agregarTarjetaCliente(0);
         
     

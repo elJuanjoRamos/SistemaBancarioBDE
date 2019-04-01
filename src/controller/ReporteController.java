@@ -46,7 +46,7 @@ public class ReporteController {
     }
 
     /*RUTAS*/
-    public String ruta = String.valueOf(System.getProperty("user.dir")) + "\\pdf\\";
+    public String ruta = String.valueOf(System.getProperty("user.dir")) + "\\dist";
 
     public void CrearPDFClientes() {
         String contenido = "ID" + "'" + "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "\n";
@@ -809,7 +809,7 @@ public class ReporteController {
             new ReporteController().crearTah(ruta, contenido, title, size);
             try {
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + ruta);
-                ruta = String.valueOf(System.getProperty("user.dir")) + "\\pdf\\";
+                ruta = String.valueOf(System.getProperty("user.dir")) +"\\dist";
             } catch (IOException b) {
                 b.printStackTrace();
             }

@@ -36,8 +36,6 @@ public class EmpleadoController {
     /*---------------*/
     
     public void agregar(String nombre, String direccion, String telefono, String departamento, String cadena, String id) {
-        System.out.println(cadena);
-        System.out.println(id);
         for (int i = 0; i < array.length; i++) {
             if (array[i] == null) {
                 array[i] = new Empleado(i, nombre, direccion, telefono, departamento, cadena, id);

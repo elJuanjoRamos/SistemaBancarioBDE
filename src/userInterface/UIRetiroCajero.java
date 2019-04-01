@@ -11,13 +11,13 @@ import beans.CuentaMonetaria;
 import controller.CajeroController;
 import controller.CuentasCliente;
 import controller.RetiroController;
+import java.awt.Dimension;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -25,9 +25,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -76,39 +74,80 @@ public class UIRetiroCajero {
         Text textTitle = new Text("  CAJERO AUTOMATICO ");
         textTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 20));
         gridPane.add(textTitle, 0, 0);
+        
+        
+        Label labelCombo1 = new Label("Cuenta para consultar: ");
+        gridPane.add(labelCombo1, 0, 2);
+
+        ComboBox comboCuenta1 = new ComboBox();
+        comboCuenta1.setPrefSize(350, 15);
+        /* BUSCA LAS CUENTAS  DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
+        ObservableList cuentas1 = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayCuentasCliete(cliente.getId()));
+        comboCuenta1.getItems().addAll(cuentas1);
+        gridPane.add(comboCuenta1, 1, 2, 3, 1);
+        
+        
+        Label labelMontoC = new Label("Monto de cuenta: ");
+        gridPane.add(labelMontoC, 0, 3);
+
+        TextField textFieldBuscar = new TextField();
+        gridPane.add(textFieldBuscar, 1, 3,3, 1);
+        
+        
+        Button buttonConsultar = new Button("Consultar saldo");
+        buttonConsultar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (comboCuenta1.getSelectionModel().getSelectedItem() != null) {
+                    CuentaAhorro ca = CuentasCliente.getCuentasCliente().buscarCuentaAhorros(Integer.parseInt(comboCuenta1.getSelectionModel().getSelectedItem().toString()));
+                    CuentaMonetaria cm =CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(comboCuenta1.getSelectionModel().getSelectedItem().toString()));
+                    if (ca != null ) {
+                        textFieldBuscar.setText(String.valueOf(ca.getMontoInicial()));
+                    } else if( cm != null) {
+                        textFieldBuscar.setText(String.valueOf(cm.getMontoInicial()));
+                        
+                    }
+                    
+                    
+                } 
+            }
+        });
+        gridPane.add(buttonConsultar, 1, 4);
+        
+        
 
         Label labelAgencia = new Label("Cajero del retiro: ");
         labelAgencia.setId("labelTexto");
-        gridPane.add(labelAgencia, 0, 1);
+        gridPane.add(labelAgencia, 0, 9);
 
         ComboBox comboCajero = new ComboBox();
         /* BUSCA LOS CLIENTES Y LOS METE EN UN COMBOBOX*/
         ObservableList cajero = FXCollections.observableArrayList(CajeroController.getCajeroControler().getDireccion());
 
         comboCajero.getItems().addAll(cajero);
-        comboCajero.setEditable(true);
-        gridPane.add(comboCajero, 1, 1);
+        comboCajero.setPrefSize(350, 15);
+        gridPane.add(comboCajero, 1, 9,3, 1);
+        
 
         Label labelCombo = new Label("Cuenta de retiro: ");
-        gridPane.add(labelCombo, 0, 2);
+        gridPane.add(labelCombo, 0, 10);
 
         ComboBox comboCuenta = new ComboBox();
-        comboCuenta.setEditable(true);
         /* BUSCA LAS CUENTAS  DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
         ObservableList cuentas = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayCuentasCliete(cliente.getId()));
 
         comboCuenta.getItems().addAll(cuentas);
-
-        gridPane.add(comboCuenta, 1, 2);
+        comboCuenta.setPrefSize(350, 15);
+        gridPane.add(comboCuenta, 1, 10,3, 1);
 
         Label labelMonto = new Label("Monto: ");
-        gridPane.add(labelMonto, 0, 3);
+        gridPane.add(labelMonto, 0, 11);
 
         ComboBox comboMonto = new ComboBox();
         comboMonto.getItems().addAll("100", "200", "500", "1000", "5000");
         comboMonto.setPromptText("Cantidad de retiro");
-        comboMonto.setEditable(true);
-        gridPane.add(comboMonto, 1, 3);
+        comboMonto.setPrefSize(350, 15);
+        gridPane.add(comboMonto, 1, 11,3, 1);
 
         Button buttonAceptar = new Button("Aceptar");
 
@@ -171,7 +210,7 @@ public class UIRetiroCajero {
             }
         });
 
-        gridPane.add(buttonAceptar, 1, 7);
+        gridPane.add(buttonAceptar, 1, 13);
 
         hBoxVista.getChildren().add(gridPane);
         hBoxVista.setAlignment(Pos.CENTER_LEFT);
@@ -180,7 +219,7 @@ public class UIRetiroCajero {
         vbox.getChildren().addAll(getMenuBar(primaryStage, cliente), hBoxVista);
         scene.getStylesheets().addAll("/resources/root.css");
         //scene.getStylesheets().addAll("/resources/jmetro.css");
-        new JMetro(style).applyTheme(scene);
+        //new JMetro(style).applyTheme(scene);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
