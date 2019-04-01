@@ -58,7 +58,6 @@ public class RetiroController {
             Cajero cajero = CajeroController.getCajeroControler().bucarCajeroUnico(objeto);
         
         if (a != null) {
-            System.out.println("entro");
             Double efectivo = a.getEfectivo();
             if (efectivo >= monto) {
                 a.setEfectivo(efectivo - monto);
@@ -66,7 +65,6 @@ public class RetiroController {
         
             }
         } else if(cajero != null) {
-            System.out.println("entro");
             Double efectivo = cajero.getEfectivo();
             
             if (efectivo >= monto) {
@@ -97,16 +95,17 @@ public class RetiroController {
 
             c.getCuentaAhorro().setMontoInicial(montoInicial - monto);
             c.setMontoInicial(montoInicial - monto);
+            
 
         } else if (CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(cuenta)) != null) {
 
             CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(cuenta));
 
             Double montoInicial = c.getMontoInicial();
-
+            int cantidad = c.getCantidadCheques() -1;
             c.getCuenta().setMontoInicial(montoInicial - monto);
             c.setMontoInicial(montoInicial - monto);
-
+            c.setCantidadCheques(cantidad);
         }
         
    

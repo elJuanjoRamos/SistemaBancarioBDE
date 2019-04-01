@@ -116,6 +116,7 @@ public class CuentasCliente {
         }
         return ca;
     }
+
     public CuentaAhorroCliente[] obtenerCuentaAhorro() {
 
         CuentaAhorroCliente[] ca = new CuentaAhorroCliente[1000];;
@@ -123,10 +124,10 @@ public class CuentasCliente {
         for (CuentaAhorroCliente c : cuentaAhorroCliente) {
             if (c != null) {
                 for (int i = 0; i < ca.length; i++) {
-                        if (ca[i] == null) {
-                            ca[i] = c;
-                            break;
-                        }
+                    if (ca[i] == null) {
+                        ca[i] = c;
+                        break;
+                    }
                 }
             }
         }
@@ -178,7 +179,7 @@ public class CuentasCliente {
         this.noCuentaMonetaria = aleatorio.nextInt(900000000 - 100000000 + 1) + 100000000;
         for (int i = 0; i < cuentaMonetaria.length; i++) {
             if (cuentaMonetaria[i] == null) {
-                cuentaMonetaria[i] = new CuentaMonetaria(noCuentaMonetaria, d, montoInicial);
+                cuentaMonetaria[i] = new CuentaMonetaria(noCuentaMonetaria, d, montoInicial, 25);
                 break;
             }
         }
@@ -351,7 +352,7 @@ public class CuentasCliente {
         }
         return arrayCuentaMonetaria;
     }
-    
+
     public String[] obtnerCantidadCuentas() {
         int[] result = new int[100];
         String[] texto = new String[100];
@@ -361,59 +362,50 @@ public class CuentasCliente {
         int cuenta2 = 0;
         int total = 0;
         for (int t = 0; t < a.length; t++) {
-            if (a[t] != null ) {
-                 for (int i = 0; i < this.cuentaMonetariaCliente.length; i++) {
+            if (a[t] != null) {
+                for (int i = 0; i < this.cuentaMonetariaCliente.length; i++) {
 
                     if (cuentaMonetariaCliente[i] != null) {
                         if (String.valueOf(cuentaMonetariaCliente[i].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
-                            
-                            cuenta1 = cuenta1 + cuentaMonetariaCliente[i].getContador(); 
+
+                            cuenta1 = cuenta1 + cuentaMonetariaCliente[i].getContador();
                         }
                     }
                 }
-                 
+
                 for (int r = 0; r < this.cuentaAhorroCliente.length; r++) {
                     if (cuentaAhorroCliente[r] != null) {
                         if (String.valueOf(cuentaAhorroCliente[r].getCliente().getId()).equals(String.valueOf(a[t].getId()))) {
                             cuenta2 = cuenta2 + cuentaAhorroCliente[r].getContador();
-                           
+
                         }
                     }
                 }
                 total = cuenta1 + cuenta2;
                 result[t] = total;
-                
-                
-                
-                System.out.println(a[t].getNombre() + " CuenasMonetarias" + cuenta1 + " CuentasAhorro" + cuenta2 + "TOTAL " + total );
-                
-                texto[t] = a[t].getId() + "'" +  a[t].getNombre() + "'" + cuenta1 + "'" + + cuenta2 + "'" + total+ "\n";; 
-    
+
+                System.out.println(a[t].getNombre() + " CuenasMonetarias" + cuenta1 + " CuentasAhorro" + cuenta2 + "TOTAL " + total);
+
+                texto[t] = a[t].getId() + "'" + a[t].getNombre() + "'" + cuenta1 + "'" + +cuenta2 + "'" + total + "\n";;
+
                 cuenta1 = 0;
                 cuenta2 = 0;
 
-
             }
-            
-            
-            
-            
-            
-            
-            /*total = cuenta1 + cuenta2;
-            for (int m = 0; m < result.length; m++) {
-                if (result[m] == 0) {
-                   result[m] = total;
-                   break;
-                    
-                }
-                System.out.println(result[m]);
-            }*/
 
+            /*total = cuenta1 + cuenta2;
+             for (int m = 0; m < result.length; m++) {
+             if (result[m] == 0) {
+             result[m] = total;
+             break;
+                    
+             }
+             System.out.println(result[m]);
+             }*/
         }
-        
-        
+
         return texto;
 
     }
+
 }

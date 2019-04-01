@@ -68,6 +68,18 @@ public class Principal extends Application {
         EmpleadoController.getEmpleadoController().agregar("Kevin Flores", "Guatemala", "12345654", "Call-Center", "-","-");
         
         
+        EmpleadoController.getEmpleadoController().agregar("Kevin Cardona", "Guatemala", "12345654", "Oficinas Centrales", "Gerencia","-");
+        EmpleadoController.getEmpleadoController().agregar("Fransisco Suares", "Guatemala", "12345654", "Oficinas Centrales", "Gerencia","-");
+        EmpleadoController.getEmpleadoController().agregar("Kenneth Aldana", "Guatemala", "12345654", "Oficinas Centrales", "Marketing","-");
+        EmpleadoController.getEmpleadoController().agregar("Carlos Samayoa", "Guatemala", "12345654", "Oficinas Centrales", "Marketing","-");
+        EmpleadoController.getEmpleadoController().agregar("Daniel del Aguila", "Guatemala", "12345654", "Oficinas Centrales", "Informatica","-");
+        EmpleadoController.getEmpleadoController().agregar("Estuardo Rans", "Guatemala", "12345654", "Oficinas Centrales", "Informatica","-");
+        EmpleadoController.getEmpleadoController().agregar("Marco lopez", "Guatemala", "12345654", "Oficinas Centrales", "Finanzas","-");
+        EmpleadoController.getEmpleadoController().agregar("Kenia Chinchilla", "Guatemala", "12345654", "Oficinas Centrales", "Finanzas","-");
+        EmpleadoController.getEmpleadoController().agregar("Alissa Mijares", "Guatemala", "12345654", "Oficinas Centrales", "Reclamos","-");
+        EmpleadoController.getEmpleadoController().agregar("Katia Loturo", "Guatemala", "12345654", "Oficinas Centrales", "Reclamos","-");
+        EmpleadoController.getEmpleadoController().agregar("Melisa Loturo", "Guatemala", "12345654", "Oficinas Centrales", "Cobros","-");
+        EmpleadoController.getEmpleadoController().agregar("Mynor Flores", "Guatemala", "12345654", "Oficinas Centrales", "Cobros","-");
         
         
         
@@ -134,7 +146,13 @@ public class Principal extends Application {
         CajeroController.getCajeroControler().agregar(100000.00, "Zona 1", "Disponible" );
         CajeroController.getCajeroControler().agregar(100000.00, "Centro Comercial Miraflores", "Disponible" );
         CajeroController.getCajeroControler().agregar(100000.00, "USAC", "No Disponible" );
-        CajeroController.getCajeroControler().agregar(100000.00, "Avenida Petapa", "No Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "Centro Comercial PeriRoosevelt", "Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "12 Av. Calz Atanasio Tzul", "Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "Diagonal 17, 24-40 Zona 11", "No Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "Avenida Petapa 25-25", "Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "Calzada Aguilar Batres", "No Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "Gasolinera Texaco Av. Petapa", "Disponible" );
+        CajeroController.getCajeroControler().agregar(100000.00, "Avenida Petapa 24-03", "No Disponible" );
         
          
         

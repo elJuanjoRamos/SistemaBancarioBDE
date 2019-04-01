@@ -266,6 +266,9 @@ public class AgenciaController {
         return noCajas;
     }
     
+    public AgenciaBancaria[] obtenerTodasAgencias(){
+        return this.array;
+    }
     
     public AgenciaBancaria[] obtenerAgencias(){
         AgenciaBancaria b[] = new AgenciaBancaria[1000];
@@ -285,6 +288,27 @@ public class AgenciaController {
         
         return b;
     }
+    
+    
+    public AgenciaBancaria[] obtenerAgenciasAuto(){
+        AgenciaBancaria b[] = new AgenciaBancaria[1000];
+         for (int i = 0; i < array.length; i++) {
+            if (array[i] != null) {
+                if (array[i].getAuto() != 0) {
+                    for (int j = 0; j < b.length; j++) {
+                        if(b[j] == null) {
+                            b[j] = array[i];
+                         break;
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        return b;
+    }
+    
     
     
     

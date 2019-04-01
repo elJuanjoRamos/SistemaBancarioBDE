@@ -15,7 +15,7 @@ public class CuentaAhorro {
     private int id;
     private Date fechaApertura;
     private Double montoInicial;
-
+    
     public CuentaAhorro() {
     }
 
@@ -48,4 +48,8 @@ public class CuentaAhorro {
     public void setMontoInicial(Double montoInicial) {
         this.montoInicial = montoInicial;
     }
+
+    
+    
+    
 }

@@ -20,6 +20,7 @@ public class CuentaMonetariaCliente {
     private Date fechaApertura;
     private Double montoInicial;
     private int idCuenta;
+    private int cantidadCheques;
     
     public CuentaMonetariaCliente() {
     }
@@ -32,6 +33,8 @@ public class CuentaMonetariaCliente {
         this.montoInicial = cuenta.getMontoInicial();
         this.idCuenta = cuenta.getId();
         this.contador = contador;
+        this.cantidadCheques = cuenta.getCantidadCheques();
+        
     }
 
     public int getId() {
@@ -92,6 +95,14 @@ public class CuentaMonetariaCliente {
 
     public void setContador(int contador) {
         this.contador = contador;
+    }
+
+    public int getCantidadCheques() {
+        return cantidadCheques;
+    }
+
+    public void setCantidadCheques(int cantidadCheques) {
+        this.cantidadCheques = cantidadCheques;
     }
 
     

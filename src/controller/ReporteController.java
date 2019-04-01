@@ -68,7 +68,7 @@ public class ReporteController {
         String nombrePdf = "pdfClientes.pdf";
         String title = "Clientes Registrados";
         float[] size = {2, 10, 6, 6};
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
 
     }
 
@@ -94,7 +94,7 @@ public class ReporteController {
         String nombrePdf = "pdfEmpleados.pdf";
         String title = "Empleados Registrados";
         float[] size = {2, 10, 6, 6, 6, 6};
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
 
     }
 
@@ -102,60 +102,64 @@ public class ReporteController {
         String contenido = "ID" + "'" + "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + "Numero Cajas" + "'" + "Escritorios SC" + "'" + "Efectivo" + "\n";
         double total = 0;
         AgenciaBancaria[] agencias = AgenciaController.getAgenciaController().obtenerAgencias();
+        AgenciaBancaria[] autoBanco = AgenciaController.getAgenciaController().obtenerAgenciasAuto();
+        
         String nombrePdf = "";
         String title = "";
         float[] size = {};
 
         try {
-            for (AgenciaBancaria c : agencias) {
-                if (c != null) {
-                    if (cadena.equals("NoAuto")) {
+            if (cadena.contains("NoAuto")) {
+                for (AgenciaBancaria c : agencias) {
+                    if (c != null) {
                         title = "Agencias Registradas";
 
-                        if (c.getAuto() == 0) {
+                        int id = c.getId();
+                        String nombre = c.getNombre();
+                        String direccion = c.getDireccion();
+                        String telefono = c.getTelefono();
+                        int noCajas = c.getNoCajas();
+                        int escritorios = c.getEscritorios();
+                        double efectivo = c.getEfectivo();
 
-                            int id = c.getId();
-                            String nombre = c.getNombre();
-                            String direccion = c.getDireccion();
-                            String telefono = c.getTelefono();
-                            int noCajas = c.getNoCajas();
-                            int escritorios = c.getEscritorios();
-                            double efectivo = c.getEfectivo();
+                        total = total + efectivo;
+                        contenido = contenido + id + "'" + nombre + "'" + direccion + "'" + telefono
+                                + "'" + noCajas + "'" + escritorios + "'" + efectivo + "\n";
 
-                            total = total + efectivo;
-                            contenido = contenido + id + "'" + nombre + "'" + direccion + "'" + telefono
-                                    + "'" + noCajas + "'" + escritorios + "'" + efectivo + "\n";
-
-                            size = new float[]{2, 10, 6, 6, 3, 3, 3};
-                            nombrePdf = "pdfAgenciasSinAutoBanco.pdf";
-                        }
-                    } else if (cadena.equals("Auto")) {
-                        title = "Agencias con Autobanco Registradas";
-
-                        if (c.getAuto() != 0) {
-
-                            int id = c.getId();
-                            String nombre = c.getNombre();
-                            String direccion = c.getDireccion();
-                            String telefono = c.getTelefono();
-                            int noCajas = c.getNoCajas();
-                            int escritorios = c.getEscritorios();
-                            double efectivo = c.getEfectivo();
-
-                            total = total + efectivo;
-                            contenido = contenido + id + "'" + nombre + "'" + direccion + "'" + telefono
-                                    + "'" + noCajas + "'" + escritorios + "'" + efectivo + "\n";
-
-                            size = new float[]{2, 10, 6, 6, 3, 3, 3};
-                            nombrePdf = "pdfAgenciasConAutoBanco.pdf";
-                        }
                     }
                 }
+            } else if (cadena.equals("Auto")) {
+                for (AgenciaBancaria c : autoBanco) {
+                    if (c != null) {
+                        int id = c.getId();
+                        String nombre = c.getNombre();
+                        String direccion = c.getDireccion();
+                        String telefono = c.getTelefono();
+                        int noCajas = c.getNoCajas();
+                        int escritorios = c.getEscritorios();
+                        double efectivo = c.getEfectivo();
+                        total = total + efectivo;
+                        contenido = contenido + id + "'" + nombre + "'" + direccion + "'" + telefono
+                                + "'" + noCajas + "'" + escritorios + "'" + efectivo + "\n";
+
+                    }
+
+                }            
             }
+            
         } catch (Exception a) {
         }
+        if (cadena.contains("NoAuto")) {
+            size = new float[]{2, 10, 6, 6, 3, 3, 3};
+            nombrePdf = "pdfAgenciasSinAutoBanco.pdf";
+
+        } else {
+            size = new float[]{2, 10, 6, 6, 3, 3, 3};
+            nombrePdf = "pdfAutoBanco.pdf";
+                            
+        }
         contenido = contenido + "-'-'-'-'-'TOTAL EFECTIVO'" + total + "'";
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
 
     }
 
@@ -183,7 +187,7 @@ public class ReporteController {
         String nombrePdf = "pdfCajero.pdf";
         String title = "Cajeros Registrados";
         float[] size = {2, 10, 6, 6, 6};
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
 
     }
 
@@ -259,7 +263,7 @@ public class ReporteController {
         String nombrePdf = "pdfClienteUnico.pdf";
         String title = "Detalles del cliente";
         float[] size = {2, 10, 6, 6, 6};
-        CrearTH(nombrePdf, todo, title, size);
+        CrearRuta(nombrePdf, todo, title, size);
 
     }
 
@@ -356,7 +360,7 @@ public class ReporteController {
         String nombrePdf = "pdfTopClienteCuentas.pdf";
         String title = "Top 3 clientes con más cuentas";
         float[] size = {10, 6, 6, 6};
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
     }
 
     public void CrearPDFClienteMayorDinero() {
@@ -477,7 +481,7 @@ public class ReporteController {
         String nombrePdf = "pdfTopClienteMayorDinero.pdf";
         String title = "Top 3 clientes con mayor dinero";
         float[] size = {2, 10, 6, 6, 6, 6, 6};
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
     }
 
     public void CrearPDFMayorDeuda() {
@@ -576,12 +580,12 @@ public class ReporteController {
         String nombrePdf = "pdfTopClienteMayorDeuda.pdf";
         String title = "Top 3 clientes con mayor deuda al banco";
         float[] size = {2, 10, 6, 6, 6};
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
 
     }
 
     public void CrearPDFEmpleadoAgencia(int idAgencia) {
-
+        System.out.println(idAgencia);
         String contenido = "ID" + "'" + "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + " Departamento" + "'" + " Agencia" + "\n";
         String nagencia = "";
         try {
@@ -608,14 +612,14 @@ public class ReporteController {
         String nombrePdf = "pdfClienteAgencia.pdf";
         String title = "Empleado de la agencia " + nagencia;
         float[] size = {2, 10, 6, 6, 6, 6};
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
 
     }
 
     public void CrearPDFAgenciaMayorEmpleado() {
 
         String contenido = "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + "Efectivo" + "'" + "Total Empleados" + "\n";
-        AgenciaBancaria[] agencias = AgenciaController.getAgenciaController().obtenerAgencias();
+        AgenciaBancaria[] agencias = AgenciaController.getAgenciaController().obtenerTodasAgencias();
         int[] result = new int[100];
         String[] texto = new String[100];
         float[] size = new float[]{2, 10, 6, 6, 3};
@@ -682,26 +686,22 @@ public class ReporteController {
         }
         String nombrePdf = "pdfMayorCantidadEmpleados.pdf";
         String title = "Agencia bancaria con mayor cantidad de empleados";
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
 
     }
 
     public void CrearPDFAgenciaMasUsada() {
 
-        String contenido = "Nombre" + "'" + "Direccion" + "'" + "Telefono" + "'" + "Efectivo" + "'" + "Total Usos" + "\n";
+        String contenido = "Nombre" + "'" + "Total Usos" + "\n";
         AgenciaBancaria[] agencias = AgenciaController.getAgenciaController().obtenerAgencias();
         int[] result = new int[100];
         String[] texto = new String[100];
-        float[] size = new float[]{2, 10, 6, 6, 3};
+        float[] size = new float[]{10, 6};
 
         int contador = 0;
 
-        int id = 0;
         String nombre = "";
-        String direccion = "";
-        String telefono = "";
-        double efectivo = 0.0;
-
+        
         AgenciaBancaria[] agencia = AgenciaController.getAgenciaController().obtenerAgencias();
         Pago[] p = PagoController.getInstancia().obtenerPagos();
         Deposito[] d = DepositoController.getInstancia().obtenerDepositos();
@@ -734,14 +734,11 @@ public class ReporteController {
                         }
                     }
 
-                    id = agencia[i].getId();
                     nombre = agencia[i].getNombre();
-                    direccion = agencia[i].getDireccion();
-                    telefono = agencia[i].getTelefono();
-                    efectivo = agencia[i].getEfectivo();
+                   
                 }
                 result[i] = contador;
-                texto[i] = nombre + "'" + direccion + "'" + telefono + "'" + efectivo + "'" + result[i] + "\n";
+                texto[i] = nombre + "'" + result[i] + "\n";
                 contador = 0;
             }
             
@@ -799,14 +796,14 @@ public class ReporteController {
             
         String nombrePdf = "pdfAgenciaMasUsada.pdf";
         String title = "Agencia Más Usada por los clientes";
-        CrearTH(nombrePdf, contenido, title, size);
+        CrearRuta(nombrePdf, contenido, title, size);
     }
 
     //////////////CREAR PDF////////////////////////////////////
-    public void CrearTH(String nombre, String contenido, String title, float[] size) {
+    public void CrearRuta(String nombre, String contenido, String title, float[] size) {
         ruta = ruta + nombre;
         try {
-            new ReporteController().crearTah(ruta, contenido, title, size);
+            new ReporteController().crearDoc(ruta, contenido, title, size);
             try {
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + ruta);
                 ruta = String.valueOf(System.getProperty("user.dir")) +"\\dist";
@@ -818,7 +815,7 @@ public class ReporteController {
         }
     }
 
-    private void crearTah(String dest, String contenido, String title, float[] size) throws IOException {
+    private void crearDoc(String dest, String contenido, String title, float[] size) throws IOException {
         PdfWriter writer = new PdfWriter(dest);
         PdfDocument pdf = new PdfDocument(writer);
         Document doc = new Document(pdf, PageSize.A4.rotate());
@@ -835,6 +832,7 @@ public class ReporteController {
 
         BufferedReader br = new BufferedReader(new StringReader(contenido));
         String datos = br.readLine();
+        
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 7; j++) {
                 try {
@@ -846,7 +844,6 @@ public class ReporteController {
         }
 
         crearTabla(datos, tabla, true);
-
         while ((datos = br.readLine()) != null) {
             crearTabla(datos, tabla, false);
         }
@@ -880,7 +877,7 @@ public class ReporteController {
             new ReporteController().crearTop(ruta, contenido, title, size);
             try {
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + ruta);
-                ruta = String.valueOf(System.getProperty("user.dir")) + "\\pdf\\";
+                ruta = String.valueOf(System.getProperty("user.dir"))+"\\dist";
             } catch (IOException b) {
                 b.printStackTrace();
             }

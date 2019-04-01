@@ -357,6 +357,7 @@ class CrearEmpleado {
                 if (comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Agencia")) {
                     comboAgencia.setVisible(true);
                     labelAgencia.setVisible(true);
+                    labelAgencia.setText("Agencia:");
                     comboAgencia.getItems().clear();
                     ObservableList agencias1 = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
@@ -367,12 +368,18 @@ class CrearEmpleado {
                     comboAgencia.getItems().clear();
                     ObservableList agenciasAuto = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgenciaAutoBanco());
                     comboAgencia.getItems().addAll(agenciasAuto);
-        
+                    labelAgencia.setText("Agencia:");
                     comboAgencia.setVisible(true);
                     labelAgencia.setVisible(true);
                     
-                } else if(comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Call-Center") ||
-                        comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Oficinas Centrales"))  {
+                } else if( comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Oficinas Centrales")) { 
+                    comboAgencia.getItems().clear();
+                    comboAgencia.getItems().addAll("Gerencia", "Marketing", "Informatica", "Finanzas","Reclamos", "Cobros" );
+                    labelAgencia.setText("Departamento:");
+                    comboAgencia.setVisible(true);
+                    labelAgencia.setVisible(true);
+                    
+                }else if(comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Call-Center"))  {
                     comboAgencia.setVisible(false);
                     labelAgencia.setVisible(false);
                     
@@ -398,20 +405,30 @@ class CrearEmpleado {
                 if (textFieldNombre.getText().length() != 0 && textFieldDireccion.getText().length() != 0 && textFieldTelefono.getText().length() != 0 &&
                         comboDepartamento.getSelectionModel().getSelectedItem() != null) {
                     
-                    String valor = ""; 
                     AgenciaBancaria a = null;
+                    try {
+                        if (comboAgencia.getSelectionModel().getSelectedItem() != null) {
+                          a = AgenciaController.getAgenciaController().buscarAgenciaUnica(comboAgencia.getSelectionModel().getSelectedItem().toString());
+                        } 
                     
-                    if (comboAgencia.getSelectionModel().getSelectedItem() != null) {
-                        a = AgenciaController.getAgenciaController().buscarAgenciaUnica(comboAgencia.getSelectionModel().getSelectedItem().toString());
-                        valor = String.valueOf(a.getNombre());
-                    } 
+                    } catch(NullPointerException e) {}
                     
+                    if (a != null) {
+                        EmpleadoController.getEmpleadoController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), 
+                                textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), a.getNombre(), String.valueOf(a.getId()));
                     
-                    EmpleadoController.getEmpleadoController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), 
-                            textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), a.getNombre(), String.valueOf(a.getId()));
+                    } else if(comboDepartamento.getSelectionModel().getSelectedItem().toString().contains("Oficinas Centrales")) {
+                        EmpleadoController.getEmpleadoController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), 
+                                textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString(), "-");
+                    } else {
+                            EmpleadoController.getEmpleadoController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), 
+                                textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), "-");
+                    
+                    }
                     textFieldNombre.clear();
                     textFieldDireccion.clear();
                     textFieldTelefono.clear();
+                    
                 } else {
                     Alert alerta = new Alert(Alert.AlertType.INFORMATION);
                     alerta.setTitle("Error!");
@@ -493,7 +510,7 @@ class ActualizarEmpleado {
         gridPane.add(labelDepartamento, 0, 6);
 
         comboDepartamento = new ComboBox();
-        comboDepartamento.getItems().addAll("Agencia","Auto Banco","Oficinas","Call-Center");
+        comboDepartamento.getItems().addAll("Agencia","Auto Banco","Oficinas Centrales","Call-Center");
         gridPane.add(comboDepartamento, 1, 6);
 
         
@@ -520,6 +537,8 @@ class ActualizarEmpleado {
                 if (comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Agencia")) {
                     comboAgencia.setVisible(true);
                     labelAgencia.setVisible(true);
+                    labelAgencia.setText("Agencia:");
+                    
                     comboAgencia.getItems().clear();
                     ObservableList agencias1 = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
@@ -530,12 +549,19 @@ class ActualizarEmpleado {
                     comboAgencia.getItems().clear();
                     ObservableList agenciasAuto = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgenciaAutoBanco());
                     comboAgencia.getItems().addAll(agenciasAuto);
-        
+                    labelAgencia.setText("Agencia:");
+                    
                     comboAgencia.setVisible(true);
                     labelAgencia.setVisible(true);
                     
-                } else if(comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Call-Center") ||
-                        comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Oficinas Centrales"))  {
+                } else if( comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Oficinas Centrales")) { 
+                    comboAgencia.getItems().clear();
+                    comboAgencia.getItems().addAll("Gerencia", "Marketing", "Informatica", "Finanzas","Reclamos", "Cobros" );
+                    labelAgencia.setText("Departamento:");
+                    comboAgencia.setVisible(true);
+                    labelAgencia.setVisible(true);
+                    
+                }else if(comboDepartamento.getSelectionModel().getSelectedItem().toString().equals("Call-Center"))  {
                     comboAgencia.setVisible(false);
                     labelAgencia.setVisible(false);
                     
@@ -554,17 +580,27 @@ class ActualizarEmpleado {
                 if (textFieldNombre.getText().length() != 0 && textFieldDireccion.getText().length() != 0 && textFieldTelefono.getText().length() != 0 &&
                         comboDepartamento.getSelectionModel().getSelectedItem() != null) {
                     
-                    String valor = ""; 
                     AgenciaBancaria a = null;
                     
-                    if (comboAgencia.getSelectionModel().getSelectedItem() != null) {
-                        a = AgenciaController.getAgenciaController().buscarAgenciaUnica(comboAgencia.getSelectionModel().getSelectedItem().toString());
-                        valor = String.valueOf(a.getNombre());
-                    } 
+                    try{
+                        if (comboAgencia.getSelectionModel().getSelectedItem() != null) {
+                            a = AgenciaController.getAgenciaController().buscarAgenciaUnica(comboAgencia.getSelectionModel().getSelectedItem().toString());
+                        }
+                    } catch(NullPointerException e){}
                     
-                    
-                      EmpleadoController.getEmpleadoController().actualizar(empleado.getId(), textFieldNombre.getText(), 
+                    if (a  != null) {
+                          EmpleadoController.getEmpleadoController().actualizar(empleado.getId(), textFieldNombre.getText(), 
                             textFieldDireccion.getText(), textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), a.getNombre(), String.valueOf(a.getId()));
+                    
+                    }else if(comboDepartamento.getSelectionModel().getSelectedItem().toString().contains("Oficinas Centrales")) {
+                        System.out.println("entro");
+                        EmpleadoController.getEmpleadoController().actualizar(empleado.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), 
+                                textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString(), "-");
+                    } else {
+                            EmpleadoController.getEmpleadoController().actualizar(empleado.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), 
+                                textFieldTelefono.getText(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), comboDepartamento.getSelectionModel().getSelectedItem().toString(), "-");
+                    
+                    }
                     UIEmpleado.getUIEmpleado().actualizarDatosTabla();
                     UIEmpleado.getUIEmpleado().restarthBoxCRUD();
                 } else {

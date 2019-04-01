@@ -401,19 +401,22 @@ class CrearAgenciaBancaria {
                             getAlert("Ya existe una agencia o agencia con autobanco asociada con ese nombre");
                         } else {
                             if (Double.parseDouble(textFieldefectivo.getText()) >= 10000.00) {
-                                AgenciaController.getAgenciaController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
-                                Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()), 
-                                Integer.parseInt(textFieldCajasAuto.getText()),
-                                Double.parseDouble(textFieldefectivo.getText()));
-                                textFieldNombre.clear();
-                                textFieldDireccion.clear();
-                                textFieldTelefono.clear();
-                                textFieldcajas.clear();
-                                textFieldescritorio.clear();
-                                textFieldCajasAuto.clear();
-                                textFieldefectivo.clear();
-                                UIAgenciaAutobanco.getAgencia().actualizarDatosTabla();
+                                if (Integer.parseInt(textFieldcajas.getText()) > 0) {
+                                    AgenciaController.getAgenciaController().agregar(textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
+                                    Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()), 
+                                    Integer.parseInt(textFieldCajasAuto.getText()),
+                                    Double.parseDouble(textFieldefectivo.getText()));
+                                    textFieldNombre.clear();
+                                    textFieldDireccion.clear();
+                                    textFieldTelefono.clear();
+                                    textFieldcajas.clear();
+                                    textFieldescritorio.clear();
+                                    textFieldCajasAuto.clear();
+                                    textFieldefectivo.clear();
+                                    UIAgenciaAutobanco.getAgencia().actualizarDatosTabla();
 
+                                }
+                                
                             } else {
                                 getAlert("El monto del efectivo debe ser mayor o igual a Q10,000.00");
                             }
@@ -565,11 +568,13 @@ class ActualizarAgenciaBancaria {
                         } else {
 
                             if (Double.parseDouble(textFieldefectivo.getText()) >= 10000.00 )  {
-                                 AgenciaController.getAgenciaController().actualizar(agenciaBancaria.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
+                                if (Integer.parseInt(textFieldcajas.getText()) > 0) {
+                                    AgenciaController.getAgenciaController().actualizar(agenciaBancaria.getId(), textFieldNombre.getText(), textFieldDireccion.getText(), textFieldTelefono.getText(),
                                     Integer.parseInt(textFieldcajas.getText()), Integer.parseInt(textFieldescritorio.getText()), Integer.parseInt(textFieldCajasAuto.getText()), Double.parseDouble(textFieldefectivo.getText()));
                             
                                     UIAgenciaAutobanco.getAgencia().actualizarDatosTabla();
                                     UIAgenciaAutobanco.getAgencia().restarthBoxCRUD();
+                                }
                             } else {
                                 getAlert("El monto del efectivo debe ser mayor o igual a Q10,000.00");
                             }

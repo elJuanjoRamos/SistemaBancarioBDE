@@ -9,6 +9,7 @@ import beans.*;
 import controller.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,6 +22,7 @@ import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
@@ -64,7 +66,7 @@ public class UIDeposito {
         VBox vbox = new VBox();
         vbox.setStyle("-fx-background-color: white");
         //screenSize.getWidth(), screenSize.getHeight()
-        Scene scene = new Scene(vbox, 700,700, Color.WHITE);
+        Scene scene = new Scene(vbox, 700, 700, Color.WHITE);
 
         GridPane gridPane = new GridPane();
         HBox h1 = new HBox(10);
@@ -203,13 +205,11 @@ class MisDepositos {
 
         ComboBox comboCuenta2 = new ComboBox();
 
-        
-        
         Label labelAgencia = new Label("Agencia Bancaria: ");
         gridPane.add(labelAgencia, 1, 7);
-        
+
         ComboBox comboAgencia = new ComboBox();
-          /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
+        /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
         ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
         comboAgencia.getItems().addAll(agencias);
@@ -249,7 +249,7 @@ class MisDepositos {
                         if (comboTipo.getSelectionModel().getSelectedItem().toString().equals("Efectivo")) {
 
                             DepositoController.getInstancia().agregar(cliente.getId(), comboCuenta.getSelectionModel().getSelectedItem().toString(),
-                                    Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente, "", 
+                                    Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente, "",
                                     comboAgencia.getSelectionModel().getSelectedItem().toString());
 
                             UIDeposito.getUI().getAlert("Deposito realizado con exito");
@@ -259,19 +259,33 @@ class MisDepositos {
                                 String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta2.getSelectionModel().getSelectedItem().toString();
 
                                 if (!comboCuenta.getSelectionModel().getSelectedItem().toString().equals(comboCuenta2.getSelectionModel().getSelectedItem().toString())) {
-                                    
+
                                     CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(comboCuenta2.getSelectionModel().getSelectedItem().toString()));
-                                    
-                                    if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim())) {
-                                        DepositoController.getInstancia().agregar(cliente.getId(), comboCuenta.getSelectionModel().getSelectedItem().toString(),
-                                            Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente, comboCuenta2.getSelectionModel().getSelectedItem().toString(), 
-                                            comboAgencia.getSelectionModel().getSelectedItem().toString());
-                                        textFieldMonto.clear();
-                                         UIDeposito.getUI().getAlert("Deposito realizado con exito");
+
+                                    if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim()) && c.getCantidadCheques() > 0) {
+
+                                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                        alert.initStyle(StageStyle.DECORATED);
+                                        alert.setTitle(" Cofirmacion");
+                                        alert.setHeaderText("Desea eminir un Cheque de la cuenta " + comboCuenta.getSelectionModel().getSelectedItem().toString() + ""
+                                                + " por el monto de Q" + textFieldMonto.getText());
+
+                                        Optional<ButtonType> result = alert.showAndWait();
+                                        if (result.get() == ButtonType.OK) {
+
+                                            int ca = c.getCantidadCheques();
+                                            c.setCantidadCheques(ca - 1);
+                                            DepositoController.getInstancia().agregar(cliente.getId(), comboCuenta.getSelectionModel().getSelectedItem().toString(),
+                                                    Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente, comboCuenta2.getSelectionModel().getSelectedItem().toString(),
+                                                    comboAgencia.getSelectionModel().getSelectedItem().toString());
+                                            textFieldMonto.clear();
+                                            UIDeposito.getUI().getAlert("Deposito realizado con exito");
+
+                                        }
+
                                     } else {
-                                         UIDeposito.getUI().getAlert("El saldo de la cuenta no es suficiente");
+                                        UIDeposito.getUI().getAlert("El saldo de la cuenta no es suficiente o se ha quedado sin cheques");
                                     }
-                                    
 
                                 } else {
                                     UIDeposito.getUI().getAlert("La cuenta para depositar no puede ser la misma de donde se va a generar el cheque");
@@ -310,10 +324,6 @@ class MisDepositos {
 
 }
 
-
-
-
-
 class MisDepositosOtroCliente {
     /*SINGLETON*/
 
@@ -335,21 +345,17 @@ class MisDepositosOtroCliente {
         gridPane.setVgap(10);
         gridPane.setPadding(new Insets(30, 30, 30, 30));
 
-        
-        
         Label labelCliente = new Label("Cliente para depositar: ");
         gridPane.add(labelCliente, 1, 0);
 
-         ComboBox comboCliente = new ComboBox();
-          /* BUSCA LOS CLIENTES Y LOS METE EN UN COMBOBOX*/
+        ComboBox comboCliente = new ComboBox();
+        /* BUSCA LOS CLIENTES Y LOS METE EN UN COMBOBOX*/
         ObservableList clientes = FXCollections.observableArrayList(ClienteController.getClienteController().getNombresClietes());
 
         comboCliente.getItems().addAll(clientes);
         comboCliente.setEditable(true);
         gridPane.add(comboCliente, 2, 0);
 
-        
-        
         Label labelCombo = new Label("Cuenta a depositar: ");
         gridPane.add(labelCombo, 1, 1);
 
@@ -357,7 +363,6 @@ class MisDepositosOtroCliente {
         comboCuenta.setEditable(true);
         gridPane.add(comboCuenta, 2, 1);
 
-        
         labelCombo.setVisible(false);
         comboCuenta.setVisible(false);
 
@@ -374,8 +379,7 @@ class MisDepositosOtroCliente {
 
             }
         });
-        
-        
+
         Label labelMonto = new Label("Monto: ");
         gridPane.add(labelMonto, 1, 2);
 
@@ -396,11 +400,11 @@ class MisDepositosOtroCliente {
 
         ComboBox comboCuenta2 = new ComboBox();
 
-         Label labelAgencia = new Label("Agencia Bancaria: ");
+        Label labelAgencia = new Label("Agencia Bancaria: ");
         gridPane.add(labelAgencia, 1, 7);
-        
+
         ComboBox comboAgencia = new ComboBox();
-          /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
+        /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
         ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
         comboAgencia.getItems().addAll(agencias);
@@ -439,9 +443,8 @@ class MisDepositosOtroCliente {
                         if (comboTipo.getSelectionModel().getSelectedItem().toString().equals("Efectivo")) {
 
                             DepositoController.getInstancia().agregar(cliente.getId(), comboCuenta.getSelectionModel().getSelectedItem().toString(),
-                                    Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), 
-                                    
-                                    ClienteController.getClienteController().buscarClieteUnico(comboCliente.getSelectionModel().getSelectedItem().toString()), "", 
+                                    Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(),
+                                    ClienteController.getClienteController().buscarClieteUnico(comboCliente.getSelectionModel().getSelectedItem().toString()), "",
                                     comboAgencia.getSelectionModel().getSelectedItem().toString());
 
                             UIDeposito.getUI().getAlert("Deposito realizado con exito");
@@ -451,23 +454,37 @@ class MisDepositosOtroCliente {
                                 String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta2.getSelectionModel().getSelectedItem().toString();
 
                                 if (!comboCuenta.getSelectionModel().getSelectedItem().toString().equals(comboCuenta2.getSelectionModel().getSelectedItem().toString())) {
-                                    
+
                                     CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(comboCuenta2.getSelectionModel().getSelectedItem().toString()));
-                                  
-                                    if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim())) {
+
+                                    if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim()) && c.getCantidadCheques() > 0) {
+                                        
+                                        
+                                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                        alert.initStyle(StageStyle.DECORATED);
+                                        alert.setTitle(" Cofirmacion");
+                                        alert.setHeaderText("Desea eminir un Cheque de la cuenta " + comboCuenta.getSelectionModel().getSelectedItem().toString() + ""
+                                                + " por el monto de Q" + textFieldMonto.getText());
+
+                                        Optional<ButtonType> result = alert.showAndWait();
+                                        if (result.get() == ButtonType.OK) {
+
+ 
+                                        int cant = c.getCantidadCheques();
+                                        c.setCantidadCheques(cant - 1);
                                         DepositoController.getInstancia().agregar(cliente.getId(), comboCuenta.getSelectionModel().getSelectedItem().toString(),
-                                            Double.parseDouble(textFieldMonto.getText().trim()), cadena, 
-                                            
-                                            ClienteController.getClienteController().buscarClieteUnico(comboCliente.getSelectionModel().getSelectedItem().toString()), 
-                                            comboCuenta2.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString());
-                                            textFieldMonto.clear();
-                                            UIDeposito.getUI().getAlert("Deposito realizado con exito");
+                                                Double.parseDouble(textFieldMonto.getText().trim()), cadena,
+                                                ClienteController.getClienteController().buscarClieteUnico(comboCliente.getSelectionModel().getSelectedItem().toString()),
+                                                comboCuenta2.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString());
+                                        textFieldMonto.clear();
+                                        UIDeposito.getUI().getAlert("Deposito realizado con exito");
+                                        }
+
 
                                     } else {
                                         UIDeposito.getUI().getAlert("El saldo de la cuenta no es sifuciente");
                                     }
-                                      
-                                    
+
                                 } else {
                                     UIDeposito.getUI().getAlert("La cuenta para depositar no puede ser la misma de donde se va a generar el cheque");
                                 }

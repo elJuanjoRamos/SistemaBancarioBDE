@@ -854,21 +854,21 @@ class ObtenerCuentasAhorro {
         tableColumnId = new TableColumn<>();
         tableColumnId.setText("Numero de Cuenta");
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idCuenta"));
-        tableColumnId.setMinWidth(250);
+        tableColumnId.setMinWidth(400);
 
         
         
         tableColumnFecha = new TableColumn<>();
         tableColumnFecha.setText("Fecha de apertura");
         tableColumnFecha.setCellValueFactory(new PropertyValueFactory<>("fechaApertura"));
-        tableColumnFecha.setMinWidth(350);
+        tableColumnFecha.setMinWidth(400);
 
         
         
         tableColumnMonto = new TableColumn<>();
         tableColumnMonto.setText("Monto Q");
         tableColumnMonto.setCellValueFactory(new PropertyValueFactory<>("montoInicial"));
-        tableColumnMonto.setMinWidth(250);
+        tableColumnMonto.setMinWidth(400);
 
      
         
@@ -912,6 +912,7 @@ class ObtenerCuentasMonetaria {
     private TableColumn<CuentaMonetariaCliente, String> tableColumnId;
     private TableColumn<CuentaMonetariaCliente, String> tableColumnFecha;
     private TableColumn<CuentaMonetariaCliente, String> tableColumnMonto;
+    private TableColumn<CuentaMonetariaCliente, String> tableColumnCheque;
     private TableView<CuentaMonetariaCliente> tableView;
     private ObservableList<CuentaMonetariaCliente> observableList;
     
@@ -931,7 +932,7 @@ class ObtenerCuentasMonetaria {
         tableColumnId = new TableColumn<>();
         tableColumnId.setText("Numero de Cuenta");
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idCuenta"));
-        tableColumnId.setMinWidth(250);
+        tableColumnId.setMinWidth(350);
 
         
         
@@ -945,14 +946,19 @@ class ObtenerCuentasMonetaria {
         tableColumnMonto = new TableColumn<>();
         tableColumnMonto.setText("Monto Q");
         tableColumnMonto.setCellValueFactory(new PropertyValueFactory<>("montoInicial"));
-        tableColumnMonto.setMinWidth(250);
+        tableColumnMonto.setMinWidth(350);
+
+        tableColumnCheque = new TableColumn<>();
+        tableColumnCheque.setText("Cantidad Cheques");
+        tableColumnCheque.setCellValueFactory(new PropertyValueFactory<>("cantidadCheques"));
+        tableColumnCheque.setMinWidth(350);
 
      
         
         tableView = new TableView<>();
         tableView.setItems(getObservableList(idCliente));
 
-        tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnMonto);
+        tableView.getColumns().addAll(tableColumnId, tableColumnFecha, tableColumnMonto, tableColumnCheque);
         tableView.setMinSize(100, 250);
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         gridPane.add(tableView, 0, 3, 2, 1);

@@ -7,6 +7,7 @@ package userInterface;
 
 import beans.*;
 import controller.*;
+import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
@@ -67,9 +69,9 @@ public class UIPagoPrestamo {
         ObservableList tarjetas = FXCollections.observableArrayList(TarjetasYPrestamosCliente.getInstancia().getArrayPrestamoClienteEspecifico(cliente.getId()));
 
         ComboBox comboPago = new ComboBox();
+        comboPago.setPrefSize(350, 15);
         comboPago.getItems().addAll(tarjetas);
         comboPago.setEditable(false);
-
         gridPane.add(comboPago, 2, 3);
 
         Label labelTipo = new Label("Tipo de Pago: ");
@@ -78,18 +80,19 @@ public class UIPagoPrestamo {
         ComboBox comboTipo = new ComboBox();
         comboTipo.getItems().addAll("Efectivo", "Cheque");
         comboTipo.setPromptText("Tipo de pago");
+        comboTipo.setPrefSize(350, 15);
         comboTipo.setEditable(false);
 
         Label labelCuenta = new Label("Numero de cuenta: ");
         gridPane.add(labelCuenta, 1, 7);
 
         ComboBox comboCuenta = new ComboBox();
-
         /* BUSCA LAS CUENTAS MONETARIAS DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
         ObservableList cuentas = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayNoCMCliete(cliente.getId()));
 
         comboCuenta.getItems().addAll(cuentas);
         comboCuenta.setEditable(false);
+        comboCuenta.setPrefSize(350, 15);
         gridPane.add(comboCuenta, 2, 7);
         
         
@@ -115,11 +118,13 @@ public class UIPagoPrestamo {
         gridPane.add(labelMonto, 1, 5);
 
         TextField textFieldMonto = new TextField();
+        textFieldMonto.setPrefSize(350, 15);
         gridPane.add(textFieldMonto, 2, 5);
 
         Label labelDeuda = new Label("Deuda del prestamo: ");
         gridPane.add(labelDeuda, 1, 6);
         TextField textFieldDeuda = new TextField();;
+        textFieldDeuda.setPrefSize(350, 15);
         gridPane.add(textFieldDeuda, 2, 6);
         labelDeuda.setVisible(false);
         textFieldDeuda.setVisible(false);
@@ -132,6 +137,7 @@ public class UIPagoPrestamo {
         ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
 
         comboAgencia.getItems().addAll(agencias);
+        comboAgencia.setPrefSize(350, 15);
         comboAgencia.setEditable(false);
 
         gridPane.add(comboAgencia, 2, 8);
@@ -197,21 +203,37 @@ public class UIPagoPrestamo {
                         
                         if (c != null) {
                             
-                            if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim())) {
+                            if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim()) && c.getCantidadCheques() > 0) {
+                                int cant = c.getCantidadCheques();
+                                c.setCantidadCheques(cant -1);
                                 if (comboCuenta.getSelectionModel().getSelectedItem() != null) {
                                     
                                     if (p.getDeuda() > 0 ) {
-                                        String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
-                                    
-                                        PagoController.getInstancia().agregar("Prestamo Codigo. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
-                                                Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente, 
-                                                comboCuenta.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString());
+                                        
+                                        
+                                        
+                                   Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                   alert.initStyle(StageStyle.DECORATED);
+                                   alert.setTitle(" Cofirmacion");
+                                   alert.setHeaderText("Desea eminir un Cheque de la cuenta " + comboCuenta.getSelectionModel().getSelectedItem().toString() + ""
+                                           + " por el monto de Q" +  textFieldMonto.getText());
+
+                                   Optional<ButtonType> result = alert.showAndWait();
+                                   if (result.get() == ButtonType.OK) {
+                                        
+                                       String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
+                                       PagoController.getInstancia().agregar("Prestamo Codigo. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
+                                       Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente, 
+                                       comboCuenta.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString());
 
                                         TarjetasYPrestamosCliente.getInstancia().modificarPrestamo(comboPago.getSelectionModel().getSelectedItem().toString(),
                                                 Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
 
                                         textFieldMonto.clear();
                                         getAlert("Pago realizado con exito");
+                                    
+                                        }
+                                   
 
                                     } else {
                                         getAlert("El pago ya esta cancelado");
@@ -222,7 +244,7 @@ public class UIPagoPrestamo {
                                 }
 
                             } else {
-                                getAlert("El saldo de la cuenta no es sufuciente");
+                                getAlert("El saldo de la cuenta no es sufuciente o se ha quedado sin cheques");
                             }
                         } else {
                             getAlert("Numero de cuenta no valido");

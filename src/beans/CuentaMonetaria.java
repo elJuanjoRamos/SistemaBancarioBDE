@@ -15,14 +15,16 @@ public class CuentaMonetaria {
     private int id;
     private Date fechaApertura;
     private Double montoInicial;
-
+    private int cantidadCheques;
+  
     public CuentaMonetaria() {
     }
 
-    public CuentaMonetaria(int id, Date fechaApertura, Double montoInicial) {
+    public CuentaMonetaria(int id, Date fechaApertura, Double montoInicial, int cantidadCheques) {
         this.id = id;
         this.fechaApertura = fechaApertura;
         this.montoInicial = montoInicial;
+        this.cantidadCheques = cantidadCheques;
     }
 
     public int getId() {
@@ -47,6 +49,14 @@ public class CuentaMonetaria {
 
     public void setMontoInicial(Double montoInicial) {
         this.montoInicial = montoInicial;
+    }
+
+    public int getCantidadCheques() {
+        return cantidadCheques;
+    }
+
+    public void setCantidadCheques(int cantidadCheques) {
+        this.cantidadCheques = cantidadCheques;
     }
     
     

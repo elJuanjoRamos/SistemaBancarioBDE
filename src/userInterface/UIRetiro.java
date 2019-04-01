@@ -7,6 +7,7 @@ package userInterface;
 
 import beans.*;
 import controller.*;
+import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,14 +21,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -78,29 +76,26 @@ public class UIRetiro {
         
         Label labelAgencia = new Label("Agencia bancaria: ");
         labelAgencia.setId("labelTexto");
-        gridPane.add(labelAgencia, 1, 0);
+        gridPane.add(labelAgencia, 0, 1);
 
         ComboBox comboAgencia = new ComboBox();
           /* BUSCA LAS AGENCIAS Y LOS METE EN UN COMBOBOX*/
         ObservableList agencias = FXCollections.observableArrayList(AgenciaController.getAgenciaController().getNombreAgencia());
-
+        comboAgencia.setPrefSize(350, 15);
         comboAgencia.getItems().addAll(agencias);
-        comboAgencia.setEditable(true);
-        gridPane.add(comboAgencia, 2, 0);
+        gridPane.add(comboAgencia, 1, 1);
 
         
         
         Label labelCombo = new Label("Cuenta de retiro: ");
-        gridPane.add(labelCombo, 1, 1);
+        gridPane.add(labelCombo, 0, 2);
 
         ComboBox comboCuenta = new ComboBox();
-        comboCuenta.setEditable(true);
+        comboCuenta.setPrefSize(350, 15);
         /* BUSCA LAS CUENTAS  DEL CLIENTE Y LAS METE EN UN COMBOBOX*/
         ObservableList cuentas = FXCollections.observableArrayList(CuentasCliente.getCuentasCliente().getArrayCuentasCliete(cliente.getId()));
-
         comboCuenta.getItems().addAll(cuentas);
-
-        gridPane.add(comboCuenta, 2, 1);
+        gridPane.add(comboCuenta, 1, 2);
 
         
             
@@ -108,13 +103,13 @@ public class UIRetiro {
         
         
         Label labelMonto = new Label("Monto: ");
-        gridPane.add(labelMonto, 1, 2);
+        gridPane.add(labelMonto, 0, 3);
 
         ComboBox comboMonto = new ComboBox();
         comboMonto.getItems().addAll("100", "200","500","1000","5000");
         comboMonto.setPromptText("Cantidad de retiro");
-        comboMonto.setEditable(true);
-        gridPane.add(comboMonto, 2, 2);
+        comboMonto.setPrefSize(350, 15);
+        gridPane.add(comboMonto, 1, 3);
 
         
         
@@ -134,12 +129,13 @@ public class UIRetiro {
                         CuentaAhorro cuenta=  CuentasCliente.getCuentasCliente().buscarCuentaAhorros(Integer.parseInt(comboCuenta.getSelectionModel().getSelectedItem().toString()));
                         if (cuenta.getMontoInicial() >= Double.parseDouble(comboMonto.getSelectionModel().getSelectedItem().toString())) {
                             
+                                    RetiroController.getRetiroController().agregar(comboCuenta.getSelectionModel().getSelectedItem().toString(), 
+                                Double.parseDouble(comboMonto.getSelectionModel().getSelectedItem().toString()), cliente.getId(), 
+                                comboAgencia.getSelectionModel().getSelectedItem().toString());
                             
-                            RetiroController.getRetiroController().agregar(comboCuenta.getSelectionModel().getSelectedItem().toString(), 
-                            Double.parseDouble(comboMonto.getSelectionModel().getSelectedItem().toString()), cliente.getId(), 
-                            comboAgencia.getSelectionModel().getSelectedItem().toString());
-                            
-                                                getAlert("Retiro realizado con exito");
+                                getAlert("Retiro realizado con exito");
+                         
+                                                     
 
                         } else {
                             getAlert("El saldo de su cuenta no es suficiente");
@@ -148,12 +144,27 @@ public class UIRetiro {
                         
                     } else if (CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(comboCuenta.getSelectionModel().getSelectedItem().toString()))!= null) {
                         CuentaMonetaria cuenta =  CuentasCliente.getCuentasCliente().buscarCuentaMonetaria(Integer.parseInt(comboCuenta.getSelectionModel().getSelectedItem().toString()));
-                        if (cuenta.getMontoInicial() >= Double.parseDouble(comboMonto.getSelectionModel().getSelectedItem().toString())) {
-                            RetiroController.getRetiroController().agregar(comboCuenta.getSelectionModel().getSelectedItem().toString(), 
-                            Double.parseDouble(comboMonto.getSelectionModel().getSelectedItem().toString()), cliente.getId(), 
-                            comboAgencia.getSelectionModel().getSelectedItem().toString());
-                                                getAlert("Retiro realizado con exito");
+                        if (cuenta.getMontoInicial() >= Double.parseDouble(comboMonto.getSelectionModel().getSelectedItem().toString()) && cuenta.getCantidadCheques() > 0) {
+                            
+                            
+                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.initStyle(StageStyle.DECORATED);
+                            alert.setTitle(" Cofirmacion");
+                            alert.setHeaderText("Se va eminir un Cheque de la cuenta " + comboCuenta.getSelectionModel().getSelectedItem().toString() + ""
+                                    + " por el monto de Q" +  comboMonto.getSelectionModel().getSelectedItem().toString() +"para cambiarlo" );
 
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.get() == ButtonType.OK) {
+                                RetiroController.getRetiroController().agregar(comboCuenta.getSelectionModel().getSelectedItem().toString(), 
+                                Double.parseDouble(comboMonto.getSelectionModel().getSelectedItem().toString()), cliente.getId(), 
+                                comboAgencia.getSelectionModel().getSelectedItem().toString());
+                                getAlert("Retiro realizado con exito");
+
+                            }
+                            
+                                                
+                                                
+                                                
                         } else {
                             getAlert("El saldo de su cuenta no es suficiente");
                         }
@@ -187,8 +198,6 @@ public class UIRetiro {
         
         vbox.getChildren().addAll(getMenuBar(primaryStage, cliente), hBoxVista);
         scene.getStylesheets().addAll("/resources/root.css");
-        //scene.getStylesheets().addAll("/resources/jmetro.css");
-        new JMetro(style).applyTheme(scene);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
