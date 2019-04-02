@@ -95,6 +95,7 @@ public class TarjetasYPrestamosCliente {
         return t;
     }
     
+    
         
     public void agregarTarjetaCliente(int idCliente) {
         
@@ -185,6 +186,7 @@ public class TarjetasYPrestamosCliente {
     
     
     
+    
     public ArrayList<String> getArrayTarjetaClienteEspecifico(int idCliente) {
         
         ArrayList<String> array = new ArrayList();
@@ -217,8 +219,21 @@ public class TarjetasYPrestamosCliente {
     }
     
 
+  /*Agregar compras*/  
     
-    
+        /*---------------Modificar tarjeta al pagar------------*/
+    public void agregarCompras(int idTarjeta, Double monto, int idCliente){
+        for (int i = 0; i < arrayTarjetaCliente.length; i++) {
+            if (arrayTarjetaCliente[i] != null) {
+                if (arrayTarjetaCliente[i].getTarjeta().getId() == idTarjeta) {
+                    
+                    Double deuda = arrayTarjetaCliente[i].getTarjeta().getDeuda();
+                    arrayTarjetaCliente[i].getTarjeta().setDeuda(deuda + monto);
+                    arrayTarjetaCliente[i].setDeuda(deuda+monto);
+                }
+            }
+        }
+    }
     
     
     

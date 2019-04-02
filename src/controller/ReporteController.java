@@ -634,23 +634,23 @@ public class ReporteController {
 
         /*                  */
         try {
-            for (int i = 0; i < AgenciaController.getAgenciaController().obtenerAgencias().length; i++) {
-                if (AgenciaController.getAgenciaController().obtenerAgencias()[i] != null) {
+            for (int i = 0; i < AgenciaController.getAgenciaController().obtenerTodasAgencias().length; i++) {
+                if (AgenciaController.getAgenciaController().obtenerTodasAgencias()[i] != null) {
 
                     for (int j = 0; j < EmpleadoController.getEmpleadoController().obtenerEmpleados().length; j++) {
                         if (EmpleadoController.getEmpleadoController().obtenerEmpleados()[j] != null) {
 
                             Empleado e = EmpleadoController.getEmpleadoController().obtenerEmpleados()[j];
 
-                            AgenciaBancaria a = AgenciaController.getAgenciaController().obtenerAgencias()[i];
+                            AgenciaBancaria a = AgenciaController.getAgenciaController().obtenerTodasAgencias()[i];
 
                             if (e.getAgencia().equals(a.getNombre())) {
                                 contador = contador + 1;
 
-                                nombre = AgenciaController.getAgenciaController().obtenerAgencias()[i].getNombre();
-                                direccion = AgenciaController.getAgenciaController().obtenerAgencias()[i].getDireccion();
-                                telefono = AgenciaController.getAgenciaController().obtenerAgencias()[i].getTelefono();
-                                efectivo = AgenciaController.getAgenciaController().obtenerAgencias()[i].getEfectivo();
+                                nombre = AgenciaController.getAgenciaController().obtenerTodasAgencias()[i].getNombre();
+                                direccion = AgenciaController.getAgenciaController().obtenerTodasAgencias()[i].getDireccion();
+                                telefono = AgenciaController.getAgenciaController().obtenerTodasAgencias()[i].getTelefono();
+                                efectivo = AgenciaController.getAgenciaController().obtenerTodasAgencias()[i].getEfectivo();
 
                             }
                         }

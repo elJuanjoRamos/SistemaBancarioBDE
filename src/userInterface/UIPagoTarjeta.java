@@ -182,16 +182,25 @@ public class UIPagoTarjeta {
                     if (comboPago.getSelectionModel().getSelectedItem() != null
                             && comboTipo.getSelectionModel().getSelectedItem().toString().equals("Efectivo")) {
 
-                        PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
+                        TarjetaCredito t = TarjetasYPrestamosCliente.getInstancia().buscarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()));
+                        
+                        if (t != null) {
+                            if (t.getDeuda() >0) {
+                                PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
                                 Double.parseDouble(textFieldMonto.getText().trim()), comboTipo.getSelectionModel().getSelectedItem().toString(), cliente, "", 
                                 comboAgencia.getSelectionModel().getSelectedItem().toString());
-                        
-                        TarjetasYPrestamosCliente.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
-                                                    Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
 
-                        getAlert("Pago realizado con exito");
-                        textFieldMonto.clear();
-                        
+                                TarjetasYPrestamosCliente.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
+                                                            Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
+
+                                getAlert("Pago realizado con exito");
+                                textFieldMonto.clear();
+
+                            } else {
+                                getAlert("La tarjeta ya esta cancelada");
+                            }
+                        }
+        
                         
                     } else if (comboPago.getSelectionModel().getSelectedItem() != null
                             && comboTipo.getSelectionModel().getSelectedItem().toString().equals("Cheque")) {
@@ -203,31 +212,39 @@ public class UIPagoTarjeta {
                             CuentaMonetariaCliente c = CuentasCliente.getCuentasCliente().getArrayCMClieteUnica(Integer.parseInt(comboCuenta.getSelectionModel().getSelectedItem().toString()));
                             if (c != null) {
                                 if (c.getMontoInicial() >= Double.parseDouble(textFieldMonto.getText().trim()) && c.getCantidadCheques() > 0) {
-                                   
-                                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                                   alert.initStyle(StageStyle.DECORATED);
-                                   alert.setTitle(" Cofirmacion");
-                                   alert.setHeaderText("Desea eminir un Cheque de la cuenta " + comboCuenta.getSelectionModel().getSelectedItem().toString() + ""
-                                           + " por el monto de Q" +  textFieldMonto.getText());
+                        
+                                    
+                                    TarjetaCredito t = TarjetasYPrestamosCliente.getInstancia().buscarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()));
+                        
+                                    if (t != null) {
+                                        if (t.getDeuda() > 0) {
+                                              Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                                alert.initStyle(StageStyle.DECORATED);
+                                                alert.setTitle(" Cofirmacion");
+                                                alert.setHeaderText("Desea eminir un Cheque de la cuenta " + comboCuenta.getSelectionModel().getSelectedItem().toString() + ""
+                                                        + " por el monto de Q" +  textFieldMonto.getText());
 
-                                   Optional<ButtonType> result = alert.showAndWait();
-                                   if (result.get() == ButtonType.OK) {
-                                        int cant = c.getCantidadCheques();
-                                        c.setCantidadCheques(cant -1);
+                                                Optional<ButtonType> result = alert.showAndWait();
+                                                if (result.get() == ButtonType.OK) {
+                                                     int cant = c.getCantidadCheques();
+                                                     c.setCantidadCheques(cant -1);
 
-                                        String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
-                                        PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
-                                                Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente
-                                                , comboCuenta.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString());
+                                                     String cadena = comboTipo.getSelectionModel().getSelectedItem().toString() + " - Cuenta No. " + comboCuenta.getSelectionModel().getSelectedItem().toString();
+                                                     PagoController.getInstancia().agregar("Tarjeta No. " + comboPago.getSelectionModel().getSelectedItem().toString(), 
+                                                             Double.parseDouble(textFieldMonto.getText().trim()), cadena, cliente
+                                                             , comboCuenta.getSelectionModel().getSelectedItem().toString(), comboAgencia.getSelectionModel().getSelectedItem().toString());
 
-                                        TarjetasYPrestamosCliente.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
-                                                                Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
+                                                     TarjetasYPrestamosCliente.getInstancia().modificarTarjeta(Integer.parseInt(comboPago.getSelectionModel().getSelectedItem().toString()), 
+                                                                             Double.parseDouble(textFieldMonto.getText().trim()), cliente.getId());
 
-                                        textFieldMonto.clear();
-                                        getAlert("Pago realizado con exito");
-                   
-                                   
-                                   }
+                                                     textFieldMonto.clear();
+                                                     getAlert("Pago realizado con exito");
+
+                                            }
+                                        }
+                                    } else {
+                                        getAlert("La tarjeta ya esta cancelada");
+                                    }
                                     
                                 } else {
                                     getAlert("El saldo de la cuenta no es suficiente o se ha quedado sin cheques");

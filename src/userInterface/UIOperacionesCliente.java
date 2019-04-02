@@ -109,15 +109,7 @@ public class UIOperacionesCliente {
         grid2.add(label5, 0, 5);
         grid2.add(label6, 1, 5);
 
-        /*Label label7 = getLabel("Cantidad de cuentas:");
-        Label label8 = getLabel("Hola FDSFDSFDS");
-        grid2.add(label7, 0, 6);
-        grid2.add(label8, 1, 6);
 
-        Label label9 = getLabel("Cantidad Tarjetas:");
-        Label label10 = getLabel("Hola FDSFDSFDS");
-        grid2.add(label9, 0, 7);
-        grid2.add(label10, 1, 7);*/
 
         h.getChildren().addAll(grid2);
 
@@ -230,7 +222,7 @@ public class UIOperacionesCliente {
 
         Menu menuArchivo = new Menu("OPCIONES");
         Menu menuAgencia = new Menu("AGENCIA BANCARIA");
-        Menu menuAgenciaAB = new Menu("AGENCIA AUTO BANCO");
+        Menu menuCompras = new Menu("COMPRAS");
         Menu menuCajero = new Menu("CAJERO");
         Menu menuCallCenter = new Menu("CallCenter");
         
@@ -254,14 +246,9 @@ public class UIOperacionesCliente {
         MenuItem menuItemRetiro = new MenuItem("_Retiros");
         
         //AGENCIA AUTO BANCO/
-        MenuItem menuItemPagoServicioAB = new MenuItem("_Pago de Servicios");
-        MenuItem menuItemPagoTarjetaAB = new MenuItem("_Pago de Tarjetas");
-        MenuItem menuItemPagoPrestamoAB = new MenuItem("_Pago de Prestamos");
-        MenuItem menuItemDepositoAB = new MenuItem("_Deposito");
-        MenuItem menuItemRetiroAB = new MenuItem("_Retiros");
+        MenuItem menuItemCompras = new MenuItem("_Ir a Compras");
         
         
-        MenuItem menuItemTransferencia = new MenuItem("");
         MenuItem menuItemCajero = new MenuItem("_Ir a cajero");
         
         MenuItem menuItemAtencion = new MenuItem("_Ir a Atencion al cliente");
@@ -332,6 +319,12 @@ public class UIOperacionesCliente {
             }
           });
         
+        menuItemCompras.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                UICompras.getUI().start(primaryStage, cliente);
+            }
+          });
         
         
 
@@ -342,19 +335,17 @@ public class UIOperacionesCliente {
         menuPago.getItems().addAll(menuItemPagoServicio, menuItemPagoTarjeta, menuItemPagoPrestamo, menuItemDeposito, 
                                     menuItemRetiro);
     
-        menuPagoAB.getItems().addAll(menuItemPagoServicioAB, menuItemPagoTarjetaAB, menuItemPagoPrestamoAB, menuItemDepositoAB, 
-                                    menuItemRetiroAB);
+        menuCompras.getItems().addAll(menuItemCompras);
     
         
         menuAtencionCliente.getItems().add(menuItemAtencion);
         menuArchivo.getItems().addAll(menuItemRegresar, menuItemSalir);
         menuAgencia.getItems().addAll(menuPago, menuAtencionCliente);
-        menuAgenciaAB.getItems().addAll(menuPagoAB);
         
         menuCajero.getItems().add(menuItemCajero);
         
         
-        menuBar.getMenus().addAll(menuArchivo, menuAgencia,menuAgenciaAB, menuCajero);
+        menuBar.getMenus().addAll(menuArchivo, menuAgencia,menuCompras, menuCajero);
         return menuBar;
         
         

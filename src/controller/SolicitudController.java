@@ -141,7 +141,7 @@ public class SolicitudController {
     public void aceptarTarjeta(Solicitudes s, Double monto){
          
         
-        TarjetasYPrestamosCliente.getInstancia().agregarTarjeta(dateFormat.format(s.getFecha()), monto, monto);
+        TarjetasYPrestamosCliente.getInstancia().agregarTarjeta(dateFormat.format(s.getFecha()), monto, 0.0);
         TarjetasYPrestamosCliente.getInstancia().agregarTarjetaCliente(s.getCliente().getId());
         
          

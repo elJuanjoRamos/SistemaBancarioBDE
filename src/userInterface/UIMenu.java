@@ -14,7 +14,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import userInterface.AccessWindow;
-
+import controller.*;
+import beans.Cliente;
 import userInterface.UISeleccionCliente;
 
 
@@ -71,8 +72,11 @@ public class UIMenu {
         gridPane.setMinSize(900, 650);
         gridPane.setAlignment(Pos.BOTTOM_CENTER);
         
+        Button modificacionDeCodigo = new Button("Modificacion de codifo");
         
-        hBoxButtons.getChildren().addAll(buttonLogin, buttonUser );
+       
+        
+        hBoxButtons.getChildren().addAll(buttonLogin, buttonUser,modificacionDeCodigo);
         
         
         gridPane.add(hBoxButtons, 1,90);
@@ -113,6 +117,18 @@ public class UIMenu {
                 UISeleccionCliente.getUI().start(primaryStage);
                 
             }
+        });
+        
+        modificacionDeCodigo.setOnAction(new EventHandler<ActionEvent>() {
+         
+            @Override
+            
+            public void handle(ActionEvent event) {
+                Cliente cliente = ClienteController.getClienteController().buscar(0);
+                UIOperacionesCliente.getUI().start(primaryStage, cliente);
+            }
+            
+            
         });
         primaryStage.setScene(scene);
         primaryStage.show();
